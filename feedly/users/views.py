@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from .forms import SignupForm
+from django.contrib.auth.decorators import login_required,logout_required
+from .forms import SignupForm ,edit_profile_form
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -58,3 +59,23 @@ def activate(request, uidb64, token):
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
         return HttpResponse('Activation link is invalid!')
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = edit_profile_form(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+            return HttpResponse('Congrats your profile is updated')
+
+    else:
+        form = edit_profile_form()
+    return render(request, 'edit_profile.html', {'form': form})
+
+
+class login(request):
+    if request.method == 'POST':
+        form = login_form(request.POST)
+

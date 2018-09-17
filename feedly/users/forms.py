@@ -1,14 +1,12 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
+from .models import MyProfile
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text='Required')
-    first_name=forms.CharField(max_length=30)
-    last_name = forms.CharField(max_length=30)
     class Meta:
         model = User
-        fields = ('first_name','last_name','username', 'email', 'password1', 'password2',)
+        fields = ('username', 'email', 'password1', 'password2',)
 
 
 
@@ -27,3 +25,14 @@ class SignupForm(UserCreationForm):
         raise forms.ValidationError('This email address is already in use.')
 
 
+class edit_profile_form(forms.ModelForm):
+     class Meta:
+         model = MyProfile
+         fields =('avatar','first_name','last_name','phone_number',
+                  'date_of_birth',)
+
+
+class login_form(forms.modelForm):
+    class Meta:
+        model = login
+        fields = ('username','password')
