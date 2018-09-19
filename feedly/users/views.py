@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.decorators import login_required,logout_required
-from .forms import SignupForm ,edit_profile_form
+from django.contrib.auth.decorators import login_required
+from .forms import SignupForm ,edit_profile_form,login_form
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -65,17 +65,37 @@ def activate(request, uidb64, token):
 def edit_profile(request):
     if request.method == 'POST':
         form = edit_profile_form(request.POST)
+        print("DATA",request.POST)
         if form.is_valid():
+            print("1")
             user = form.save(commit=False)
+            user.user = request.user
+            print("User",request.user)
             user.save()
+            print("2")
             return HttpResponse('Congrats your profile is updated')
-
     else:
         form = edit_profile_form()
+        print("3")
     return render(request, 'edit_profile.html', {'form': form})
 
 
-class login(request):
+def login_view(request):
     if request.method == 'POST':
         form = login_form(request.POST)
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return  render(request,'home.html')
+            else:
+                return HttpResponse('please! verify your Email first')
+        else:
+            return  HttpResponse('Invalid Login')
+
+    else:
+        form = login_form()
+    return render(request, 'login.html', {'form': form})
 
