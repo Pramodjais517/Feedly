@@ -32,7 +32,12 @@ class edit_profile_form(forms.ModelForm):
                   'date_of_birth',)
 
 
-class login_form(forms.modelForm):
+
+
+class login_form(forms.ModelForm):
+    password = forms.CharField(
+        widget=forms.PasswordInput
+    )
     class Meta:
-        model = login
-        fields = ('username','password')
+        model = User
+        fields=('username','password',)
