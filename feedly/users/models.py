@@ -1,13 +1,14 @@
 import uuid
 from django.db import models
 from django.contrib.auth.models import User
+import os
 
 
 
 def avatar_id(instance, filename):    # to give unique id to profile pic uploaded by using uuid
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (uuid.uuid4(), ext)
-    return os.path.join('profile_pic', filename)
+    return os.path.join('static/images', filename)
 
 
 

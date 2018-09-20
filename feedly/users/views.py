@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.mail import send_mail
 from feedly.settings import EMAIL_HOST_USER
+from .models import MyProfile
 
 def home(request):
     return render(request ,'home.html')
@@ -61,23 +62,23 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
-@login_required
-def edit_profile(request):
-    if request.method == 'POST':
-        form = edit_profile_form(request.POST)
-        print("DATA",request.POST)
-        if form.is_valid():
-            print("1")
-            user = form.save(commit=False)
-            user.user = request.user
-            print("User",request.user)
-            user.save()
-            print("2")
-            return HttpResponse('Congrats your profile is updated')
-    else:
-        form = edit_profile_form()
-        print("3")
-    return render(request, 'edit_profile.html', {'form': form})
+# @login_required
+# def edit_profile(request):
+#     if request.method == 'POST':
+#         form = edit_profile_form(request.POST)
+#         print("DATA",request.POST)
+#         if form.is_valid():
+#             print("1")
+#             user = form.save(commit=False)
+#             user.user = request.user
+#             print("User",request.user)
+#             user.save()
+#             print("2")
+#             return HttpResponse('Congrats your profile is updated')
+#     else:
+#         form = edit_profile_form()
+#         print("3")
+#     return render(request, 'edit_profile.html', {'form': form})
 
 
 def login_view(request):
@@ -99,3 +100,10 @@ def login_view(request):
         form = login_form()
     return render(request, 'login.html', {'form': form})
 
+def profile_view(request):
+    profile = MyProfile.objects.get(user=request.user.id)
+    context={
+        'profile': profile
+    }
+    # print(fields.first_name)
+    return render(request,'profile.html', context)

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+</head>
+<body>
+{% load staticfiles %}
+{% block content %}
+<div style="text-align:center">
+<h2>Profile</h2>
+<br>
+<br>
+<img style="width: 245px; height: 247px;"
+                     alt="Image description"
+                     src="{% static 'users/profile.png' %}"/>
+<br>
+<br>
+<br>
+<label>First name :{{ profile.first_name }}
+</label>
+<br>
+    <br>
+    <br>
+<label>Last name: {{ profile.last_name }}</label>
+<br>
+    <br>
+    <br>
+<label>Username :{{ profile.user.username }}</label>
+<br>
+    <br>
+    <br>
+<label>Email : {{ profile.user.email }}</label>
+<br>
+    <br>
+    <br>
+<label>Contact no.: {{ profile.phone_number }}</label>
+<br>
+    <br>
+    <br>
+<label>Date of birth : {{ profile.date_of_birth|date:"M d, Y" }}</label>
+<br>
+</div>
+{% endblock %}
+</body>
+</html>
