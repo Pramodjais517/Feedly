@@ -8,40 +8,44 @@
 {% load staticfiles %}
 {% block content %}
 <div style="text-align:center">
-<h2>Profile</h2>
+<h1>Profile</h1>
 <br>
 <br>
 
 
-<img style="width: 245px; height: 247px;"
+<img style="width: 15vw; height: 25vh;"
                      alt="Image description"
                      src="{% static 'users/profile.png' %}"/>
 <br>
 <br>
-    <a href="{% url 'logout' %}" style="margin-left:80vw"> log out</a>
+    <p><a href="{% url 'logout' %}" style="margin-left:80vw"> log out</a>
+   </p>
+    <p>
+    <a href="{% url 'profile' %}" style="margin-left:80vw">Edit profile</a>
+    </p>
 <br>
-<label>First name :{{ profile.first_name }}
+<label>First name :{{ profile.myprofile.first_name }}
 </label>
 <br>
     <br>
     <br>
-<label>Last name: {{ profile.last_name }}</label>
+<label>Last name: {{ profile.myprofile.last_name }}</label>
 <br>
     <br>
     <br>
-<label>Username :{{ profile.user.username }}</label>
+<label>Username :{{ profile.username }}</label>
 <br>
     <br>
     <br>
-<label>Email : {{ profile.user.email }}</label>
+<label>Email : {{ profile.email }}</label>
 <br>
     <br>
     <br>
-<label>Contact no.: {{ profile.phone_number }}</label>
+<label>Contact no.: {{ profile.myprofile.phone_number }}</label>
 <br>
     <br>
     <br>
-<label>Date of birth : {{ profile.date_of_birth|date:"M d, Y" }}</label>
+<label>Date of birth : {{ profile.myprofile.date_of_birth|date:"M d, Y" }}</label>
 <br>
 </div>
 {% endblock %}

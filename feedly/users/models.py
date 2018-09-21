@@ -13,7 +13,7 @@ def avatar_id(instance, filename):    # to give unique id to profile pic uploade
 
 
 class MyProfile(models.Model):
-    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    account = models.OneToOneField(User, on_delete = models.CASCADE)
     first_name = models.CharField(max_length=100, blank=True,null=True)
     last_name = models.CharField(max_length=100, blank=True,null=True)
     phone_number = models.CharField(max_length=100, blank=True, null=True)

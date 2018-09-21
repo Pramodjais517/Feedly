@@ -13,8 +13,11 @@
     <br>
     <a href="{% url 'signup' %}"> Sign Up</a>
     <br>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'logout' %}"> log out</a>
+    {% else %}
     <a href="{% url 'login' %}"> Log In</a>
-
+    {% endif %}
 </p>
 </body>
 </html>

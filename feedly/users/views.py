@@ -19,31 +19,32 @@ def home(request):
 
 #sidnup process /forms
 def signup(request):
-    # if request.user.is_authenticated:
-    #     return redirect('home')
-    if request.method == 'POST':
-        form = SignupForm(request.POST)
-        if form.is_valid():
-                user = form.save(commit=False)
-                user.is_active = False
-                user.save()
-                current_site = get_current_site(request)
-                subject = 'Activate Your Feedly Account'
-                message = render_to_string('acc_active_email.html', {
-
-                    'user': user,
-                    'domain': current_site.domain,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode,
-                    'token': account_activation_token.make_token(user),
-                })
-                from_mail = EMAIL_HOST_USER
-                to_mail = [user.email]
-                send_mail(subject, message, from_mail, to_mail, fail_silently=False)
-                return HttpResponse('Please confirm your email address to complete the registration')
-
+    if request.user.is_authenticated:
+        return redirect('home')
     else:
-        form = SignupForm()
-    return render(request, 'signup.html', {'form': form})
+        if request.method == 'POST':
+            form = SignupForm(request.POST)
+            if form.is_valid():
+                    user = form.save(commit=False)
+                    user.is_active = False
+                    user.save()
+                    current_site = get_current_site(request)
+                    subject = 'Activate Your Feedly Account'
+                    message = render_to_string('acc_active_email.html', {
+
+                        'user': user,
+                        'domain': current_site.domain,
+                        'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode,
+                        'token': account_activation_token.make_token(user),
+                    })
+                    from_mail = EMAIL_HOST_USER
+                    to_mail = [user.email]
+                    send_mail(subject, message, from_mail, to_mail, fail_silently=False)
+                    return HttpResponse('Please confirm your email address to complete the registration')
+
+        else:
+            form = SignupForm()
+        return render(request, 'signup.html', {'form': form})
 
 #account activation function
 def activate(request, uidb64, token):
@@ -108,7 +109,7 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
-    profile = MyProfile.objects.get(user=request.user.id)
+    profile = User.objects.get(id=request.user.id)
     context={
         'profile': profile
     }
