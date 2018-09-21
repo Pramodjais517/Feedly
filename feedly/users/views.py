@@ -63,23 +63,16 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
-# @login_required
-# def edit_profile(request):
-#     if request.method == 'POST':
-#         form = edit_profile_form(request.POST)
-#         print("DATA",request.POST)
-#         if form.is_valid():
-#             print("1")
-#             user = form.save(commit=False)
-#             user.user = request.user
-#             print("User",request.user)
-#             user.save()
-#             print("2")
-#             return HttpResponse('Congrats your profile is updated')
-#     else:
-#         form = edit_profile_form()
-#         print("3")
-#     return render(request, 'edit_profile.html', {'form': form})
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = edit_profile_form(request.POST,instance=request.user.myprofile)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('Congrats your profile is updated')
+    else:
+        form = edit_profile_form(instance=request.user)
+    return render(request, 'edit_profile.html', {'form': form})
 
 
 def login_view(request):
@@ -95,7 +88,8 @@ def login_view(request):
             else:
                 return HttpResponse('please! verify your Email first')
         else:
-            return  HttpResponse('Invalid Login')
+            messages.error(request,'username or password not correct')
+            return  redirect('login')
 
     else:
         form = login_form()

@@ -2,23 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>profile</title>
 </head>
 <body>
 {% block content %}
-<h2>login</h2>
+<h2> Profile </h2>
 <form method="post">
     {% csrf_token %}
+    <p>Username : {{user.username }}</p>
+    <p>Email:  {{ user.email }}</p>
     {% for field in form %}
     <p>
         {{ field.label_tag }}<br>
         {{ field }}
-    </p>
-    {% endfor %}
-    {% for error in messages %}
+        {% for error in field.errors %}
     <p style="color: red">{{ error }}</p>
     {% endfor %}
-    <button type="submit">Log in</button>
+    </p>
+    {% endfor %}
+    <button type="submit">Save</button>
 
 </form>
 {% endblock %}

@@ -28,8 +28,7 @@ class SignupForm(UserCreationForm):
 class edit_profile_form(forms.ModelForm):
      class Meta:
          model = MyProfile
-         fields =('avatar','first_name','last_name','phone_number',
-                  'date_of_birth',)
+         fields=('avatar', 'first_name', 'last_name', 'gender', 'date_of_birth','phone_number')
 
 
 

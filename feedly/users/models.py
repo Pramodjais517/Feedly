@@ -18,7 +18,13 @@ class MyProfile(models.Model):
     last_name = models.CharField(max_length=100, blank=True,null=True)
     phone_number = models.CharField(max_length=100, blank=True, null=True)
     date_of_birth = models.DateTimeField(null=True, blank=True)
-    avatar = models.ImageField(upload_to=avatar_id, default='static/images/avatar.jgp')
+    avatar = models.ImageField(upload_to=avatar_id, default='static/images/avatar.jgp',null=True)
+    GENDER_CHOICES=(
+        ('Male','Male'),
+        ('Female','Female'),
+        ('Others','Others')
+    )
+    gender=models.CharField(max_length=10,choices=GENDER_CHOICES,default='Male')
 
     def __str__(self):
-        return self.user.username
+        return self.account.username
