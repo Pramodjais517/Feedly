@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.decorators import login_required
 from .forms import SignupForm ,edit_profile_form,login_form
 from django.contrib.sites.shortcuts import get_current_site
@@ -100,6 +100,13 @@ def login_view(request):
         form = login_form()
     return render(request, 'login.html', {'form': form})
 
+
+def logout_view(request):
+    logout(request)
+    return HttpResponse("You have successfully logged out!")
+
+
+@login_required
 def profile_view(request):
     profile = MyProfile.objects.get(user=request.user.id)
     context={
@@ -107,3 +114,4 @@ def profile_view(request):
     }
     # print(fields.first_name)
     return render(request,'profile.html', context)
+

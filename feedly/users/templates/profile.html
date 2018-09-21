@@ -11,11 +11,14 @@
 <h2>Profile</h2>
 <br>
 <br>
+
+
 <img style="width: 245px; height: 247px;"
                      alt="Image description"
                      src="{% static 'users/profile.png' %}"/>
 <br>
 <br>
+    <a href="{% url 'logout' %}" style="margin-left:80vw"> log out</a>
 <br>
 <label>First name :{{ profile.first_name }}
 </label>
