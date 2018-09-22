@@ -46,6 +46,7 @@ def signup(request):
             form = SignupForm()
         return render(request, 'signup.html', {'form': form})
 
+
 #account activation function
 def activate(request, uidb64, token):
     try:
@@ -68,10 +69,11 @@ def edit_profile(request):
     if request.method == 'POST':
         form = edit_profile_form(request.POST,instance=request.user.myprofile)
         if form.is_valid():
+            form.save(commit=True)
             form.save()
             return HttpResponse('Congrats your profile is updated')
     else:
-        form = edit_profile_form(instance=request.user)
+        form = edit_profile_form(instance=request.user.myprofile)
     return render(request, 'edit_profile.html', {'form': form})
 
 
@@ -103,10 +105,5 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
-    profile = User.objects.get(id=request.user.id)
-    context={
-        'profile': profile
-    }
-    # print(fields.first_name)
-    return render(request,'profile.html', context)
+    return render(request,'profile.html')
 
