@@ -7,21 +7,13 @@ from django.dispatch import receiver
 from phonenumber_field.modelfields import PhoneNumberField
 
 
-
-def avatar_id(instance, filename):    # to give unique id to profile pic uploaded by using uuid
-    ext = filename.split('.')[-1]
-    filename = "%s.%s" % (uuid.uuid4(), ext)
-    return os.path.join('profile_pic', filename)
-
-
-
 class MyProfile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     first_name = models.CharField(max_length=100, blank=True,null=True,default='')
     last_name = models.CharField(max_length=100, blank=True,null=True,default='')
     phone_number = PhoneNumberField(max_length=100, blank=True, null=True)
     date_of_birth = models.DateTimeField(null=True, blank=True)
-    avatar = models.ImageField(default='profile.png', upload_to=avatar_id)
+    avatar = models.ImageField(default='profile.png', upload_to='profile_pic')
     GENDER_CHOICES=(
         ('Male','Male'),
         ('Female','Female'),

@@ -67,11 +67,10 @@ def activate(request, uidb64, token):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        form = edit_profile_form(request.POST,instance=request.user.myprofile)
+        form = edit_profile_form(request.POST,request.FILES,instance=request.user.myprofile)
         if form.is_valid():
-            form.save(commit=True)
             form.save()
-            return HttpResponse('Congrats your profile is updated')
+            return redirect('profile')
     else:
         form = edit_profile_form(instance=request.user.myprofile)
     return render(request, 'edit_profile.html', {'form': form})
@@ -100,7 +99,8 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponse("You have successfully logged out!")
+    messages.success(request,'you are successfully logged out')
+    return  redirect('home')
 
 
 @login_required
