@@ -6,8 +6,8 @@
 </head>
 <body>
 {% block content %}
-<h2> Profile </h2>
-<form method="post">
+<h2> Update Profile </h2>
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <p>Username : {{user.username }}</p>
     <p>Email:  {{ user.email }}</p>

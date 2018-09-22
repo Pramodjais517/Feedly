@@ -13,4 +13,4 @@ urlpatterns = [
         name='activate'),
     url(r'^profile/$',views.profile_view,name ='profile'),
     url(r'^profile/edit/$',views.edit_profile,name ='edit_profile'),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+ ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

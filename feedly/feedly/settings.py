@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users'
+    'users',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,5 @@ MEDIA_URL = '/media/'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
+PHONENUMBER_DEFAULT_REGION = 'IN'
+PHONENUMBER_DB_FORMAT='NATIONAL'

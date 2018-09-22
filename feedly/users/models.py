@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 import os
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 
@@ -16,17 +17,17 @@ def avatar_id(instance, filename):    # to give unique id to profile pic uploade
 
 class MyProfile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    first_name = models.CharField(max_length=100, blank=True,null=True)
-    last_name = models.CharField(max_length=100, blank=True,null=True)
-    phone_number = models.CharField(max_length=100, blank=True, null=True)
+    first_name = models.CharField(max_length=100, blank=True,null=True,default='')
+    last_name = models.CharField(max_length=100, blank=True,null=True,default='')
+    phone_number = PhoneNumberField(max_length=100, blank=True, null=True)
     date_of_birth = models.DateTimeField(null=True, blank=True)
-    avatar = models.ImageField(upload_to=avatar_id, default='profile.png')
+    avatar = models.ImageField(default='profile.png', upload_to=avatar_id)
     GENDER_CHOICES=(
         ('Male','Male'),
         ('Female','Female'),
         ('Others','Others')
     )
-    gender=models.CharField(max_length=10,choices=GENDER_CHOICES,default='Male')
+    gender=models.CharField(max_length=10,choices=GENDER_CHOICES,default='')
 
     def __str__(self):
         return self.user.username

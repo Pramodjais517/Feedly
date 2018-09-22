@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,reverse
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.decorators import login_required
 from .forms import SignupForm ,edit_profile_form,login_form
@@ -40,8 +40,8 @@ def signup(request):
                     from_mail = EMAIL_HOST_USER
                     to_mail = [user.email]
                     send_mail(subject, message, from_mail, to_mail, fail_silently=False)
-                    return HttpResponse('Please confirm your email address to complete the registration')
-
+                    messages.success(request, 'please!Confirm your email to complete registration.')
+                    return redirect('home')
         else:
             form = SignupForm()
         return render(request, 'signup.html', {'form': form})
@@ -58,8 +58,8 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        #return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        messages.success(request, 'thank you! for email verification')
+        return redirect('home')
     else:
         return HttpResponse('Activation link is invalid!')
 
