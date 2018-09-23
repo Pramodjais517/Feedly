@@ -29,4 +29,9 @@ class login_form(forms.ModelForm):
     )
     class Meta:
         model = User
-        fields=('username','password',)
+        fields = ('username','password')
+
+# class create_post_form(forms.ModelForm):
+#     class Meta:
+#         model = Post
+#         fields = ('title',)

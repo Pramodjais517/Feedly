@@ -67,7 +67,7 @@ def activate(request, uidb64, token):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        form = edit_profile_form(request.POST,request.FILES,instance=request.user.myprofile)
+        form = edit_profile_form(request.POST, request.FILES, instance=request.user.myprofile)
         if form.is_valid():
             form.save()
             return redirect('profile')
@@ -106,4 +106,8 @@ def logout_view(request):
 @login_required
 def profile_view(request):
     return render(request,'profile.html')
+
+# @login_required
+# def create_post_view(request):
+#
 
