@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Subreddits:-</h1>
+{% if all_subreddit %}
+    <ul>
+        {% for subreddit in all_subreddit %}
+            <li><a href= '/subred/{{subreddit_id}}'><b>{{subreddit.sub}}</b></a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You Have No Subreddits. Please Add Some!!</p>
+{% endif %}
+</body>
+</html>
