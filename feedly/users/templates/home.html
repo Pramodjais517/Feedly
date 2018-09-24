@@ -9,9 +9,14 @@
 <p style="color: green">{{ error }}</p>
 {% endfor %}
 <h1>welcome to feedly</h1>
+
     <a href="{% url 'profile' %}">Profile</a>
     <br>
+    {% if request.user.is_authenticated %}
+    <a href="#">Create Post</a>
+    {% else %}
     <a href="{% url 'signup' %}"> Sign Up</a>
+{% endif %}
     <br>
     {% if request.user.is_authenticated %}
     <a href="{% url 'logout' %}"> log out</a>
@@ -20,13 +25,20 @@
     {% endif %}
 <br>
 <br>
-<div style="margin-left:35vw">
+<div style="margin-left:25vw;margin-right:28vw">
+
 {% for post in object_list %}
-    <b>{{ post.post_by.username }}</b>
+
+    <div style ="border:1px solid gray;padding:2vw">
+    <b><a href="{{ post.post_by.username }}">{{ post.post_by.username }}</a></b>
     <p>{{ post.title }} </p><i>{{   post.post_on }}</i>
     <br>
-    <img style="width: 25vw; height: 30vh;"
-     src="{{ post.image_post.url }}" alt="imagpost"><br>
+    <img style="width: 40vw; height: 45vh;"
+     src="{{ post.image_post.url }}" alt="imagpost">
+    <br>
+    </div>
+    <br>
+
 {% endfor %}
 </div>
 </body>

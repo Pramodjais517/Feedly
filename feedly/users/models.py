@@ -13,11 +13,11 @@ class MyProfile(models.Model):
     date_of_birth = models.DateTimeField(null=True, blank=True)
     avatar = models.ImageField(default='profile.png', upload_to='profile_pic')
     GENDER_CHOICES=(
-        ('Male','Male'),
-        ('Female','Female'),
-        ('Others','Others')
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Others', 'Others')
     )
-    gender=models.CharField(max_length=10,choices=GENDER_CHOICES,default='')
+    gender=models.CharField(max_length=10, choices=GENDER_CHOICES, default='')
 
     def __str__(self):
         return self.user.username
