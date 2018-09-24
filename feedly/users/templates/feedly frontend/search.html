@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="community.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato|Roboto|Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script>
+
+        var modal = document.getElementById('id01');
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // window.onclick = function(event) {
+        //   if (!event.target.matches('.dropbtn')) {
+
+        //     var dropdowns = document.getElementsByClassName("dropdown-content");
+        //     var i;
+        //     for (i = 0; i < dropdowns.length; i++) {
+        //       var openDropdown = dropdowns[i];
+        //       if (openDropdown.classList.contains('show')) {
+        //         openDropdown.classList.remove('show');
+        //       }
+        //     }
+        //   }
+        // }
+
+
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+            }
+            else {
+                document.getElementById("myBtn").style.display = "none";
+            }
+        }
+
+
+        function topFunction() {
+            document.documentElement.scrollTop = 0;
+        }
+
+
+        function myFunction1(){
+            document.getElementById('myDIV1').style.display = "block";
+            document.getElementById('myDIV2').style.display = "none";
+            document.getElementById('myDIV3').style.display = "none";
+        }
+
+        function myFunction2(){
+            document.getElementById('myDIV2').style.display = "block";
+            document.getElementById('myDIV1').style.display = "none";
+            document.getElementById('myDIV3').style.display = "none";
+        }
+        function myFunction3(){
+            document.getElementById('myDIV3').style.display = "block";
+            document.getElementById('myDIV1').style.display = "none";
+            document.getElementById('myDIV2').style.display = "none";
+        }
+
+
+    
+
+    </script>
+
+</head>
+
+
+<body>
+    <header id="navbar">
+        <ul id="nav1">
+            <li id="logo">
+                <img src="feedly_logo.svg" style="width:60%;height:60%; padding-left:10%">
+            </li>
+            <li id="name">
+                FeedLy
+            </li>
+            <li id="searchbox">
+                <form>
+                    <input type="text" id="search" placeholder=" Search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form> </a>
+            </li>
+            <li>
+                <button id="cp" type="button" onclick="document.getElementById('id01').style.display='block'"><i class="far fa-edit"
+                        style="margin-right:5%"></i> POST</button>
+            </li>
+            <li>
+                <button id="noti" type="button" onclick="document.getElementById('id02').style.display='block'"><i
+                        class="far fa-bell" style="margin-right:5%" style="margin-right:5%"></i>NOTIFICATION</button>
+            </li>
+            <li>
+
+                <div class="dropdown">
+                    <button onclick="myFunction()" class="dropbtn"><i class="far fa-user"></i><i class="fa fa-caret-down"></i></button>
+
+                </div>
+
+            </li>
+        </ul>
+    </header>
+    
+    <div id="myDropdown" class="dropdown-content">
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+    </div>
+
+    <div class="icon-bar">
+        <a class="active" href="#"><i class="fa fa-user">
+                <p class="side-content">MY PROFILE</p>
+            </i></a>
+        <!-- <a class="active" href="#"><i class="fa fa-home">
+                <p class="side-content">HOME</p>
+            </i></a> -->
+        <a href="#"><i class="fa fa-chart-line">
+                <p class="side-content">POPULAR</p>
+            </i></a>
+        <a href="#"><i class="fa fa-globe">
+                <p class="side-content">ALL</p>
+            </i></a>
+        <a href="#"><i class="fa fa-copyright">
+                <p class="side-content">ORIGNAL CONTENT</p>
+            </i></a>
+        <a href="#"><i class="fa fa-moon">
+                <p class="side-content">NIGHT MODE</p>
+            </i></a>
+        <a href="#"><i class="fa fa-sign-out">
+                <p class="side-content">LOGOUT</p>
+            </i></a>
+    </div>
+
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
+
+   
+   <div class="srchmenu">
+       <button class="srchbarbtn" onclick="myFunction1()"><h2 class="srchbar">All</h2></button>
+       <button class="srchbarbtn" onclick="myFunction2()"><h2 class="srchbar">Communities</h2></button>
+       <button class="srchbarbtn" onclick="myFunction3()"><h2 class="srchbar">Posts</h2></button>
+
+   </div>
+
+   <div id="myDIV1">
+        This is my DIV1 element.
+      </div>
+
+    <div id="myDIV2">
+        <div class="srchc" >
+                <div class="dp"><img src="feedly_logo.svg" class="postdp"></div>
+                <h2>f/community</h2>
+
+        </div>
+        </div>
+        <div id="myDIV3">
+                This is my DIV3 element.
+            </div>
+
+
+    <div class="footer">
+        <h2>Footer</h2>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
