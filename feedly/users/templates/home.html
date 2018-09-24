@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedly</title>
+</head>
+<body>
+{% for error in messages %}
+<p style="color: green">{{ error }}</p>
+{% endfor %}
+<h1>welcome to feedly</h1>
+    <a href="{% url 'profile' %}">Profile</a>
+    <br>
+    <a href="{% url 'signup' %}"> Sign Up</a>
+    <br>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'logout' %}"> log out</a>
+    {% else %}
+    <a href="{% url 'login' %}"> Log In</a>
+    {% endif %}
+<br>
+<br>
+<div style="margin-left:35vw">
+{% for post in object_list %}
+    <b>{{ post.post_by.username }}</b>
+    <p>{{ post.title }} </p><i>{{   post.post_on }}</i>
+    <br>
+    <img style="width: 25vw; height: 30vh;"
+     src="{{ post.image_post.url }}" alt="imagpost"><br>
+{% endfor %}
+</div>
+</body>
+</html>
