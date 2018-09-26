@@ -21,12 +21,12 @@
     <p><a href="{% url 'logout' %}" style="margin-left:80vw"> log out</a>
    </p>
     <p>
-        {% if request.user.is_authenticated %}
+        {% if request.user.id == user.id %}
     <a href="{% url 'edit_profile' user.id %}" style="margin-left:80vw">Edit profile</a>
         {% endif %}
     </p>
     <p>
-        {% if request.user.is_authenticated  %}
+        {% if request.user.id == user.id  %}
         <a href="{% url 'account_del' user.id %}" style="margin-left:80vw">delete account</a>
         {% endif %}
     </p>

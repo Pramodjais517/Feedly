@@ -88,12 +88,12 @@ class Activate(View):
 
 class EditProfileView(View):
     @method_decorator(login_required)
-    def post(self, request, *args, **kwargs):
-        current_user = request.user
+    def post(self, request,user_id ,*args, **kwargs):
         form = edit_profile_form(request.POST, request.FILES, instance=request.user.myprofile)
         if form.is_valid():
             form.save()
-            return redirect('profile', current_user.id)
+            return redirect('profile', user_id)
+
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         form = edit_profile_form(instance=request.user.myprofile)

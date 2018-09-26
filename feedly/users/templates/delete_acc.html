@@ -6,7 +6,7 @@
 </head>
 <body>
 {% block content %}
-<p>Are you sure you want to delete your account?</p>
+<p>Hello, {{ user.username }}...<br><br>Are you sure you want to delete your account?</p>
 <br>
 <form method="post">
     {% csrf_token %}
