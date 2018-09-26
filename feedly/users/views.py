@@ -14,22 +14,17 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from feedly.settings import EMAIL_HOST_USER
 from django.views import View
-from django.views.generic import ListView
 from .models import MyProfile,Post,Vote
 
 class HomeView(View):
+     def get(self, request, *args, **kwargs):
+         context={
+             # 'user':request.user,
+             # 'post': Post,
+             'object_list': Post.objects.order_by('-post_on'),
+         }
 
-    # def get_queryset(self):
-    #     """Return the lastest published  Posts."""
-    #     return Post.objects.order_by('-post_on')
-
-    def get(self, request, *args, **kwargs):
-        context={
-            'user':request.user,
-            'post': Post,
-            'object_list': Post.objects.order_by('-post_on')
-        }
-        return render(request, 'home.html', context)
+         return render(request, 'home.html', context)
 
 
 #sidnup process /forms
@@ -132,8 +127,6 @@ class LogoutView(View):
         logout(request)
         messages.success(request, 'you are successfully logged out')
         context={
-            'user':request.user,
-            'post': Post,
             'object_list': Post.objects.order_by('-post_on')
         }
         return render(request, 'home.html', context)
@@ -141,9 +134,8 @@ class LogoutView(View):
 
 class ProfileView(View):
     model= User
-    template_name = 'profile'
     @method_decorator(login_required)
-    def get(self,request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         return render(request, 'profile.html')
 
 

@@ -32,12 +32,22 @@
 
     <div style ="border:1px solid gray;padding:2vw">
         <img src="{{ post.post_by.myprofile.avatar.url }}" style="width:3vw;height:3vw;" alt="pic">
-        <b><a href="{% url 'profile' post.post_by.id %}">{{ post.post_by.username }}</a></b>
-        <p>{{ post.title }} </p><i>{{   post.post_on }}</i>
+        <b><a href="{% url 'profile' post.post_by.id %}">{{ post.post_by.username }}</a> </b>
+        <i> {{ post.post_on }}</i><br><br><b>{{ post.title }} </b>
         <br>
+        <br>
+        {% if post.image_post %}
         <img style="width: 40vw; height: 45vh;"
           src="{{ post.image_post.url }}" alt="imagpost">
-        <br>
+        {% endif %}
+        {%if post.text_post %}
+        <p>{{post.text_post }}</p>
+        {% endif %}
+        {% if post.video_post %}
+        <video width="600vw" height="400vw" controls>
+            <source src="{{ post.video_post.url }}" type="video/mp4"></video>
+        {% endif %}
+        <p>Votes = {{ votes }}</p>
     </div>
     <br>
 
