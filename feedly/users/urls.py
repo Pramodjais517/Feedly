@@ -12,6 +12,9 @@ urlpatterns = [
         views.Activate.as_view(),
         name='activate'),
     url(r'^profile/(?P<user_id>[0-9]+)/$', views.ProfileView.as_view(), name='profile'),
-    url(r'^profile/(?P<user_id>[0-9]+)/edit/$', views.EditProfileView.as_view(), name='edit_profile'),
+    url(r'^profile/(?P<user_id>[0-9]+)/edit/$', views.EditProfileView.as_view(),
+        name='edit_profile'),
+    url(r'^profile/(?P<user_id>[0-9]+)/delete/$', views.DeleteAccount.as_view(),
+        name='account_del'),
     # url(r'^profile/(?P<user_id>[0-9]+)/create_post/$', views.CreatePostView.as_view(), name='createpost'),
  ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

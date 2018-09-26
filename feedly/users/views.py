@@ -18,6 +18,7 @@ from .models import MyProfile,Post,Vote
 
 class HomeView(View):
      def get(self, request, *args, **kwargs):
+
          context={
              # 'user':request.user,
              # 'post': Post,
@@ -135,9 +136,32 @@ class LogoutView(View):
 class ProfileView(View):
     model= User
     @method_decorator(login_required)
-    def get(self, request, *args, **kwargs):
-        return render(request, 'profile.html')
+    def get(self, request, user_id,*args, **kwargs):
+        user = User.objects.get(pk=user_id)
+        context={
+            'user': user
+        }
+        return render(request, 'profile.html', context)
 
+class DeleteAccount(View):
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        return render(request, 'delete_acc.html')
+
+    def post(self, request, *args, **kwargs):
+        choice = request.POST['des']
+        if choice == '1':
+            user = request.user
+            user.delete()
+            logout(request)
+            context={
+                'object_list': Post.objects.order_by('-post_on'),
+            }
+            messages.success(request, 'Your account is successfully deleted')
+            return render(request,'home.html', context)
+        if choice == '2':
+            current_user = request.user
+            return redirect('profile', current_user.id)
 
 # class CreatePostView(View):
 #     form= create_imgpost_form()

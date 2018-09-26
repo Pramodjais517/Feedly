@@ -36,7 +36,7 @@ class MyProfile(models.Model):
 #creating posts on timeline
 class Post(models.Model):
     post_by = models.ForeignKey(User,on_delete=models.CASCADE)
-    # subfeed = models.ForeignKey(Subfeed,on_delete=models.CASCADE)
+    # subfeed = models.ForeignKey(MyProfile,on_delete=models.CASCADE,null=True,blank=True)
     title = models.CharField(max_length=200, null=True)
     post_on = models.DateTimeField(auto_now_add=True)
     image_post = models.ImageField(upload_to='post_pics',blank=True,null=True)
