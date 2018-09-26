@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import MyProfile,Post
+
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text='Required')
     class Meta:
@@ -30,8 +31,8 @@ class login_form(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username','password')
-#
-# class create_post_form(forms.ModelForm):
+
+# class create_imgpost_form(forms.ModelForm):
 #     class Meta:
 #         model = Post
-#         fields = ('title',)
+#         fields = ('title', 'image_post')

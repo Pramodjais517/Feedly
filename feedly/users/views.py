@@ -17,18 +17,25 @@ from django.views import View
 from django.views.generic import ListView
 from .models import MyProfile,Post,Vote
 
-class HomeView(ListView):
-    model= Post
-    template_name = 'home.html'
+class HomeView(View):
 
-    def get_queryset(self):
-        """Return the lastest published  Posts."""
-        return Post.objects.order_by('-post_on')
+    # def get_queryset(self):
+    #     """Return the lastest published  Posts."""
+    #     return Post.objects.order_by('-post_on')
+
+    def get(self, request, *args, **kwargs):
+        context={
+            'user':request.user,
+            'post': Post,
+            'object_list': Post.objects.order_by('-post_on')
+        }
+        return render(request, 'home.html', context)
+
 
 #sidnup process /forms
 
-
 class SignUpView(View):
+    form = SignupForm()
     def post(self, request, *args, **kwargs):
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -49,8 +56,12 @@ class SignUpView(View):
             send_mail(subject, message, from_mail, to_mail, fail_silently=False)
             messages.success(request, 'Please!Confirm your email to complete registration.')
             return redirect('home')
+        else:
+            return render(request, 'signup.html', {'form': form})
 
-    def get(self,request,*args,**kwargs):
+
+
+    def get(self,request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('home')
         else:
@@ -81,13 +92,14 @@ class Activate(View):
 
 class EditProfileView(View):
     @method_decorator(login_required)
-    def post(self,request,*args,**kwargs):
+    def post(self, request, *args, **kwargs):
+        current_user = request.user
         form = edit_profile_form(request.POST, request.FILES, instance=request.user.myprofile)
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            return redirect('profile', current_user.id)
     @method_decorator(login_required)
-    def get(self,request,*args,**kwargs):
+    def get(self, request, *args, **kwargs):
         form = edit_profile_form(instance=request.user.myprofile)
         return render(request, 'edit_profile.html', {'form': form})
 
@@ -116,21 +128,29 @@ class LoginView(View):
 
 
 class LogoutView(View):
-    def get(self, request):
+    def get(self, request,*args, **kwargs):
         logout(request)
         messages.success(request, 'you are successfully logged out')
-        return redirect('home')
+        context={
+            'user':request.user,
+            'post': Post,
+            'object_list': Post.objects.order_by('-post_on')
+        }
+        return render(request, 'home.html', context)
 
 
 class ProfileView(View):
+    model= User
+    template_name = 'profile'
     @method_decorator(login_required)
-    def get(self,request):
+    def get(self,request, *args, **kwargs):
         return render(request, 'profile.html')
 
 
-class CreatePostView(View):
-    @method_decorator(login_required)
-    def get(self, request, *args, **kwagrs):
-        return render(request, 'home')
+# class CreatePostView(View):
+#     form= create_imgpost_form()
+#     @method_decorator(login_required)
+#     def get(self, request, *args, **kwagrs):
+#         return render(request, 'createpost')
 
 
