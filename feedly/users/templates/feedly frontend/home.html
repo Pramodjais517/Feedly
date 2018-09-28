@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="home.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato|Roboto|Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -17,6 +17,7 @@
         window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
+                console.log('67');
             }
         }
 
@@ -34,7 +35,7 @@
 
         function topFunction() {
             document.body.scrollTop = 0; 
-            document.documentElement.scrollTop = 0;
+            document.documentElement.scrollTop = 0;}
             
 
         function validateEmail(emailField){
@@ -82,7 +83,7 @@
 
 
     <div class="icon-bar">
-        <!-- <a class="active" href="#"><i class="fa fa-user"><p class="side-content">PROFILE</p></i></a>  -->
+         <!-- <a class="active" href="#"><i class="fa fa-user"><p class="side-content">PROFILE</p></i></a> -->
         <a class="active" href="#"><i class="fa fa-home">
                 <p class="side-content">HOME</p>
             </i></a>
@@ -92,15 +93,15 @@
         <a href="#"><i class="fa fa-globe">
                 <p class="side-content">ALL</p>
             </i></a>
-        <a href="#"><i class="fa fa-copyright">
-                <p class="side-content">ORIGNAL CONTENT</p>
+        <a href="#"><i class="fa fa-bolt">
+                <p class="side-content">RECENTS</p>
             </i></a>
         <a href="#"><i class="fa fa-moon">
                 <p class="side-content">NIGHT MODE</p>
             </i></a>
-        <a href="#"><i class="fa fa-sign-out">
-                <p class="side-content">LOGOUT</p>
-            </i></a>
+        <!-- <a href="#"><i class="fa fa-sign-out">
+                  <p class="side-content">LOGOUT</p>
+             </i></a>  -->
     </div>
 
     <div id="id01" class="modal">
@@ -138,6 +139,14 @@
                 <input class="input-field" type="text" placeholder="email" name="email" onblur="validateEmail(this);" >
             </div>
             <div class="input-container ">
+                    <i class="fa fa-edit icon"></i>
+                    <input class="input-field" type="password" placeholder="First Name" name="psw">
+                </div>
+                <div class="input-container ">
+                        <i class="fa fa-pencil icon"></i>
+                        <input class="input-field" type="password" placeholder="Last Name" name="psw">
+                    </div>
+            <div class="input-container ">
                 <i class="fa fa-key icon"></i>
                 <input class="input-field" type="password" placeholder="Password" name="psw">
             </div>
@@ -145,6 +154,7 @@
                 <i class="fa fa-lock icon"></i>
                 <input class="input-field" type="password" placeholder="confirm Password" name="psw">
             </div>
+            
             <button type="submit" class="btn">Signup</button>
         </form>
     </div>
@@ -220,24 +230,24 @@
             <div class="card">
                 <h3> TRENDING COMMUNITIES </h3>
                 <div class="comm">
-                        <div class="dp"><img src="feedly_logo.svg" class="postdp"></div>
-                    <p style="margin-left:5%"> R/art</p>
-                    <button type="button" class="btnsub">Subscribe</button>
+                    <div class="dp"><img src="feedly_logo.svg" class="postdp"></div>
+                    <div style="margin-left:19%;margin-top:-10%"><p > R/art</p></div>
+                    <div class="ss"><button type="button" class="btnsub">Subscribe</button></div>
                 </div>
                 <div class="comm">
-                        <div class="dp"><img src="feedly_logo.svg" class="postdp"></div>
-                    <p style="margin-left:5%"> R/art</p>
-                    <button type="button" class="btnsub">Subscribe</button>
+                    <div class="dp"><img src="feedly_logo.svg" class="postdp"></div>
+                    <div style="margin-left:19%;margin-top:-10%"><p > R/art</p></div>
+                    <div class="ss"><button type="button" class="btnsub">Subscribe</button></div>
                 </div>
                 <div class="comm">
-                        <div class="dp"><img src="feedly_logo.svg" class="postdp"></div>
-                    <p style="margin-left:5%"> R/art</p>
-                    <button type="button" class="btnsub">Subscribe</button>
+                    <div class="dp"><img src="feedly_logo.svg" class="postdp"></div>
+                    <div style="margin-left:19%;margin-top:-10%"><p > R/art</p></div>
+                    <div class="ss"><button type="button" class="btnsub">Subscribe</button></div>
                 </div>
                 <div class="comm">
-                        <div class="dp"><img src="feedly_logo.svg" class="postdp"></div>
-                    <p style="margin-left:5%"> R/art</p>
-                    <button type="button" class="btnsub subs">Subscribe</button>
+                    <div class="dp"><img src="feedly_logo.svg" class="postdp"></div>
+                    <div style="margin-left:19%;margin-top:-10%"><p > R/arthh</p></div>
+                    <div class="ss"><button type="button" class="btnsub">Subscribe</button></div>
                 </div>
             </div>
         </div>
@@ -245,6 +255,20 @@
     </div>
     <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
 
+    <div class="center">
+    <div class="pagination">
+        <a href="#">&laquo;</a>
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">6</a>
+        <a href="#">&raquo;</a>
+      </div>
+    </div>
+    
+    
     <div class="footer">
         <h2>Footer</h2>
     </div>
@@ -253,7 +277,7 @@
         <div class="cardpost modal-content" style="padding:20px;border-radius: 25px">
             <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal">&times;</span>
             <div class="cardh">
-                <img src="login-illustration-mahisadd.jpg" class="postdp">
+                <div class="dp"><img src="login-illustration-mahisadd.jpg" class="postdp"></div>
                 <h3 style="padding-left:2%">TITLE HEADING</h3>
             </div>
             <div class="cardh">
@@ -272,7 +296,7 @@
             <h3>Your Comments:</h3>
             <div>
                 <textarea rows="4" cols="50" name="comment" form="usrform"  placeholder="ggw" style="width:100%"></textarea>
-                <div class="edit">
+                <div class="edittxt">
                     <i class="fa fa-bold edits" ></i>
                     <i class="fa fa-italic edits" ></i>
                     <i class="fa fa-underline edits" ></i>

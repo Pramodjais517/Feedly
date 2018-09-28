@@ -12,7 +12,7 @@
 
     <script>
 
-        var modal = document.getElementById('id01');
+        var modal = document.getElementById('id03');
 
         window.onclick = function (event) {
             if (event.target == modal) {
@@ -123,63 +123,19 @@
             </i></a>
     </div>
 
-    <div id="id01" class="modal">
-        <form class="modal-content animate" action="/action_page.php">
-            <div class="imgcontainer">
-                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-                <img src="loginboy2.png" alt="Avatar" class="avatar">
-            </div>
-            <h1 class="lihead">LOGIN</h1>
-            <div class="input-container email">
-                <i class="fa fa-user icon"></i>
-                <input class="input-field" type="text" placeholder="Username" name="email">
-            </div>
-            <div class="input-container ">
-                <i class="fa fa-key icon"></i>
-                <input class="input-field" type="password" placeholder="Password" name="psw">
-            </div>
-            <button type="submit" class="btn">Login</button>
-        </form>
-    </div>
-
-    <div id="id02" class="modal row">
-        <form class="modal-content animate" action="/action_page.php">
-            <div class="imgcontainer">
-                <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-                <img src="loginboy2.png" alt="Avatar" class="avatar">
-            </div>
-            <h1 class="suhead">SIGNUP</h1>
-            <div class="input-container email">
-                <i class="fa fa-user icon"></i>
-                <input class="input-field" type="text" placeholder="Username" name="email">
-            </div>
-            <div class="input-container">
-                <i class="fa fa-envelope icon"></i>
-                <input class="input-field" type="text" placeholder="email" name="email">
-            </div>
-            <div class="input-container ">
-                <i class="fa fa-key icon"></i>
-                <input class="input-field" type="password" placeholder="Password" name="psw">
-            </div>
-            <div class="input-container ">
-                <i class="fa fa-lock icon"></i>
-                <input class="input-field" type="password" placeholder="confirm Password" name="psw">
-            </div>
-            <button type="submit" class="btn">Signup</button>
-        </form>
-    </div>
+   
 
     <div class="row">
         <div class="leftcolumn">
             <div class="cardpost">
                 <div class="cardh">
-                    <img src="login-illustration-mahisadd.jpg" class="postdp">
+                    <div class="dp"><img src="login-illustration-mahisadd.jpg" class="postdp"></div>
                     <h3 style="padding-left:2%">TITLE HEADING</h3>
                 </div>
                 <div class="cardh">
                     <h4>TITLE HEADING huui hjhyj kjkjoiu h</h4>
                 </div>
-                <img src="login-illustration-mahisadd.jpg" alt="Avatar" class="fakeimg">
+                <img src="login-illustration-mahisadd.jpg" alt="Avatar" class="fakeimg" onclick="document.getElementById('id03').style.display='block'">
                 <div class="cardf">
                     <i class="like fa fa-thumbs-up"></i>
                     <p style="padding-left:9px">200</p>
@@ -192,7 +148,7 @@
             </div>
             <div class="cardpost">
                 <div class="cardh">
-                    <img src="feedly_logo.svg" class="postdp">
+                    <div class="dp"><img src="feedly_logo.svg" class="postdp"></div>
                     <h3 style="padding-left:2%">TITLE HEADING</h3>
                 </div>
                 <div class="cardh">
@@ -217,42 +173,45 @@
                 <p style="padding:6px">Some text about me in culpa qui officia deserunt mollit anim..</p>
             </div>
             <div class="card">
-                <h3> TRENDING COMMUNITIES </h3>
-                <div class="comm">
-                    <img src="feedly_logo.svg" class="postdp">
-                    <p style="margin-left:5%"> R/art</p>
-                    <button type="button" class="btnsub">Subscribe</button>
+                    <h3> TRENDING COMMUNITIES </h3>
+                    <div class="comm">
+                        <div class="dp"><img src="feedly_logo.svg" class="postdp"></div>
+                        <div style="margin-left:19%;margin-top:-10%"><p > R/art</p></div>
+                        <div class="ss"><button type="button" class="btnsub">Subscribe</button></div>
+                    </div>
+                    <div class="comm">
+                        <div class="dp"><img src="feedly_logo.svg" class="postdp"></div>
+                        <div style="margin-left:19%;margin-top:-10%"><p > R/art</p></div>
+                        <div class="ss"><button type="button" class="btnsub">Subscribe</button></div>
+                    </div>
+                    <div class="comm">
+                        <div class="dp"><img src="feedly_logo.svg" class="postdp"></div>
+                        <div style="margin-left:19%;margin-top:-10%"><p > R/art</p></div>
+                        <div class="ss"><button type="button" class="btnsub">Subscribe</button></div>
+                    </div>
+                    <div class="comm">
+                        <div class="dp"><img src="feedly_logo.svg" class="postdp"></div>
+                        <div style="margin-left:19%;margin-top:-10%"><p > R/arthh</p></div>
+                        <div class="ss"><button type="button" class="btnsub">Subscribe</button></div>
+                    </div>
                 </div>
-                <div class="comm">
-                    <img src="feedly_logo.svg" class="postdp">
-                    <p style="margin-left:5%"> R/art</p>
-                    <button type="button" class="btnsub">Subscribe</button>
-                </div>
-                <div class="comm">
-                    <img src="feedly_logo.svg" class="postdp">
-                    <p style="margin-left:5%"> R/art</p>
-                    <button type="button" class="btnsub">Subscribe</button>
-                </div>
-                <div class="comm">
-                    <img src="feedly_logo.svg" class="postdp">
-                    <p style="margin-left:5%"> R/art</p>
-                    <button type="button" class="btnsub">Subscribe</button>
-                </div>
-            </div>
         </div>
     </div>
     </div>
+
+
     <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
 
     <div class="footer">
         <h2>Footer</h2>
     </div>
 
+
     <div id="id03" class="modal">
-        <div class="cardpost modal-content">
+        <div class="cardpost modal-content" style="padding:20px;border-radius: 25px">
             <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal">&times;</span>
             <div class="cardh">
-                <img src="login-illustration-mahisadd.jpg" class="postdp">
+                <div class="dp"><img src="login-illustration-mahisadd.jpg" class="postdp"></div>
                 <h3 style="padding-left:2%">TITLE HEADING</h3>
             </div>
             <div class="cardh">
@@ -267,8 +226,50 @@
                 <p style="padding-left:9px">200</p>
                 <i class="like fa fa-paper-plane" style="padding-left:9px"> </i>
             </div>
+            
+            <h3>Your Comments:</h3>
+            <div>
+                <textarea rows="4" cols="50" name="comment" form="usrform"  placeholder="ggw" style="width:100%"></textarea>
+                <div class="edittxt">
+                    <i class="fa fa-bold edits" ></i>
+                    <i class="fa fa-italic edits" ></i>
+                    <i class="fa fa-underline edits" ></i>
+                    <button type="submit" class="cmntbtn">comment</button>
+                    
+
+                </div>
+            </div>
         </div>
     </div>
+
+
+    <div id="id04" class="modal row">
+            <form class="modal-content animate" action="#">
+                <div class="imgcontainer">
+                    <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+                    <img  src="loginboy2.png" alt="Avatar" class="avatar">
+                </div>
+                <h1 class="suhead">SIGNUP</h1>
+                <div class="input-container email">
+                    <i class="fa fa-user icon"></i>
+                    <input class="input-field" type="text" placeholder="Username" name="email">
+                </div>
+                <div class="input-container">
+                    <i class="fa fa-envelope icon"></i>
+                    <input class="input-field" type="text" placeholder="email" name="email" onblur="validateEmail(this);" >
+                </div>
+                <div class="input-container ">
+                    <i class="fa fa-key icon"></i>
+                    <input class="input-field" type="password" placeholder="Password" name="psw">
+                </div>
+                <div class="input-container ">
+                    <i class="fa fa-lock icon"></i>
+                    <input class="input-field" type="password" placeholder="confirm Password" name="psw">
+                </div>
+                <button type="submit" class="btn">Signup</button>
+            </form>
+        </div>
+    
 
 
 

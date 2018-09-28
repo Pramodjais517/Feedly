@@ -20,8 +20,8 @@
 }
 .sfname{
     margin-left: 21.5%;
-    margin-top: 0%;
-    font-size: 270%
+    margin-top: -5%;
+    font-size: 200%
 }
 
 .subs{
@@ -29,12 +29,13 @@
     color: white;
     border: none;
     padding: 11px 11px;
-    margin-left: 55%;
-    margin-top: 0%;
+    margin-right: 5%;
+    margin-top: -3%;
     cursor: pointer;
     font-size: 150%;
     box-shadow: 2px 2px 5px black;
     border-radius: 50px;
+    float: right;
 }
 
 .grid-container {
@@ -63,8 +64,12 @@
     background-color: #DDDEDE;
     width: 100%;
     margin-top: 12%;
+    transition: transform .2s;
     
     
+  }
+  .gfakeimg:hover{
+    transform: scale(1.1); 
   }
   .gcardf{
     background-color:#E8E8E8;
@@ -82,47 +87,46 @@
       display: flex;
       align-items: center;
       padding: 1%;
-      background-color: #2B2D42;
+      background-color: #E0FFE3;
       margin-top: 75px;
       margin-left: 8%;
-      width: 90%;
+      width: 80%;
+      border-radius: 10px;
 
   }
 
-  .srchbar{
-      padding: %;
-  }
+  
 
   .srchbarbtn{
       background-color: transparent;
       padding: 0px 1% 0px 1%;
       border: none;
+
   }
-  #myDIV1{
-    background-color: #2B2D42;
+
+  .srchbarbtn:active{
+      border-bottom: 1px solid black;
+  }
+
+  
+  #myDIV2, #myDIV3{
+    background-color: #E0FFE3;
     margin-top: 15px;
     margin-left: 8%;
-    width: 90%;
-    height:500px;
+    width: 80%;
+    height:600px;
+    border-radius: 10px;
+
+    }
+    #myDIV3{
+        display: none;
+    }
+    .srchc{
+        
+        padding: 1.5%;
+        width: 100%;
+        background-color: rgb(242, 243, 243);
+        border-bottom:2px solid darkgray;
+        border-radius: 10px;
     
-
-  }
-  #myDIV2{
-    background-color: #2B2D42;
-    margin-top: 15px;
-    margin-left: 8%;
-    width: 90%;
-    height:500px;
-    display: none;
-
-  }
-  #myDIV3{
-    background-color: #2B2D42;
-    margin-top: 15px;
-    margin-left: 8%;
-    width: 90%;
-    height:500px;
-    display: none;
-
-  }
-
+    }

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="home.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script>
+
+        var modal = document.getElementById('id01');
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                console.log('67');
+            }
+        }
+
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+            }
+            else {
+                document.getElementById("myBtn").style.display = "none";
+            }
+        }
+
+
+        function topFunction() {
+            document.body.scrollTop = 0; 
+            document.documentElement.scrollTop = 0;}
+            
+
+        function validateEmail(emailField){
+        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+        if (reg.test(emailField.value) == false) 
+        {
+            alert('Invalid Email Address');
+            return false;
+        }
+
+        return true;
+
+}
+
+    </script>
+
+</head>
+
+
+<body>
+    <header id="navbar">
+        <ul id="nav1">
+            <li id="logo">
+                <img src="feedly_logo.svg" style="width:60%;height:60%; padding-left:10%">
+            </li>
+            <li id="name">
+                FeedLy
+            </li>
+            <li id="searchbox">
+                <form>
+                    <input type="text" id="search" placeholder=" Search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form> </a>
+            </li>
+            <li>
+                <button id="login" type="button" onclick="document.getElementById('id01').style.display='block'">LOGIN</button>
+            </li>
+            <li>
+                <button id="signup" type="button" onclick="document.getElementById('id02').style.display='block'">SIGNUP</button>
+            </li>
+
+        </ul>
+    </header>
+
+
+    <div class="icon-bar">
+         <!-- <a class="active" href="#"><i class="fa fa-user"><p class="side-content">PROFILE</p></i></a> -->
+        <a class="active" href="#"><i class="fa fa-home">
+                <p class="side-content">HOME</p>
+            </i></a>
+        <a href="#"><i class="fa fa-chart-line">
+                <p class="side-content">POPULAR</p>
+            </i></a>
+        <a href="#"><i class="fa fa-globe">
+                <p class="side-content">ALL</p>
+            </i></a>
+        <a href="#"><i class="fa fa-bolt">
+                <p class="side-content">RECENTS</p>
+            </i></a>
+        <a href="#"><i class="fa fa-moon">
+                <p class="side-content">NIGHT MODE</p>
+            </i></a>
+        <!-- <a href="#"><i class="fa fa-sign-out">
+                  <p class="side-content">LOGOUT</p>
+             </i></a>  -->
+    </div>
+
+    <div id="id01" class="modal">
+        <form class="modal-content animate" action="#">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <img src="loginboy2.png" alt="Avatar" class="avatar">
+            </div>
+            <h1 class="lihead">LOGIN</h1>
+            <div class="input-container email">
+                <i class="fa fa-user icon"></i>
+                <input class="input-field" type="text" placeholder="Username" name="email" required>
+            </div>
+            <div class="input-container ">
+                <i class="fa fa-key icon"></i>
+                <input class="input-field" type="password" placeholder="Password" name="psw" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+
+    <div id="id02" class="modal row">
+        <form class="modal-content animate" action="#">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <img  src="loginboy2.png" alt="Avatar" class="avatar">
+            </div>
+            <h1 class="suhead">SIGNUP</h1>
+            <div class="input-container email">
+                <i class="fa fa-user icon"></i>
+                <input class="input-field" type="text" placeholder="Username" name="email">
+            </div>
+            <div class="input-container">
+                <i class="fa fa-envelope icon"></i>
+                <input class="input-field" type="text" placeholder="email" name="email" onblur="validateEmail(this);" >
+            </div>
+            <div class="input-container ">
+                    <i class="fa fa-edit icon"></i>
+                    <input class="input-field" type="password" placeholder="First Name" name="psw">
+                </div>
+                <div class="input-container ">
+                        <i class="fa fa-pencil icon"></i>
+                        <input class="input-field" type="password" placeholder="Last Name" name="psw">
+                    </div>
+            <div class="input-container ">
+                <i class="fa fa-key icon"></i>
+                <input class="input-field" type="password" placeholder="Password" name="psw">
+            </div>
+            <div class="input-container ">
+                <i class="fa fa-lock icon"></i>
+                <input class="input-field" type="password" placeholder="confirm Password" name="psw">
+            </div>
+            
+            <button type="submit" class="btn">Signup</button>
+        </form>
+    </div>
+
+    
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
+
+   
+    
+   
+    
+
+
+
+
+
+</body>
+
+</html>
