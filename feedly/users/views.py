@@ -20,7 +20,7 @@ from .models import MyProfile,Post,Vote
 class HomeView(ListView):
      def get(self, request, *args, **kwargs):
          context={
-             # 'user':request.user,
+              'user':request.user,
              # 'post': Post,
              'object_list': Post.objects.order_by('-post_on'),
          }
@@ -129,10 +129,12 @@ class LoginView(View):
 class LogoutView(View):
     def get(self, request,*args, **kwargs):
         logout(request)
-        messages.success(request, 'you are successfully logged out')
+
         context={
-            'object_list': Post.objects.order_by('-post_on')
+            'object_list': Post.objects.order_by('-post_on'),
+            'user': request.user
         }
+        messages.success(request, 'you are successfully logged out')
         return render(request, 'home.html', context)
 
 
