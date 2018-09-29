@@ -133,4 +133,7 @@ LOGIN_REDIRECT_URL = 'home'
 PHONENUMBER_DEFAULT_REGION = 'IN'
 PHONENUMBER_DB_FORMAT='NATIONAL'
 DATE_INPUT_FORMATS = ('%d/%m/%Y','%d-%m-%Y')
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+]
