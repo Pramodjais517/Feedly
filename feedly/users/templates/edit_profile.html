@@ -6,20 +6,26 @@
 </head>
 <body>
 {% block content %}
+{% for message in messages %}
+<p style="color: green">{{ message }}</p>
+{% endfor %}
 <h2> Update Profile </h2>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    <p>
+        {% if request.user.id == user.id  %}
+        <a href="{% url 'account_del' user.id %}" style="margin-left:80vw">delete account</a>
+        {% endif %}
+    </p>
+    <img style="width: 15vw; height: 25vh;" src="/media/{{ form.avatar.value }}">
     <p>Username : {{user.username }}</p>
     <p>Email:  {{ user.email }}</p>
-    {% for field in form %}
-    <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% for error in field.errors %}
-    <p style="color: red">{{ error }}</p>
-    {% endfor %}
-    </p>
-    {% endfor %}
+   <p><label>Avatar: {{ form.avatar }}</label></p>
+    <p> <label>First Name: {{ form.first_name }}</label></p>
+    <p> <label>Last Name: {{ form.last_name }}</label></p>
+    <p> <label>Gender: {{ form.gender }}</label></p>
+    <p>  <label> Date Of Birth: {{  form.date_of_birth }}</label></p>
+    <p>  <label> Phone Number: {{  form.phone_number }}</label></p>
     <button type="submit">Save</button>
 
 </form>

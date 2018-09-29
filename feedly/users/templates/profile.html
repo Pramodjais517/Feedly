@@ -10,14 +10,11 @@
 <div style="text-align:center">
 <h1>Profile</h1>
 <br>
-<br>
-
 
 <img style="width: 15vw; height: 25vh;"
                      alt="avatar"
                      src="{{ user.myprofile.avatar.url }}"/>
-<br>
-<br>
+
     <p><a href="{% url 'logout' %}" style="margin-left:80vw"> log out</a>
    </p>
     <p>
@@ -25,12 +22,6 @@
     <a href="{% url 'edit_profile' user.id %}" style="margin-left:80vw">Edit profile</a>
         {% endif %}
     </p>
-    <p>
-        {% if request.user.id == user.id  %}
-        <a href="{% url 'account_del' user.id %}" style="margin-left:80vw">delete account</a>
-        {% endif %}
-    </p>
-<br>
 <label>First name :{{ user.myprofile.first_name }}
 </label>
 <br>
@@ -56,7 +47,7 @@
 <br>
     <br>
     <br>
-<label>Date of birth : {{ user.myprofile.date_of_birth|date:"M d, Y" }}</label>
+<label>Date of birth : {{ user.myprofile.date_of_birth|date:"d M, Y" }}</label>
 <br>
 </div>
 {% endblock %}

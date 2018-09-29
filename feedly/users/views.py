@@ -24,7 +24,6 @@ class HomeView(View):
              # 'post': Post,
              'object_list': Post.objects.order_by('-post_on'),
          }
-
          return render(request, 'home.html', context)
 
 
@@ -32,6 +31,7 @@ class HomeView(View):
 
 class SignUpView(View):
     form = SignupForm()
+
     def post(self, request, *args, **kwargs):
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -79,7 +79,7 @@ class Activate(View):
             user.save()
             login(request, user)
             messages.success(request, 'thank you! for email verification')
-            return redirect('home')
+            return redirect('edit_profile',user.id)
         else:
             messages.success('Activation link is invalid!')
             return redirect('home')
@@ -93,6 +93,8 @@ class EditProfileView(View):
         if form.is_valid():
             form.save()
             return redirect('profile', user_id)
+        else:
+            return HttpResponse("hello")
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
@@ -108,6 +110,7 @@ class LoginView(View):
             if user is not None:
                 if user.is_active:
                     login(request, user)
+                    messages.success(request, 'woahh!! logged in..')
                     return redirect('home')
                 else:
                     return HttpResponse('please! verify your Email first')
@@ -150,7 +153,7 @@ class DeleteAccount(View):
 
     def post(self, request, *args, **kwargs):
         choice = request.POST['des']
-        if choice == '1':
+        if choice == 'accept':
             user = request.user
             user.delete()
             logout(request)
@@ -159,14 +162,21 @@ class DeleteAccount(View):
             }
             messages.success(request, 'Your account is successfully deleted')
             return render(request,'home.html', context)
-        if choice == '2':
+        if choice == 'reject':
             current_user = request.user
             return redirect('profile', current_user.id)
 
 # class CreatePostView(View):
-#     form= create_imgpost_form()
 #     @method_decorator(login_required)
 #     def get(self, request, *args, **kwagrs):
-#         return render(request, 'createpost')
-
+#         return render(request, 'createpost.html',{ 'form': create_imgpost_form()})
+#     @method_decorator(login_required)
+#     def post(self,request,user_id,*args,**kwrgs):
+#         form = create_imgpost_form(request.POST)
+#         context = {
+#             'object_list': Post.objects.order_by('-post_on'),
+#         }
+#         if form.is_valid():
+#             form.save()
+#             return render(request, 'home.html', context)
 

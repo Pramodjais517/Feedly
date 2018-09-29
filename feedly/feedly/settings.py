@@ -29,8 +29,8 @@ ALLOWED_HOSTS = []
 # for sending confirmation email.
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'pramodjaiswal517@gmail.com'
-EMAIL_HOST_PASSWORD = '9839934945'
+EMAIL_HOST_USER = 'feedlysi001'
+EMAIL_HOST_PASSWORD = 'pramod@12345'
 EMAIL_PORT = 587
 
 # Application definition
@@ -110,13 +110,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-GB'
 
 TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
-USE_L10N = True
+# USE_L10N = True
 
 USE_TZ = True
 
@@ -132,3 +132,5 @@ LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
 PHONENUMBER_DEFAULT_REGION = 'IN'
 PHONENUMBER_DB_FORMAT='NATIONAL'
+DATE_INPUT_FORMATS = ('%d/%m/%Y','%d-%m-%Y')
+
