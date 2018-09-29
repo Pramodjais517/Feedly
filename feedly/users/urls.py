@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^$', views.HomeView.as_view(), name='home'),
+    url(r'^posts/(?P<rec>[0-9]+)/$', views.SortedView.as_view(), name='recents'),
     url(r'^signup/$', views.SignUpView.as_view(), name='signup'),
     url(r'^login/$', views.LoginView.as_view(), name='login'),
     url(r'^logout/$', views.LogoutView.as_view(), name='logout'),
@@ -16,5 +17,9 @@ urlpatterns = [
         name='edit_profile'),
     url(r'^profile/(?P<user_id>[0-9]+)/delete/$', views.DeleteAccount.as_view(),
         name='account_del'),
-    # url(r'^profile/(?P<user_id>[0-9]+)/create_post/$', views.CreatePostView.as_view(), name='createpost'),
+    url(r'^profile/(?P<user_id>[0-9]+)/create_post/$', views.CreatePostView.as_view(),
+        name='createpost'),
  ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

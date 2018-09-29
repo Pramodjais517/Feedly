@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect,reverse
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .forms import SignupForm ,edit_profile_form,login_form
+from .forms import SignupForm ,edit_profile_form,login_form,create_imgpost_form
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -18,20 +18,28 @@ from .models import MyProfile,Post,Vote
 
 class HomeView(View):
      def get(self, request, *args, **kwargs):
-
          context={
-             # 'user':request.user,
-             # 'post': Post,
-             'object_list': Post.objects.order_by('-post_on'),
+              'user':request.user,
+             'object_list': Post.objects.order_by('?'),
          }
-
          return render(request, 'home.html', context)
 
+class SortedView(View):
+    def get(self,request,rec,*args,**kwargs):
+        if rec == '3':
+            object_list = Post.objects.order_by('-post_on')
+        if rec== '2':
+            object_list = Post.objects.order_by('?')
 
-#sidnup process /forms
+        context={
+            'object_list': object_list,
+        }
+        return render(request,'home.html', context)
+
 
 class SignUpView(View):
     form = SignupForm()
+
     def post(self, request, *args, **kwargs):
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -79,7 +87,7 @@ class Activate(View):
             user.save()
             login(request, user)
             messages.success(request, 'thank you! for email verification')
-            return redirect('home')
+            return redirect('edit_profile',user.id)
         else:
             messages.success('Activation link is invalid!')
             return redirect('home')
@@ -88,12 +96,14 @@ class Activate(View):
 
 class EditProfileView(View):
     @method_decorator(login_required)
-    def post(self, request, *args, **kwargs):
-        current_user = request.user
+    def post(self, request,user_id ,*args, **kwargs):
         form = edit_profile_form(request.POST, request.FILES, instance=request.user.myprofile)
         if form.is_valid():
             form.save()
-            return redirect('profile', current_user.id)
+            return redirect('profile', user_id)
+        else:
+            return HttpResponse("hello")
+
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         form = edit_profile_form(instance=request.user.myprofile)
@@ -108,7 +118,12 @@ class LoginView(View):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect('home')
+                    context={
+                        'object_list': Post.objects.order_by('?'),
+                        'user': request.user
+                    }
+                    messages.success(request, 'woahh!! logged in..')
+                    return render(request, 'home.html', context)
                 else:
                     return HttpResponse('please! verify your Email first')
             else:
@@ -126,10 +141,12 @@ class LoginView(View):
 class LogoutView(View):
     def get(self, request,*args, **kwargs):
         logout(request)
-        messages.success(request, 'you are successfully logged out')
+
         context={
-            'object_list': Post.objects.order_by('-post_on')
+            'object_list': Post.objects.order_by('?'),
+            'user': request.user
         }
+        messages.success(request, 'you are successfully logged out')
         return render(request, 'home.html', context)
 
 
@@ -150,7 +167,7 @@ class DeleteAccount(View):
 
     def post(self, request, *args, **kwargs):
         choice = request.POST['des']
-        if choice == '1':
+        if choice == 'accept':
             user = request.user
             user.delete()
             logout(request)
@@ -159,14 +176,22 @@ class DeleteAccount(View):
             }
             messages.success(request, 'Your account is successfully deleted')
             return render(request,'home.html', context)
-        if choice == '2':
+        if choice == 'reject':
             current_user = request.user
             return redirect('profile', current_user.id)
 
-# class CreatePostView(View):
-#     form= create_imgpost_form()
-#     @method_decorator(login_required)
-#     def get(self, request, *args, **kwagrs):
-#         return render(request, 'createpost')
-
+class CreatePostView(View):
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwagrs):
+        return render(request, 'createpost.html',{'form': create_imgpost_form()})
+    @method_decorator(login_required)
+    def post(self,request,user_id,*args,**kwrgs):
+        form = create_imgpost_form(request.POST or None, request.FILES or None)
+        f = form.save(commit = False)
+        f.post_by = self.request.user
+        if form.is_valid():
+            form.save()
+            return render(request, 'profile.html')
+        else:
+            return render(request, 'createpost.html', {'form': create_imgpost_form()})
 

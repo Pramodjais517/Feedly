@@ -6,12 +6,12 @@
 </head>
 <body>
 {% block content %}
-<p>Are you sure you want to delete your account?</p>
+<p>Hello, {{ user.username }}...<br><br>Are you sure you want to delete your account?</p>
 <br>
 <form method="post">
     {% csrf_token %}
-    <button value="1" name="des"> Yes,I'm sure  </button>
-    <button value ="2" name="des">No,I won't delete</button>
+    <button value="accept" name="des"> Yes,I'm sure  </button>
+    <button value ="reject" name="des">No,I won't delete</button>
 </form>
 {% endblock %}
 </body>

@@ -1,28 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>profile</title>
-</head>
-<body>
-{% block content %}
-<h2> Update Profile </h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <p>Username : {{user.username }}</p>
-    <p>Email:  {{ user.email }}</p>
-    {% for field in form %}
-    <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% for error in field.errors %}
-    <p style="color: red">{{ error }}</p>
-    {% endfor %}
-    </p>
-    {% endfor %}
-    <button type="submit">Save</button>
+{% extends 'base.html' %}
+{% load staticfiles %}
 
-</form>
+{% block editprofile %}
+<div class="cvrimg">
+    <img src="/media/{{ form.avatar.value }}" style="width:10%;">
+</div>
+
+<div class="pgimg">
+    <img src="loginboy2.png" style="height:1%;">
+    <label>Avatar: {{ form.avatar }}</label>
+</div>
+<div class="sfname">
+    <h2 >{{user.username }}</h2>
+</div>
+{% if request.user.id == user.id  %}
+<a href="{% url 'account_del' user.id %}"><button type="button" class="subs">Delete Account</button></a>
+{% endif %}
+<div class="edit">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="uname">Username:</label>
+        <p id="uname">{{user.username }}</p>
+
+        <label for="email">Email:</label>
+        <p id="email">{{ user.email }}</p>
+
+        <label for="fname">First Name:
+            <div id="fname">
+                {{ form.first_name }}
+            </div>
+        </label>
+        <!--<input type="text" id="fname" name="firstname" placeholder="First name">-->
+
+        <label for="lname">Last Name:
+            <div id="lname">
+                {{ form.last_name }}
+            </div>
+        </label>
+        <!--<input type="text" id="fname" name="firstname" placeholder=" Last name">-->
+
+        <label>Gender:{{ form.gender }}</label>
+
+        <label for="dob">Date of Birth:
+            <div id="dob">
+                {{  form.date_of_birth }}
+            </div>
+        </label>
+        <!--<input type="text" id="lname" name="lastname" placeholder="yyyy-mm-dd">-->
+
+        <label for="cn">Contact no.:
+            <div id="cn">
+                {{  form.phone_number }}
+            </div>
+        </label>
+        <!--<input type="text" id="fname" name="firstname" placeholder="**********">-->
+
+        <input type="submit" value="UPDATE" class="editbtn">
+    </form>
+</div>
 {% endblock %}
-</body>
-</html>
