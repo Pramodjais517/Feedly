@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect,reverse
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .forms import SignupForm ,edit_profile_form,login_form
+from .forms import SignupForm ,edit_profile_form,login_form,create_imgpost_form
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -14,11 +14,11 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from feedly.settings import EMAIL_HOST_USER
 from django.views import View
+from django.views.generic import ListView
 from .models import MyProfile,Post,Vote
 
-class HomeView(View):
+class HomeView(ListView):
      def get(self, request, *args, **kwargs):
-
          context={
              # 'user':request.user,
              # 'post': Post,
@@ -166,17 +166,18 @@ class DeleteAccount(View):
             current_user = request.user
             return redirect('profile', current_user.id)
 
-# class CreatePostView(View):
-#     @method_decorator(login_required)
-#     def get(self, request, *args, **kwagrs):
-#         return render(request, 'createpost.html',{ 'form': create_imgpost_form()})
-#     @method_decorator(login_required)
-#     def post(self,request,user_id,*args,**kwrgs):
-#         form = create_imgpost_form(request.POST)
-#         context = {
-#             'object_list': Post.objects.order_by('-post_on'),
-#         }
-#         if form.is_valid():
-#             form.save()
-#             return render(request, 'home.html', context)
+class CreatePostView(View):
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwagrs):
+        return render(request, 'createpost.html',{'form': create_imgpost_form()})
+    @method_decorator(login_required)
+    def post(self,request,user_id,*args,**kwrgs):
+        form = create_imgpost_form(request.POST or None, request.FILES or None)
+        f = form.save(commit = False)
+        f.post_by = self.request.user
+        if form.is_valid():
+            form.save()
+            return render(request, 'profile.html')
+        else:
+            return render(request, 'createpost.html', {'form': create_imgpost_form()})
 

@@ -34,8 +34,21 @@ class login_form(forms.ModelForm):
         fields = ('username','password')
 
 
-# class create_imgpost_form(forms.ModelForm):
-#     about = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':40}))
-#     class Meta:
-#         model = Post
-#         fields = ('about', 'image')
+class create_imgpost_form(forms.ModelForm):
+    about = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':40}))
+    class Meta:
+        model = Post
+        exclude=('post_by','video','text')
+
+class create_videopost_form(forms.ModelForm):
+    about = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':40}))
+    class Meta:
+        model = Post
+        exclude=('post_by','image','text')
+
+
+class create_textpost_form(forms.ModelForm):
+    about = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':40}))
+    class Meta:
+        model = Post
+        exclude=('post_by','video','image')

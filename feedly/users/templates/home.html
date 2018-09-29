@@ -14,7 +14,7 @@
 {% endif %}
     <br>
     {% if request.user.is_authenticated %}
-    <a href="#">Create Post</a>
+    <a href="{% url 'createpost' user.id %}">Create Post</a>
     {% else %}
     <a href="{% url 'signup' %}"> Sign Up</a>
 {% endif %}
@@ -34,15 +34,17 @@
         <img src="{{ post.post_by.myprofile.avatar.url }}" style="width:3vw;height:3vw;" alt="pic">
         <b><a href="{% url 'profile' post.post_by.id %}">{{ post.post_by.username }}</a> </b>
         <i> {{ post.post_on }}</i><br><br><b>{{ post.title }} </b>
-
+        {%if post.about %}
+        <p>{{post.about }}</p>
+        {% endif %}
+        {%if post.text %}
+        <p>{{post.text }}</p>
+        {% endif %}
         {% if post.image %}
         <br>
         <br>
         <img style="width: 40vw; height: 45vh;"
-          src="{{ post.image.url }}" alt="imagpost">
-        {% endif %}
-        {%if post.text %}
-        <p>{{post.text }}</p>
+             src="{{ post.image.url }}" alt="imagpost">
         {% endif %}
         {% if post.video %}
         <video width="600vw" height="400vw" controls>
