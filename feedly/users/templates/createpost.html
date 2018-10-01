@@ -3,9 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>feedly-post</title>
+
+    <style>
+    {% if form.image %}
+       #image
+       {% endif %}
+       {% if form.video %}
+       #video
+       {% endif %}
+       {% if form.text %}
+      #text
+      {% endif %}
+       {
+       color:red;
+       }
+    </style>
+
 </head>
 <body>
-<p>Image</p>
+<a id="image" href="{% url 'createpost' user.id 'image' %}" >Image</a>
+<a id="text" href="{% url 'createpost' user.id 'text' %}">Text</a>
+<a id="video" href="{% url 'createpost' user.id 'video' %}">Video</a>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
 

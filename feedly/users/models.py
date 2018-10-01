@@ -44,7 +44,7 @@ class Post(models.Model):
     text = models.CharField(max_length=800, null=True, blank=True)
     video = models.FileField(upload_to ='post_videos', null=True, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.post_by
 
 class Vote(models.Model):

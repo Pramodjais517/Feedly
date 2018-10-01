@@ -48,7 +48,6 @@ class create_videopost_form(forms.ModelForm):
 
 
 class create_textpost_form(forms.ModelForm):
-    about = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':40}))
     class Meta:
         model = Post
-        exclude=('post_by','video','image')
+        fields = ('text',)

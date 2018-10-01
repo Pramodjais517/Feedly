@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect,reverse
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .forms import SignupForm ,edit_profile_form,login_form,create_imgpost_form
+from .forms import SignupForm ,edit_profile_form,login_form,create_imgpost_form,\
+    create_videopost_form,create_textpost_form
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -14,28 +15,20 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from feedly.settings import EMAIL_HOST_USER
 from django.views import View
+from django.views.generic import ListView
 from .models import MyProfile,Post,Vote
 
-class HomeView(View):
+class HomeView(ListView):
      def get(self, request, *args, **kwargs):
          context={
-              'user':request.user,
-             'object_list': Post.objects.order_by('?'),
+             # 'user':request.user,
+             # 'post': Post,
+             'object_list': Post.objects.order_by('-post_on'),
          }
          return render(request, 'home.html', context)
 
-class SortedView(View):
-    def get(self,request,rec,*args,**kwargs):
-        if rec == '3':
-            object_list = Post.objects.order_by('-post_on')
-        if rec== '2':
-            object_list = Post.objects.order_by('?')
 
-        context={
-            'object_list': object_list,
-        }
-        return render(request,'home.html', context)
-
+#sidnup process /forms
 
 class SignUpView(View):
     form = SignupForm()
@@ -118,12 +111,8 @@ class LoginView(View):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    context={
-                        'object_list': Post.objects.order_by('?'),
-                        'user': request.user
-                    }
                     messages.success(request, 'woahh!! logged in..')
-                    return render(request, 'home.html', context)
+                    return redirect('home')
                 else:
                     return HttpResponse('please! verify your Email first')
             else:
@@ -141,12 +130,10 @@ class LoginView(View):
 class LogoutView(View):
     def get(self, request,*args, **kwargs):
         logout(request)
-
-        context={
-            'object_list': Post.objects.order_by('?'),
-            'user': request.user
-        }
         messages.success(request, 'you are successfully logged out')
+        context={
+            'object_list': Post.objects.order_by('-post_on')
+        }
         return render(request, 'home.html', context)
 
 
@@ -155,8 +142,10 @@ class ProfileView(View):
     @method_decorator(login_required)
     def get(self, request, user_id,*args, **kwargs):
         user = User.objects.get(pk=user_id)
+        posts = Post.objects.filter(post_by=user)
         context={
-            'user': user
+            'user': user,
+            'posts':posts
         }
         return render(request, 'profile.html', context)
 
@@ -182,16 +171,27 @@ class DeleteAccount(View):
 
 class CreatePostView(View):
     @method_decorator(login_required)
-    def get(self, request, *args, **kwagrs):
-        return render(request, 'createpost.html',{'form': create_imgpost_form()})
+    def get(self, request,user_id,ch, *args, **kwagrs):
+        if ch == 'image':
+            form = create_imgpost_form(request.POST or None, request.FILES or None)
+        if ch == 'text':
+            form = create_textpost_form(request.POST or None)
+        if ch == 'video':
+            form = create_videopost_form(request.POST or None, request.FILES or None)
+        return render(request, 'createpost.html',{'form':form,})
     @method_decorator(login_required)
-    def post(self,request,user_id,*args,**kwrgs):
-        form = create_imgpost_form(request.POST or None, request.FILES or None)
+    def post(self,request,user_id,ch,*args,**kwrgs):
+        if ch == 'image':
+            form = create_imgpost_form(request.POST or None, request.FILES or None)
+        if ch == 'text':
+            form = create_textpost_form(request.POST or None)
+        if ch == 'video':
+            form = create_videopost_form(request.POST or None, request.FILES or None)
         f = form.save(commit = False)
         f.post_by = self.request.user
         if form.is_valid():
             form.save()
-            return render(request, 'profile.html')
+            return redirect('home')
         else:
-            return render(request, 'createpost.html', {'form': create_imgpost_form()})
+            return render(request, 'createpost.html', {'form': form,})
 
