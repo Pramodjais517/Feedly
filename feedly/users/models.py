@@ -45,7 +45,7 @@ class Post(models.Model):
     video = models.FileField(upload_to ='post_videos', null=True, blank=True)
 
     def __str__(self):
-        return self.post_by
+        return ("%s posted : %s" %(self.post_by.username,self.about))
 
 class Vote(models.Model):
     voter = models.ForeignKey(User, on_delete= models.CASCADE)

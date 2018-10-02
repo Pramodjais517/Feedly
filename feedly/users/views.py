@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect,reverse
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .forms import SignupForm ,edit_profile_form,login_form,create_imgpost_form,\
+from .forms import SignupForm ,edit_profile_form,login_form,create_imgpost_form, \
     create_videopost_form,create_textpost_form
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
@@ -16,19 +16,30 @@ from django.core.mail import send_mail
 from feedly.settings import EMAIL_HOST_USER
 from django.views import View
 from django.views.generic import ListView
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import MyProfile,Post,Vote
 
 class HomeView(ListView):
-     def get(self, request, *args, **kwargs):
-         context={
-             # 'user':request.user,
-             # 'post': Post,
-             'object_list': Post.objects.order_by('-post_on'),
-         }
-         return render(request, 'home.html', context)
+    def get(self,request, *args, **kwargs):
+        context={
+            'user':request.user,
+            'object_list': Post.objects.order_by('-post_on'),
+        }
+        return render(request, 'home.html', context)
+
+class SortedView(View):
+    @method_decorator(login_required)
+    def get(self, request,rec, *args, **kwargs):
+        if rec =='3':
+            queryset=Post.objects.order_by('-post_on')
+        if rec =='2':
+            queryset = Post.objects.order_by('?')
+        context={
+            'object_list': queryset,
+            }
+        return render(request, 'home.html', context)
 
 
-#sidnup process /forms
 
 class SignUpView(View):
     form = SignupForm()
@@ -131,10 +142,7 @@ class LogoutView(View):
     def get(self, request,*args, **kwargs):
         logout(request)
         messages.success(request, 'you are successfully logged out')
-        context={
-            'object_list': Post.objects.order_by('-post_on')
-        }
-        return render(request, 'home.html', context)
+        return redirect('home')
 
 
 class ProfileView(View):
@@ -142,10 +150,8 @@ class ProfileView(View):
     @method_decorator(login_required)
     def get(self, request, user_id,*args, **kwargs):
         user = User.objects.get(pk=user_id)
-        posts = Post.objects.filter(post_by=user)
         context={
-            'user': user,
-            'posts':posts
+            'user': user
         }
         return render(request, 'profile.html', context)
 
@@ -194,4 +200,3 @@ class CreatePostView(View):
             return redirect('home')
         else:
             return render(request, 'createpost.html', {'form': form,})
-

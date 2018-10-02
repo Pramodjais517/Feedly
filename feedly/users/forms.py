@@ -48,6 +48,7 @@ class create_videopost_form(forms.ModelForm):
 
 
 class create_textpost_form(forms.ModelForm):
+    text =forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':40}))
     class Meta:
         model = Post
         fields = ('text',)

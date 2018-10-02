@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>feedly-post</title>
-
     <style>
     {% if form.image %}
        #image
@@ -18,7 +17,6 @@
        color:red;
        }
     </style>
-
 </head>
 <body>
 <a id="image" href="{% url 'createpost' user.id 'image' %}" >Image</a>
