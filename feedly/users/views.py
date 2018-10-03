@@ -200,3 +200,16 @@ class CreatePostView(View):
             return redirect('home')
         else:
             return render(request, 'createpost.html', {'form': form,})
+
+class VoteView(View):
+    @method_decorator(login_required)
+    def post(self,request,*args,**kwargs):
+        post = request.POST['post']
+        user = self.request.user
+        prev_votes = Vote.objects.filter(voter=user, post_id = post)
+        has_voted = (prev_votes.count()>0)
+        if not has_voted:
+            Vote.objects.create(voter=user, post_id=post)
+        else:
+            prev_votes[0].delete()
+        return redirect('home')

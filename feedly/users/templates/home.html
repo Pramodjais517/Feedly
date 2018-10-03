@@ -30,9 +30,13 @@
         <source src="{{ post.video.url }}" type="video/mp4" ></video>
     {% endif %}
     <div class="cardf">
-        <i class="like fa fa-thumbs-up"></i>
-        <p style="padding-left:9px">200</p>
-        <i class="like fa fa-thumbs-down" style="padding-left:9px"></i>
+        <form action="{% url 'vote' %}" method="POST">
+            <input type="hidden" name="post" value="{{post.pk}}">
+            {% csrf_token %}
+            <button type="submit" style="border:none"><i class="like fa fa-thumbs-up"></i></button>
+        </form>
+        <p style="padding-left:9px">VOTES=</p>
+        <!--<i class="like fa fa-thumbs-down" style="padding-left:9px"></i>-->
         {% if post.image %}
         <div id="cmntmodal" ><i onclick="item('image','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.image.url}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
         {% endif %}

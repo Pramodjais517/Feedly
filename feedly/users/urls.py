@@ -19,6 +19,7 @@ urlpatterns = [
         name='account_del'),
     url(r'^profile/(?P<user_id>[0-9]+)/create_post/(?P<ch>[0-9A-Za-z]+)$', views.CreatePostView.as_view(),
         name='createpost'),
+    url(r'^vote/$', views.VoteView.as_view(), name='vote'),
  ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
