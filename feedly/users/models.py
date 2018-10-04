@@ -38,11 +38,12 @@ class MyProfile(models.Model):
 class Post(models.Model):
     post_by = models.ForeignKey(User, on_delete=models.CASCADE)
     # subfeed = models.ForeignKey(MyProfile,on_delete=models.CASCADE,null=True,blank=True)
-    about = models.CharField(max_length=100, null=True,blank=True)
+    about = models.CharField(max_length=100, null=True, blank=True)
     post_on = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='post_pics',blank=True,null=True)
     text = models.CharField(max_length=800, null=True, blank=True)
     video = models.FileField(upload_to ='post_videos', null=True, blank=True)
+    result = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return ("%s posted : %s" %(self.post_by.username,self.about))
@@ -50,6 +51,7 @@ class Post(models.Model):
 class Vote(models.Model):
     voter = models.ForeignKey(User, on_delete= models.CASCADE)
     post = models.ForeignKey(Post, on_delete= models.CASCADE)
+    status = models.BooleanField(default= False)
 
     def __str__(self):
         return ("%s voted %s" %(self.voter.username,self.post.about))

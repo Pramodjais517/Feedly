@@ -1,41 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>feedly-post</title>
-    <style>
-    {% if form.image %}
-       #image
-       {% endif %}
-       {% if form.video %}
-       #video
-       {% endif %}
-       {% if form.text %}
-      #text
-      {% endif %}
-       {
-       color:red;
-       }
-    </style>
-</head>
-<body>
-<a id="image" href="{% url 'createpost' user.id 'image' %}" >Image</a>
-<a id="text" href="{% url 'createpost' user.id 'text' %}">Text</a>
-<a id="video" href="{% url 'createpost' user.id 'video' %}">Video</a>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block post %}
+<button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
 
-    {% for field in form %}
-    <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% for error in field.errors %}
-    <p style="color: red">{{ error }}</p>
-    {% endfor %}
-    </p>
-    {% endfor %}
-    <button type="submit">Upload</button>
+<div class="cvrimg">
+    <img src="/static/FRANCE.svg" style="width:100%;">
+</div>
 
-</form>
-</body>
-</html>
+<div class="pgimg">
+    <img src="{{ user.myprofile.avatar.url }}" style="height:100%;">
+</div>
+<div class="sfname">
+    <h2 >{{ user.username }}</h2></div>
+
+
+
+<div class="cont">
+        <div class="imgcont">
+            <img src="/static/ballon.svg" alt="Avatar" class="avatar">
+        </div>
+        <h1 class="lihead" style="color:rgb(95, 95, 95)">CREATE POST</h1>
+        <!--<div class="upimg">-->
+            <!--<textarea rows="7" cols="50" name="comment" placeholder="whats on your mind.." class="txt"></textarea>-->
+        <!--</div>-->
+<div class="createpost">
+    <form class="cp-content " method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if form.image %}
+        <label class="abt">About:</label>
+        <p><textarea name="about" cols="40" rows="3" required="" id="id_about" class="txt" placeholder="Whats On Your Mind.. "></textarea></p>
+        <label class="abt">Image:</label>
+        <p>{{ form.image }}</p>
+        {% endif %}
+        {% if form.text %}
+        <label class="abt">Text:</label>
+        <p ><textarea name="about" cols="40" rows="3" required="" id="id_about" class="txt" placeholder="Whats On Your Mind.. " ></textarea></p>
+        {% endif %}
+        {% if form.video %}
+        <label class="abt">About:</label>
+        <p > <textarea name="about" cols="40" rows="3" required="" id="id_about" class="txt" placeholder="Whats On Your Mind.. " ></textarea></p>
+        <label class="abt">Video:</label>
+        <p>{{ form.video}}</p>
+        {% endif %}
+        <div class="cpmenu">
+        <button type="submit" class="uploadbtn" > <i class="fa fa-upload" placeholder="Whats On Your Mind.. "></i> Upload</button>
+        </div>
+    </form>
+</div>
+
+        <div class="cpmenu">
+            <a href="{% url 'createpost' user.id 'image' %}">
+                <button class="srchbarbtn srchbar"><h1><i id ="image" class="fa fa-camera" onclick="document.getElementById('cf').style.display='block'" style="color:#888"></i></h1></button>
+            </a>
+            <a href="{% url 'createpost' user.id 'video' %}">
+                <button class="srchbarbtn srchbar" ><h1><i id = "video" class="fa fa-video" style="color:#888" ></i></h1></button>
+            </a>
+            <a href="{% url 'createpost' user.id 'text' %}">
+                <button class="srchbarbtn srchbar" ><h1><i id ="text" style="color:#888" class="fa fa-font" aria-hidden="true"></i></h1></button>
+            </a>
+        </div>
+</div>
+{% endblock %}

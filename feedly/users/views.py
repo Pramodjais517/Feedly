@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.shortcuts import render, redirect,reverse
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.decorators import login_required
@@ -15,14 +15,52 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from feedly.settings import EMAIL_HOST_USER
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import DetailView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import MyProfile,Post,Vote
+from django.db.models import Q
 
-class HomeView(ListView):
-    def get(self,request, *args, **kwargs):
+
+class LandingView(View):
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            user = request.user
+            is_voted = Vote.objects.filter(voter=user,status = True)
+            post_voted_list = list()
+
+            for votes in is_voted:
+                post_voted =Post.objects.get(vote=votes)
+                post_voted_list.append(post_voted)
+
+            context={
+            # 'user':request.user,
+               'is_voted':is_voted,
+               'vote':Vote.objects.all(),
+               'post_voted_list' : post_voted_list,
+               'object_list': Post.objects.order_by('-post_on'),
+            }
+            return render(request, 'home.html', context)
+        else:
+            return render(request,'landing.html',{'form':login_form()})
+
+
+
+class HomeView(View):
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        is_voted = Vote.objects.filter(voter=user,status = True)
+        post_voted_list = list()
+
+        for votes in is_voted:
+            post_voted =Post.objects.get(vote=votes)
+            post_voted_list.append(post_voted)
+
         context={
-            'user':request.user,
+            # 'user':request.user,
+            'is_voted':is_voted,
+            'vote':Vote.objects.all(),
+            'post_voted_list' : post_voted_list,
             'object_list': Post.objects.order_by('-post_on'),
         }
         return render(request, 'home.html', context)
@@ -63,7 +101,7 @@ class SignUpView(View):
             to_mail = [user.email]
             send_mail(subject, message, from_mail, to_mail, fail_silently=False)
             messages.success(request, 'Please!Confirm your email to complete registration.')
-            return redirect('home')
+            return redirect('signup')
         else:
             return render(request, 'signup.html', {'form': form})
 
@@ -128,21 +166,20 @@ class LoginView(View):
                     return HttpResponse('please! verify your Email first')
             else:
                 messages.error(request, 'username or password not correct')
-                return redirect('login')
+                return redirect('landing')
 
         def get(self, request, *args, **kwagrs):
             if request.user.is_authenticated:
                return redirect('home')
             else:
                 form = login_form()
-            return render(request, 'login.html', {'form': form})
+            return render(request, 'landing.html', {'form': form})
 
 
 class LogoutView(View):
     def get(self, request,*args, **kwargs):
         logout(request)
-        messages.success(request, 'you are successfully logged out')
-        return redirect('home')
+        return redirect('landing')
 
 
 class ProfileView(View):
@@ -184,7 +221,7 @@ class CreatePostView(View):
             form = create_textpost_form(request.POST or None)
         if ch == 'video':
             form = create_videopost_form(request.POST or None, request.FILES or None)
-        return render(request, 'createpost.html',{'form':form,})
+        return render(request, 'createpost.html',{'form':form})
     @method_decorator(login_required)
     def post(self,request,user_id,ch,*args,**kwrgs):
         if ch == 'image':
@@ -193,7 +230,7 @@ class CreatePostView(View):
             form = create_textpost_form(request.POST or None)
         if ch == 'video':
             form = create_videopost_form(request.POST or None, request.FILES or None)
-        f = form.save(commit = False)
+        f = form.save(commit=False)
         f.post_by = self.request.user
         if form.is_valid():
             form.save()
@@ -206,10 +243,16 @@ class VoteView(View):
     def post(self,request,*args,**kwargs):
         post = request.POST['post']
         user = self.request.user
-        prev_votes = Vote.objects.filter(voter=user, post_id = post)
+        item = Post.objects.get(pk=post)
+        prev_votes = Vote.objects.filter(Q(voter=user)& Q(post_id = post))
         has_voted = (prev_votes.count()>0)
         if not has_voted:
-            Vote.objects.create(voter=user, post_id=post)
+            Vote.objects.create(voter=user,post_id=post,status=True)
+            item.result = item.result +1
+            item.save()
         else:
+            item.result = item.result - 1
+            item.save()
             prev_votes[0].delete()
+
         return redirect('home')

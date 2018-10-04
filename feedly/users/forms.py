@@ -38,13 +38,13 @@ class create_imgpost_form(forms.ModelForm):
     about = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':40}))
     class Meta:
         model = Post
-        exclude=('post_by','video','text')
+        fields=('about','image',)
 
 class create_videopost_form(forms.ModelForm):
     about = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':40}))
     class Meta:
         model = Post
-        exclude=('post_by','image','text')
+        fields=('about','video',)
 
 
 class create_textpost_form(forms.ModelForm):

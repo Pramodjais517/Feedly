@@ -121,12 +121,14 @@ font-weight: 500
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
     display: none;
-    position: absolute;
+    position: fixed;
+    margin-right:10%;
     background-color: #f1f1f1;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     /* margin-left: 85%; */
+    opacity:0.8;
     right:0;
 }
 
@@ -139,7 +141,11 @@ font-weight: 500
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd}
+.dropdown-content a:hover {background-color: darkgrey;
+ color:black;
+ font-weight:bold;
+ font-size:120%;
+}
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
@@ -169,26 +175,27 @@ font-weight: 500
     display: block;
     text-align: center;
     padding: 10px;
-    transition: all 0.3s ease;
+    transition: all 1s ease;
     color: white;
-    font-size: 270%;
+    font-size: 2.5em;
 }
 
 .icon-bar a:hover {
     background-color: #000;
     color:#4AA82B;
     transform:scale(0.9,0.9);
+    transition:all 1s ease;
 
 }
 .side-content{
     font-size:35%;
     display: none;
-    transition: .5s ease;
+    transition:all 1s ease;
     font-family: 'Lato', sans-serif;
     
 }
 
-.icon-bar:hover .side-content{
+.icon-bar a:hover .side-content{
     display: block;
     
 }
@@ -332,7 +339,9 @@ img.avatar {
    float: left;
    width: 27%;
    padding-left: 4.5%;
-   margin-top: 75px;
+   margin-top:75px;
+   margin-left:60%;
+   position:fixed;
 }
 
 
@@ -364,6 +373,7 @@ img.avatar {
       padding: 4px;
       border-radius: 4px;
       color: #2B2D42;
+      font-size:150%;
   }
   .cardpost {
     background-color: #E0FFE3;
@@ -399,6 +409,7 @@ img.avatar {
     color: #2B2D42;
     cursor: pointer;
     user-select: none;
+    font-size:150%;
 }
 
 .like:hover {
