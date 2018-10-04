@@ -1,34 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>profile</title>
-</head>
-<body>
-{% block content %}
-{% for message in messages %}
-<p style="color: green">{{ message }}</p>
-{% endfor %}
-<h2> Update Profile </h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <p>
-        {% if request.user.id == user.id  %}
-        <a href="{% url 'account_del' user.id %}" style="margin-left:80vw">delete account</a>
-        {% endif %}
-    </p>
-    <img style="width: 15vw; height: 25vh;" src="/media/{{ form.avatar.value }}">
-    <p>Username : {{user.username }}</p>
-    <p>Email:  {{ user.email }}</p>
-   <p><label>Avatar: {{ form.avatar }}</label></p>
-    <p> <label>First Name: {{ form.first_name }}</label></p>
-    <p> <label>Last Name: {{ form.last_name }}</label></p>
-    <p> <label>Gender: {{ form.gender }}</label></p>
-    <p>  <label> Date Of Birth: {{  form.date_of_birth }}</label></p>
-    <p>  <label> Phone Number: {{  form.phone_number }}</label></p>
-    <button type="submit">Save</button>
+{% extends 'base.html' %}
+{% load staticfiles %}
 
-</form>
+{% block editprofile %}
+<div class="cvrimg">
+    <img src="/static/FRANCE.svg" style="width:100%;">
+</div>
+<div class="pgimg">
+    <img style="width: 100%; height: 150px;"
+         alt="avatar"
+         src="{{ user.myprofile.avatar.url }}"/>
+</div>
+<div class="sfname">
+    <h2 >{{user.username }}</h2>
+</div>
+{% if request.user.id == user.id  %}
+<a href="{% url 'account_del' user.id %}"><button type="button" class="subs">Delete Account</button></a>
+{% endif %}
+<form method="post" enctype="multipart/form-data" class="editprofile">
+    {% csrf_token %}
+    <!--<span id="changepic" style="display:grid;">{{ form.avatar }}</span>-->
+    <span id="changepic" style="display:grid;" >
+     <input type="file" name="avatar" accept="image/*" id="id_avatar">
+    </span>
+
+<div class="edit">
+
+
+        <label>Username:</label>
+        <p class="fname">{{user.username }}</p>
+
+        <label>Email:</label>
+        <p class="fname">{{ user.email }}</p>
+
+        <label >First Name:
+                {{ form.first_name }}
+        </label>
+        <!--<input type="text" id="fname" name="firstname" placeholder="First name">-->
+
+        <label>Last Name:
+                {{ form.last_name }}
+        </label>
+        <!--<input type="text" id="fname" name="firstname" placeholder=" Last name">-->
+
+        <label>Gender:
+            {{ form.gender }}
+        </label>
+
+        <label >Date of Birth:
+                {{  form.date_of_birth }}
+        </label>
+        <!--<input type="text" id="lname" name="lastname" placeholder="yyyy-mm-dd">-->
+
+        <label>Contact no.:
+                {{  form.phone_number }}
+        </label>
+        <!--<input type="text" id="fname" name="firstname" placeholder="**********">-->
+
+        <input type="submit" value="UPDATE" class="editbtn">
+    </form>
+</div>
 {% endblock %}
-</body>
-</html>

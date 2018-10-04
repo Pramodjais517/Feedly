@@ -126,6 +126,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_URL = '/media/'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
@@ -134,6 +135,6 @@ PHONENUMBER_DEFAULT_REGION = 'IN'
 PHONENUMBER_DB_FORMAT='NATIONAL'
 DATE_INPUT_FORMATS = ('%d/%m/%Y','%d-%m-%Y')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    '/var/www/static/',
-]
+     os.path.join(BASE_DIR, "static"),
+     '/var/www/static/',
+ ]

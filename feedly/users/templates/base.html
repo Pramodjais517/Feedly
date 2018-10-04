@@ -1,0 +1,250 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{% static '/css/home.css' %}">
+    <link rel="stylesheet" href="{% static '/css/community.css' %} ">
+    <link rel="stylesheet" href="{% static '/css/post.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+          function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        var modal = document.getElementById('id01');
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                console.log('67');
+            }
+        }
+
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+            }
+            else {
+                document.getElementById("myBtn").style.display = "none";
+            }
+        }
+
+
+        function topFunction() {
+            document.body.scrollTop = 0; 
+            document.documentElement.scrollTop = 0;}
+            
+
+        function validateEmail(emailField){
+        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+        if (reg.test(emailField.value) == false) 
+        {
+            alert('Invalid Email Address');
+            return false;
+        }
+
+        return true;
+
+}
+function item(type,dpurl,postby,about,time,posturl)
+{
+document.getElementById('dpurl').setAttribute("src", dpurl);
+document.getElementById('postby').innerHTML = postby;
+document.getElementById('time').innerHTML = time;
+if(type == 'text')
+{
+document.getElementById('postitem3').style.display='block';
+document.getElementById('postitem3').innerHTML = posturl;
+document.getElementById('about').style.display = 'none';
+document.getElementById('postitem2').style.display='none';
+document.getElementById('postitem').style.display='none';
+}
+if (type == 'image'){
+document.getElementById('postitem').style.display='block';
+document.getElementById('about').style.display = 'block';
+document.getElementById('postitem').setAttribute("src", posturl);
+document.getElementById('about').innerHTML = about;
+document.getElementById('postitem2').style.display='none';
+document.getElementById('postitem3').style.display='none';
+}
+if (type == 'video'){
+document.getElementById('postitem2').style.display='block';
+document.getElementById('about').style.display = 'block';
+document.getElementById('postitem2').setAttribute("src", posturl);
+document.getElementById('about').innerHTML = about;
+document.getElementById('postitem').style.display='none';
+document.getElementById('postitem3').style.display='none';
+var video = document.getElementById('postitem2');
+video.play();
+var vi = document.getElementById('videopost'+time);
+vi.pause();
+}
+document.getElementById('id03').style.display='block';
+    }
+
+
+function closemodal(){
+var vid=document.getElementById('postitem2');
+vid.pause();
+document.getElementById('id03').style.display='none';
+}
+
+
+function chBackcolor() {
+    if(document.body.style.backgroundColor != ""){
+        window.location.reload();
+    }
+    else
+    {document.body.style.backgroundColor = "#141d26";
+    }
+
+}
+    </script>
+    <!--<script type="text/javascript">-->
+        <!--$(document).ready(function(event){-->
+          <!--$(document).on('click','#like',function(event){-->
+          <!--event.preventDefault();-->
+          <!--var pk = $(this).attr('value');-->
+          <!--$.ajax({-->
+          <!--type : 'POST',-->
+          <!--url : '{% url 'home' %}',-->
+          <!--data:{'post':pk,'csrfmiddlewaretoken':'{{ csrf_token }}'},-->
+          <!--dataType:'json',-->
+          <!--success:function(response){-->
+           <!--$('#like_section').html(response['form'])-->
+           <!--console.log(('#like_section').html(response['form']));-->
+          <!--},-->
+          <!--error:function(rs,e){-->
+          <!--console.log(rs.responseText);-->
+          <!--},-->
+          <!--});-->
+        <!--});-->
+      <!--});-->
+    <!--</script>-->
+    <style>
+    {% if form.image %}
+       #image
+       {% endif %}
+       {% if form.video %}
+       #video
+       {% endif %}
+       {% if form.text %}
+      #text
+      {% endif %}
+       {
+       background-color:green;
+       }
+    </style>
+
+</head>
+
+
+<body>
+    <header id="navbar">
+        <ul id="nav1">
+            <li id="logo">
+                <img src="/static/feedly_logo.svg" style="width:60%;height:60%; padding-left:10%;margin-top:4%">
+            </li>
+            <li id="name">
+                FeedLy
+            </li>
+            <li id="searchbox">
+                <form>
+                    <input type="text" id="search" placeholder=" Search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </li>
+            {% if request.user.is_authenticated %}
+            <li>
+                <a href="{% url 'createpost' user.id 'text' %}" style="text-decoration:none"><button id="cp" type="button" ><i class="far fa-edit" style="margin-right:5%"></i> POST</button>
+                </a>
+            </li>
+            {% else %}
+            <li>
+                <a href="{% url 'login' %}">
+                <button id="login" type="button" onclick="document.getElementById('id01').style.display='block'">
+                        LOGIN </button>
+                </a>
+            </li>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+            <li>
+                <button id="noti" type="button" onclick="document.getElementById('id02').style.display='block'">
+                    <i class="far fa-bell" style="margin-right:5%" style="margin-right:5%"></i>NOTIFICATION</button>
+            </li>
+            {% else %}
+            <li>
+                <a href="{% url 'signup' %}">
+                <button id="signup" type="button" onclick="document.getElementById('id02').style.display='block'">SIGNUP</button>
+                </a>
+            </li>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+            <li>
+                <div class="dropdown">
+                    <button onclick="myFunction()" class="dropbtn"><i class="far fa-user"></i><i class="fa fa-caret-down"></i></button>
+
+                </div>
+
+            </li>
+            {% endif %}
+
+        </ul>
+    </header>
+{% if request.user.is_authenticated %}
+    <div id="myDropdown" class="dropdown-content" style="margin-top:64px">
+        <a href="{% url 'profile' user.id %}">My profile</a>
+        <a href="{% url 'edit_profile' user.id %}">Edit profile</a>
+        <a href="{% url 'logout' %}">Log Out</a>
+    </div>
+{% endif %}
+    <div class="icon-bar">
+        <a class="active" href="{% url 'home' %}"><i class="fa fa-home">
+            <p class="side-content">HOME</p>
+        </i></a>
+        <a href="#"><i class="fa fa-chart-line">
+                <p class="side-content">POPULAR</p>
+            </i></a>
+        <a href="{% url 'recents' rec=2 %}"><i class="fa fa-globe">
+                <p class="side-content">ALL</p>
+            </i></a>
+
+        <a href="{% url 'recents' rec=3 %}"><i class="fa fa-bolt">
+                <p class="side-content">RECENTS</p>
+            </i></a>
+        <a onclick = "chBackcolor()"><i class="fa fa-moon">
+                <p class="side-content">NIGHT MODE</p>
+            </i></a>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}"><i class="fa fa-sign-out">
+            <p class="side-content">LOGOUT</p>
+        </i></a>
+        {% endif %}
+    </div>
+
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
+
+    {% block content %}
+<!--loads home.html-->
+    {% endblock %}
+
+    {% block editprofile %}
+   <!--loads edit_profile.html-->
+    {% endblock %}
+  <!--loads createprofile.html-->
+   {% block post %}
+
+{% endblock %}
+</body>
+
+</html>

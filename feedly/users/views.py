@@ -1,9 +1,10 @@
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.shortcuts import render, redirect,reverse
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .forms import SignupForm ,edit_profile_form,login_form,create_imgpost_form
+from .forms import SignupForm ,edit_profile_form,login_form,create_imgpost_form, \
+    create_videopost_form,create_textpost_form
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -14,20 +15,69 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from feedly.settings import EMAIL_HOST_USER
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import DetailView
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import MyProfile,Post,Vote
-
-class HomeView(ListView):
-     def get(self, request, *args, **kwargs):
-         context={
-             # 'user':request.user,
-             # 'post': Post,
-             'object_list': Post.objects.order_by('-post_on'),
-         }
-         return render(request, 'home.html', context)
+from django.db.models import Q
 
 
-#sidnup process /forms
+class LandingView(View):
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            user = request.user
+            is_voted = Vote.objects.filter(voter=user,status = True)
+            post_voted_list = list()
+
+            for votes in is_voted:
+                post_voted =Post.objects.get(vote=votes)
+                post_voted_list.append(post_voted)
+
+            context={
+            # 'user':request.user,
+               'is_voted':is_voted,
+               'vote':Vote.objects.all(),
+               'post_voted_list' : post_voted_list,
+               'object_list': Post.objects.order_by('-post_on'),
+            }
+            return render(request, 'home.html', context)
+        else:
+            return render(request,'landingpage.html')
+
+
+
+class HomeView(View):
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        is_voted = Vote.objects.filter(voter=user,status = True)
+        post_voted_list = list()
+
+        for votes in is_voted:
+            post_voted =Post.objects.get(vote=votes)
+            post_voted_list.append(post_voted)
+
+        context={
+            # 'user':request.user,
+            'is_voted':is_voted,
+            'vote':Vote.objects.all(),
+            'post_voted_list' : post_voted_list,
+            'object_list': Post.objects.order_by('-post_on'),
+        }
+        return render(request, 'home.html', context)
+
+class SortedView(View):
+    @method_decorator(login_required)
+    def get(self, request,rec, *args, **kwargs):
+        if rec =='3':
+            queryset=Post.objects.order_by('-post_on')
+        if rec =='2':
+            queryset = Post.objects.order_by('?')
+        context={
+            'object_list': queryset,
+            }
+        return render(request, 'home.html', context)
+
+
 
 class SignUpView(View):
     form = SignupForm()
@@ -129,11 +179,7 @@ class LoginView(View):
 class LogoutView(View):
     def get(self, request,*args, **kwargs):
         logout(request)
-        messages.success(request, 'you are successfully logged out')
-        context={
-            'object_list': Post.objects.order_by('-post_on')
-        }
-        return render(request, 'home.html', context)
+        return redirect('home')
 
 
 class ProfileView(View):
@@ -168,16 +214,45 @@ class DeleteAccount(View):
 
 class CreatePostView(View):
     @method_decorator(login_required)
-    def get(self, request, *args, **kwagrs):
-        return render(request, 'createpost.html',{'form': create_imgpost_form()})
+    def get(self, request,user_id,ch, *args, **kwagrs):
+        if ch == 'image':
+            form = create_imgpost_form(request.POST or None, request.FILES or None)
+        if ch == 'text':
+            form = create_textpost_form(request.POST or None)
+        if ch == 'video':
+            form = create_videopost_form(request.POST or None, request.FILES or None)
+        return render(request, 'createpost.html',{'form':form})
     @method_decorator(login_required)
-    def post(self,request,user_id,*args,**kwrgs):
-        form = create_imgpost_form(request.POST or None, request.FILES or None)
-        f = form.save(commit = False)
+    def post(self,request,user_id,ch,*args,**kwrgs):
+        if ch == 'image':
+            form = create_imgpost_form(request.POST or None, request.FILES or None)
+        if ch == 'text':
+            form = create_textpost_form(request.POST or None)
+        if ch == 'video':
+            form = create_videopost_form(request.POST or None, request.FILES or None)
+        f = form.save(commit=False)
         f.post_by = self.request.user
         if form.is_valid():
             form.save()
-            return render(request, 'profile.html')
+            return redirect('home')
         else:
-            return render(request, 'createpost.html', {'form': create_imgpost_form()})
+            return render(request, 'createpost.html', {'form': form,})
 
+class VoteView(View):
+    @method_decorator(login_required)
+    def post(self,request,*args,**kwargs):
+        post = request.POST['post']
+        user = self.request.user
+        item = Post.objects.get(pk=post)
+        prev_votes = Vote.objects.filter(Q(voter=user)& Q(post_id = post))
+        has_voted = (prev_votes.count()>0)
+        if not has_voted:
+            Vote.objects.create(voter=user,post_id=post,status=True)
+            item.result = item.result +1
+            item.save()
+        else:
+            item.result = item.result - 1
+            item.save()
+            prev_votes[0].delete()
+
+        return redirect('home')

@@ -1,0 +1,107 @@
+.loggedin{
+    text-align: center;
+    margin: 40px 0% 10px 0%;
+}
+
+.ok{
+    font-size: 120%;
+    background-color: rgb(107, 216, 118);
+    margin-left: 80%;
+    border-color: #45a049;
+    padding: 0.5% 3%;
+    border-radius: 15px;
+
+}
+
+.cp-content{
+        background-color: #DDDEDE;
+        border-radius: 25px;
+        margin: 50px auto 20px 23%;
+        border: 1px solid #888;
+        width: 60%; 
+        float: left;
+}
+@media (max-width: 1000px) {
+    .leftcolumn {   
+        width: 90%;
+        margin: auto;
+        margin-top: 75px;
+    }
+    .rightcolumn{
+        display: none;
+    }
+    .icon-bar a{
+        font-size: 1.7em;
+    }
+    
+}
+
+@media (max-width: 800px) {
+    .icon-bar a{
+        font-size: 1.5em;
+    }
+    
+}
+@media (max-width: 700px) {
+    .icon-bar a{
+        font-size: 1.2em;
+    }
+    
+}
+
+@media (max-width: 600px) {
+    .icon-bar a{
+        font-size: 0.9em;
+    }
+    
+}
+
+
+.cpmenu{
+    display: flex;
+    align-items: center;
+    margin: 0% 0% 2% 47%;
+    width: 50%;
+    }
+
+.choosefile{
+    margin-left: 4%;
+    background-color: black;
+    display: none;
+
+}
+
+.cpost{
+    text-align: center;
+    background-color: #DDDEDE;
+    padding: 5px 0px;
+    border-radius: 25px 25px 0px 0px;
+}
+
+.txt{
+    margin: 15px 2% 8px 7%;
+    width: 50%;
+    border: 2px solid #888;
+    border-radius: 8px;
+    padding: 1%;
+    font-size: 120%
+}
+.uploadbtn{
+    font-size: 120%;
+    margin-left: 59%;
+    color: white;
+    padding: 1%;
+    background-color: #888;
+    border-radius: 6px;
+}
+
+
+.srchc{
+        
+    padding: 1.5%;
+    width: 100%;
+    background-color: rgb(242, 243, 243);
+    border-bottom:2px solid darkgray;
+    border-radius: 10px;
+
+}
