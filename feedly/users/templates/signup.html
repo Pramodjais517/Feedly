@@ -63,11 +63,11 @@
                 {% if form.password2.errors %}
                 <p>{{ form.password2.errors }}</p><br><br>
                 {% endif %}
-                <button type="submit" class="btn cabtn" onclick="document.getElementById('id05').style.display='block'" >Signup</button>
+                <button type="submit" class="btn" onclick="document.getElementById('id05').style.display='block'" >Signup</button>
 
             </div>
             </form>
-        <a href="{% url 'landing' %}"><button type="submit" class="btn" style="margin-left: 23%;" >Login</button></a>
+        <a href="{% url 'landing' %}"><button type="submit" class="cabtn" style="margin-left: 23%;" >Login</button></a>
     </div>
 </body>
 </html>

@@ -98,13 +98,28 @@ width:30%;
 }
 .cabtn{
     float:right;
-    margin-right:30%;
+    margin-right:68%;
     background-color: transparent;
     border: 2px solid #4AA82B;
     color: #4AA82B;
-    
+    padding:6px 6px;
+    width:8%;
+    margin-top:-2.2%;
+
+
+
+
+        padding: 6px 10px;
+
+        cursor: pointer;
+
+        opacity: 0.9;
+        font-size: 120%;
+        border-radius: 30px;
+
 }
 .errorlist{
 color:red;
 margin-left:80px;
+
 }

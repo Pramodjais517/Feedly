@@ -6,15 +6,16 @@
 <!--{% endfor %}-->
 {% for post in object_list %}
 <div class="leftcolumn">
-<div class="cardpost">
+<div class="cardpost" style="margin-top:30px; margin-bottom:-50px;">
     <div class="cardh">
         <div class="dp">
             <a href="{{ post.post_by.myprofile.avatar.url }}"><img src="{{ post.post_by.myprofile.avatar.url }}" class="postdp"></a>
         </div>
-        <a style="text-decoration:none" href="{% url 'profile' post.post_by.id %}"><h4 style="padding-left:2%">{{ post.post_by.username }}</h4></a>
-        <i> {{ post.post_on }}</i>
+        <a style="text-decoration:none" href="{% url 'profile' post.post_by.id %}"><h4 style="padding-left:1%;position:absolute;margin-top:-10px;">{{ post.post_by.username }}</h4></a>
+        <span><i style="float:left;left:9rem;position:relative;"> {{ post.post_on }}</i></span>
     </div>
     <div class="cardh">
+        <!--<input type="hidden" name="comment" id = '{{post.id}}'>-->
         {%if post.about %}
         <h4>{{post.about }}</h4>
         {% endif %}
@@ -23,10 +24,10 @@
         {% endif %}
     </div>
     {% if post.image %}
-    <img id="cmntmodal" onclick="item('image','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.image.url}}')" src="{{ post.image.url }}" alt="img_post" class="fakeimg">
+    <img id="cmntmodal" onclick="item('{{post.id}}','image','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.image.url}}')" src="{{ post.image.url }}" alt="img_post" class="fakeimg">
     {% endif %}
     {% if post.video %}
-    <video  id="videopost{{ post.post_on}}" class="fakeimg" onclick="item('video','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.video.url}}')" controls>
+    <video  id="videopost{{ post.post_on}}" class="fakeimg" onclick="item('{{post.id}}','video','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.video.url}}')" controls>
         <source src="{{ post.video.url }}" type="video/mp4" ></video>
     {% endif %}
     <div class="cardf">
@@ -35,21 +36,23 @@
             <input type="hidden" name="post" value="{{post.pk}}">
             {% csrf_token %}
             {% if post in post_voted_list %}
-            <button type="submit" style="border:none" id="like" value="{{post.id}}"><i class="like fa fa-thumbs-down"></i></button>
+            <button type="submit" style="border:none" id="like" value="{{post.id}}">
+                <i class="like fa fa-thumbs-down" style="font-size: 150%;"></i></button>
             {% else %}
-            <button type="submit" style="border:none" id ="like" value="{{post.id}}"><i class="like fa fa-thumbs-up"></i></button>
+            <button type="submit" style="border:none" id ="like" value="{{post.id}}">
+                <i class="like fa fa-thumbs-up" style="font-size: 150%;"></i></button>
             {% endif %}
         </form>
 
         <!--<i class="like fa fa-thumbs-down" style="padding-left:9px"></i>-->
         {% if post.image %}
-        <div id="cmntmodal" ><i onclick="item('image','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.image.url}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
+        <div id="cmntmodal" ><i onclick="item('{{post.id}}','image','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.image.url}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
         {% endif %}
         {% if post.text %}
-        <div id="cmntmodal" ><i onclick="item('text','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.text}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
+        <div id="cmntmodal" ><i onclick="item('{{post.id}}','text','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.text}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
         {% endif %}
         {% if post.video %}
-        <div id="cmntmodal" ><i onclick="item('video','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.video.url}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
+        <div id="cmntmodal" ><i onclick="item('{{post.id}}','video','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.video.url}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
         {% endif %}
         <p style="padding-left:9px">200</p>
         <i class="like fa fa-paper-plane" style="padding-left:9px"> </i>
@@ -128,21 +131,24 @@
        <h4 id="postitem3"></h4>
        <video class="fakeimg" id="postitem2" controls></video>
     <img src="/static/loginboy2.png" alt="Avatar" class="fakeimg" id="postitem">
-
-
-<h3>Your Comments:</h3>
+       <div id ="comment">
+<!--comment goes here-->
+       </div>
+<h3 style="margin-top:20px">Your Comments:</h3>
 <div>
-<textarea rows="4" cols="50" name="comment" form="usrform"  placeholder="ggw" style="width:100%"></textarea>
-<div class="edittxt">
-<i class="fa fa-bold edits" ></i>
-<i class="fa fa-italic edits" ></i>
-<i class="fa fa-underline edits" ></i>
-<button type="submit" class="cmntbtn">comment</button>
+    <form id="comment_form"  method="post">
+        {% csrf_token %}
+        <textarea name="content" cols="85" rows="5" maxlength="300" required="" id="id_content" style="border: 2px solid darkgrey;border-radius:6px;font-size:130%;" placeholder="your comments here.."></textarea>
+        <button type="submit" class="cmntbtn" style="margin-left:85%;font-size:120%;margin-top:1%">comment</button>
+    </form>
+<!--<textarea rows="4" cols="50" name="comment" form="usrform"  placeholder="ggw" style="width:100%"></textarea>-->
+<!--<div class="edittxt">-->
 
 
-</div>
-</div>
-</div>
-</div>
+
+        </div>
+     </div>
+    </div>
+ </div>
 
 {% endblock %}

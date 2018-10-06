@@ -1,48 +1,125 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-{% block content %}
-<div style="text-align:center">
-<h1>Profile</h1>
-<br>
+{% block profile %}
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
 
-<img style="width: 15vw; height: 25vh;"
-                     alt="avatar"
-                     src="{{ user.myprofile.avatar.url }}"/>
+    <div class="cvrimg">
+        <img src="/static/FRANCE.svg" style="width:100%;">
+    </div>
 
-    <p><a href="{% url 'logout' %}" style="margin-left:80vw"> log out</a>
-   </p>
-    <p>
-        {% if request.user.id == user.id %}
-    <a href="{% url 'edit_profile' user.id %}" style="margin-left:80vw">Edit profile</a>
-        {% endif %}
-    </p>
-<label>First name :{{ user.myprofile.first_name }}
-</label>
-<br>
-    <br>
-    <br>
-<label>Last name: {{ user.myprofile.last_name }}</label>
-<br>
-    <br>
-    <br>
-    <label>Gender: {{ user.myprofile.gender }}</label>
-    <br>
-    <br>
-    <br>
-<label>Username :{{ user.username }}</label>
-<br>
-    <br>
-    <br>
-<label>Email : {{ user.email }}</label>
-<br>
-    <br>
-    <br>
-<label>Contact no.: {{ user.myprofile.phone_number }}</label>
-<br>
-    <br>
-    <br>
-<label>Date of birth : {{ user.myprofile.date_of_birth|date:"d M, Y" }}</label>
-<br>
+    <div class="pgimg">
+        <img src="{{ user.myprofile.avatar.url }}" style="height:100%;">
+    </div>
+    <div class="sfname">
+            <h2 >{{ user.username }}</h2></div>
+{% if posts %}
+
+    <div class="row" style="margin-top:-3%">
+        <div class="leftcolumn">
+
+            <div class="grid-container">
+                {% for post in posts %}
+                <div class="grid-item">
+                    <div class="gfakeimage">
+                        <h3 class="uname">{{ user.username }}</h3><i style="float:left;margin-top:5px;">{{post.post_on}}</i><br><br>
+                        <div class="uname">
+                            {% if post.about %}
+                            <p style="font-size:18px;flaot:left;">{{ post.about }}</p>
+                            {% endif %}
+                            {% if post.text %}
+                            <p style="font-size:18px;">{{ post.text }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="gfakeimg">
+                        {% if post.image %}
+                        <img  onclick="item('{{post.id}}','image','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.image.url}}')" src="{{ post.image.url }}" alt="img_post" class="fakeimg">
+                        {% endif %}
+                        {% if post.video %}
+                        <video  id="videopost{{ post.post_on}}" class="fakeimg" onclick="item('{{post.id}}','video','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.video.url}}')" controls>
+                            <source src="{{ post.video.url }}" type="video/mp4" ></video>
+                        {% endif %}
+                    </div>
+                    <div class="gcardf">
+                        <form action="{% url 'voteprofile' post.post_by.id %}" method="POST">
+                            {{ post.result }}
+                            <input type="hidden" name="post" value="{{post.pk}}">
+                            {% csrf_token %}
+                            {% if post in post_voted_list %}
+                            <button type="submit" style="border:none" id="like" value="{{post.id}}"><i class="like fa fa-thumbs-down"></i></button>
+                            {% else %}
+                            <button type="submit" style="border:none" id ="like" value="{{post.id}}"><i class="like fa fa-thumbs-up"></i></button>
+                            {% endif %}
+                        </form>
+
+                        <!--<i class="like fa fa-thumbs-down" style="padding-left:9px"></i>-->
+                        {% if post.image %}
+                        <div id="cmntmodal" ><i onclick="item('{{post.id}}','image','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.image.url}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
+                        {% endif %}
+                        {% if post.text %}
+                        <div id="cmntmodal" ><i onclick="item('{{post.id}}','text','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.text}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
+                        {% endif %}
+                        {% if post.video %}
+                        <div id="cmntmodal" ><i onclick="item('{{post.id}}','video','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.video.url}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
+                        {% endif %}
+                        <p style="padding-left:9px">200</p>
+                        <i class="like fa fa-paper-plane" style="padding-left:9px"> </i>
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="nopost">
+                <img src="/static/up.svg" alt="sdvfwegg">
+                <h2 style="margin-top:-10%;margin-left:19%;">You havn't posted any thing yet!!:( </h2>
+            </div>
+            {% endif %}
+        </div>
+
+
+        <div class="rightc" style="margin-left:10%">
+            <div class="card">
+                <img src="/static/explore-feed_preview.jpeg" class="fakeimg" >
+
+                <h2 style="padding:2%"><i class="fa fa-globe" style="padding-right:4%"></i> BIO</h2>
+                <h4 style="padding:4%"><i class=" fa fa-user" style="padding-right:4%"></i> {{ user.myprofile.first_name}} {{user.myprofile.last_name }}</h4>
+                <h4 style="padding:4%"><i class=" fa fa-envelope-open" style="padding-right:4%"></i> {{ user.email }} </h4>
+                <h4 style="padding:4%"><i class=" fa fa-venus-mars" style="padding-right:4%"></i> {{ user.myprofile.gender }} </h4>
+                <h4 style="padding:4%"><i class=" fa fa-birthday-cake" style="padding-right:4%"></i> {{ user.myprofile.date_of_birth|date:"d M, Y" }}</h4>
+                <h4 style="padding:4%"><i class=" fa fa-mobile" style="padding-right:4%"></i>{{ user.myprofile.phone_number }} </h4>
+            </div>
+        </div>
+    </div>
+<div id="id03" class="modal">
+
+    <div class="cardpost modal-content" style="padding:20px;border-radius: 25px">
+        <div class="imgcontainer">
+            <span onclick="closemodal()" class="close" title="Close Modal">&times;</span>
+
+        </div>
+        <div class="cardh">
+            <div class="dp"><img src="" class="postdp" id="dpurl"></div>
+            <h3 style="padding-left:2%" id="postby"></h3><i id="time"></i>
+        </div>
+        <div class="cardh">
+            <h4 id="about"></h4>
+        </div>
+        <h4 id="postitem3"></h4>
+        <video class="fakeimg" id="postitem2" controls></video>
+        <img src="/static/loginboy2.png" alt="Avatar" class="fakeimg" id="postitem">
+        <div id ="comment">
+<!--comment goes here-->
+        </div>
+
+        <h3 style="margin-top:20px;">Your Comments:</h3>
+        <div>
+            <form id="comment_form"  method="post">
+                {% csrf_token %}
+                <textarea name="content" cols="85" rows="5" maxlength="300" required="" id="id_content" style="border: 2px solid darkgrey;border-radius:6px;font-size:130%;" placeholder="your comments here.."></textarea>
+                <button type="submit" class="cmntbtn" style="margin-left:85%;font-size:120%;margin-top:1%">comment</button>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
-

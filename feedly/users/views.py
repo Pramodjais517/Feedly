@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect,reverse
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .forms import SignupForm ,edit_profile_form,login_form,create_imgpost_form, \
-    create_videopost_form,create_textpost_form
+from .forms import SignupForm ,Edit_Profile_Form,Login_Form,Create_Imgpost_Form, \
+    Create_Videopost_Form,Create_Textpost_Form,CommentForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -17,31 +17,16 @@ from feedly.settings import EMAIL_HOST_USER
 from django.views import View
 from django.views.generic import DetailView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import MyProfile,Post,Vote
+from .models import MyProfile,Post,Vote,Comment
 from django.db.models import Q
 
 
 class LandingView(View):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            user = request.user
-            is_voted = Vote.objects.filter(voter=user,status = True)
-            post_voted_list = list()
-
-            for votes in is_voted:
-                post_voted =Post.objects.get(vote=votes)
-                post_voted_list.append(post_voted)
-
-            context={
-            # 'user':request.user,
-               'is_voted':is_voted,
-               'vote':Vote.objects.all(),
-               'post_voted_list' : post_voted_list,
-               'object_list': Post.objects.order_by('-post_on'),
-            }
-            return render(request, 'home.html', context)
+            return redirect('home')
         else:
-            return render(request,'landing.html',{'form':login_form()})
+            return render(request,'landing.html',{'form':Login_Form()})
 
 
 
@@ -51,19 +36,21 @@ class HomeView(View):
         user = request.user
         is_voted = Vote.objects.filter(voter=user,status = True)
         post_voted_list = list()
+        form = CommentForm()
 
         for votes in is_voted:
             post_voted =Post.objects.get(vote=votes)
             post_voted_list.append(post_voted)
-
         context={
             # 'user':request.user,
-            'is_voted':is_voted,
-            'vote':Vote.objects.all(),
-            'post_voted_list' : post_voted_list,
+            # 'is_voted':is_voted,
+            'comments': Comment.objects.all().order_by('-comment_on'),
+            'post_voted_list': post_voted_list,
             'object_list': Post.objects.order_by('-post_on'),
+            'com_form': form,
         }
         return render(request, 'home.html', context)
+
 
 class SortedView(View):
     @method_decorator(login_required)
@@ -72,11 +59,12 @@ class SortedView(View):
             queryset=Post.objects.order_by('-post_on')
         if rec =='2':
             queryset = Post.objects.order_by('?')
+        if rec =='1':
+            queryset = Post.objects.order_by('-result')
         context={
             'object_list': queryset,
             }
         return render(request, 'home.html', context)
-
 
 
 class SignUpView(View):
@@ -105,8 +93,6 @@ class SignUpView(View):
         else:
             return render(request, 'signup.html', {'form': form})
 
-
-
     def get(self,request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('home')
@@ -128,18 +114,17 @@ class Activate(View):
             user.is_active = True
             user.save()
             login(request, user)
-            messages.success(request, 'thank you! for email verification')
+            # messages.success(request, 'thank you! for email verification')
             return redirect('edit_profile',user.id)
         else:
-            messages.success('Activation link is invalid!')
-            return redirect('home')
+            return HttpResponse("invalid linkh")
 
 
 
 class EditProfileView(View):
     @method_decorator(login_required)
     def post(self, request,user_id ,*args, **kwargs):
-        form = edit_profile_form(request.POST, request.FILES, instance=request.user.myprofile)
+        form = Edit_Profile_Form(request.POST, request.FILES, instance=request.user.myprofile)
         if form.is_valid():
             form.save()
             return redirect('profile', user_id)
@@ -148,7 +133,7 @@ class EditProfileView(View):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        form = edit_profile_form(instance=request.user.myprofile)
+        form = Edit_Profile_Form(instance=request.user.myprofile)
         return render(request, 'edit_profile.html', {'form': form})
 
 
@@ -172,7 +157,7 @@ class LoginView(View):
             if request.user.is_authenticated:
                return redirect('home')
             else:
-                form = login_form()
+                form = Login_Form()
             return render(request, 'landing.html', {'form': form})
 
 
@@ -183,12 +168,14 @@ class LogoutView(View):
 
 
 class ProfileView(View):
-    model= User
     @method_decorator(login_required)
     def get(self, request, user_id,*args, **kwargs):
         user = User.objects.get(pk=user_id)
+        posts = Post.objects.filter(post_by=user).order_by('-post_on')
         context={
-            'user': user
+            'user': user,
+            'posts':posts,
+            'comments':Comment.objects.all().order_by('-comment_on')
         }
         return render(request, 'profile.html', context)
 
@@ -203,11 +190,7 @@ class DeleteAccount(View):
             user = request.user
             user.delete()
             logout(request)
-            context={
-                'object_list': Post.objects.order_by('-post_on'),
-            }
-            messages.success(request, 'Your account is successfully deleted')
-            return render(request,'home.html', context)
+            return redirect('landing')
         if choice == 'reject':
             current_user = request.user
             return redirect('profile', current_user.id)
@@ -216,20 +199,20 @@ class CreatePostView(View):
     @method_decorator(login_required)
     def get(self, request,user_id,ch, *args, **kwagrs):
         if ch == 'image':
-            form = create_imgpost_form(request.POST or None, request.FILES or None)
+            form = Create_Imgpost_Form(request.POST or None, request.FILES or None)
         if ch == 'text':
-            form = create_textpost_form(request.POST or None)
+            form = Create_Textpost_Form(request.POST or None)
         if ch == 'video':
-            form = create_videopost_form(request.POST or None, request.FILES or None)
+            form = Create_Videopost_Form(request.POST or None, request.FILES or None)
         return render(request, 'createpost.html',{'form':form})
     @method_decorator(login_required)
     def post(self,request,user_id,ch,*args,**kwrgs):
         if ch == 'image':
-            form = create_imgpost_form(request.POST or None, request.FILES or None)
+            form = Create_Imgpost_Form(request.POST or None, request.FILES or None)
         if ch == 'text':
-            form = create_textpost_form(request.POST or None)
+            form = Create_Textpost_Form(request.POST or None)
         if ch == 'video':
-            form = create_videopost_form(request.POST or None, request.FILES or None)
+            form = Create_Videopost_Form(request.POST or None, request.FILES or None)
         f = form.save(commit=False)
         f.post_by = self.request.user
         if form.is_valid():
@@ -247,7 +230,7 @@ class VoteView(View):
         prev_votes = Vote.objects.filter(Q(voter=user)& Q(post_id = post))
         has_voted = (prev_votes.count()>0)
         if not has_voted:
-            Vote.objects.create(voter=user,post_id=post,status=True)
+            Vote.objects.create(voter=user, post_id=post, status=True)
             item.result = item.result +1
             item.save()
         else:
@@ -256,3 +239,49 @@ class VoteView(View):
             prev_votes[0].delete()
 
         return redirect('home')
+
+
+class VoteProfileView(View):
+    @method_decorator(login_required)
+    def post(self,request,post_by,*args,**kwargs):
+        post = request.POST['post']
+        user = self.request.user
+        item = Post.objects.get(pk=post)
+        prev_votes = Vote.objects.filter(Q(voter=user)& Q(post_id = post))
+        has_voted = (prev_votes.count()>0)
+        if not has_voted:
+            Vote.objects.create(voter=user, post_id=post, status=True)
+            item.result = item.result +1
+            item.save()
+        else:
+            item.result = item.result - 1
+            item.save()
+            prev_votes[0].delete()
+        is_voted = Vote.objects.filter(voter=user,status = True)
+        post_voted_list = list()
+
+        for votes in is_voted:
+            post_voted =Post.objects.get(vote=votes)
+            post_voted_list.append(post_voted)
+        posts = Post.objects.filter(post_by=post_by)
+        context={
+            'user':User.objects.get(pk=post_by),
+            'posts':posts,
+            'post_voted_list' : post_voted_list,
+            'object_list': Post.objects.order_by('-post_on'),
+        }
+        return render(request,'profile.html',context)
+
+class CommentView(View):
+        @method_decorator(login_required)
+        def post(self,request,post_id,*args,**kwargs):
+            form = CommentForm(request.POST or None)
+            post = Post.objects.get(pk = post_id)
+            f = form.save(commit=False)
+            f.comment_by = self.request.user
+            f.post_id = post_id
+            if form.is_valid():
+                form.save()
+                return redirect('home')
+            else:
+                return HttpResponse("form Ivalid")

@@ -1,18 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load staticfiles %}
+<!DOCTYPE <!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Feedly</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+   
+<style>
+
+.del{
+    background-color: rgba(210, 227, 252, 0.596);
+    margin: 0% 37% 0% 37%;
+    font-family: "Roboto",sans-serif;
+    margin-top: 5%;
+    border-radius: 10px;
+    
+}
+ .delimg{
+    width:70%;
+    /* height: 50%; */
+    margin: 40% 50% -30% 50%;
+    transform: translate(-50%,-50%);
+}
+.sorry{
+    margin-left: 3%;
+    margin-right:3%;
+    font-size: 110%;
+    text-align: center;
+
+}
+
+.delbtn{
+    font-size: 130%;
+    padding: 1% 3%; font-size: 130%;
+    padding: 1% 3%;
+    margin:0% 30% 0% 30%;
+    background-color:rgba(12, 112, 243, 0.699);
+    border:2px solid rgba(12, 112, 243, 0.699);
+    color: white;
+
+    border-radius: 5px;
+
+}
+
+.delbtn1{
+    background-color: transparent;
+    border:2px solid rgba(144, 144, 145, 0.699);
+    color:red;
+    margin: 4% 28.5% 15% 30%;
+    font-size: 125%;
+    padding: 2% 3%;
+    border-radius: 5px;
+
+}
+
+</style>
+
+
 </head>
 <body>
-{% block content %}
-<p>Hello, {{ user.username }}...<br><br>Are you sure you want to delete your account?</p>
-<br>
-<form method="post">
-    {% csrf_token %}
-    <button value="accept" name="des"> Yes,I'm sure  </button>
-    <button value ="reject" name="des">No,I won't delete</button>
-</form>
-{% endblock %}
+    <div class="del">
+        <img src="/static/del.png" class="delimg" >
+        <div class="sorry">
+           <p>Hello, {{ user.username }}...</p>
+            <p>We,re Sorry to see you go. If you want to permanently delete your account, click Delete account.</p>
+    
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <button value="reject" class="delbtn" name="des">Keep Account </button>
+            <button value ="accept" class="delbtn1" name="des">Delete Account</button>
+        </form>
+<!--<button type="submit" class="delbtn">Keep Account</button>-->
+<!--<button type="submit" class="delbtn1" >Delete Account</button>-->
+
+</button>
+
+
+    </div>
+    
 </body>
 </html>

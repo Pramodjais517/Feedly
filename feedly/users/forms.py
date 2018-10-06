@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import MyProfile,Post
+from .models import MyProfile,Post,Comment
 
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=30, help_text='Required')
@@ -18,14 +18,14 @@ class SignupForm(UserCreationForm):
         raise forms.ValidationError('This email address is already in use.')
 
 
-class edit_profile_form(forms.ModelForm):
+class Edit_Profile_Form(forms.ModelForm):
     # date_of_birth = forms.DateField(widget=forms.widgets.DateInput(format="%d/%m/%Y"))
     class Meta:
         model = MyProfile
         fields=('avatar', 'first_name', 'last_name', 'gender', 'date_of_birth','phone_number')
 
 
-class login_form(forms.ModelForm):
+class Login_Form(forms.ModelForm):
     password = forms.CharField(
         widget=forms.PasswordInput
     )
@@ -34,21 +34,26 @@ class login_form(forms.ModelForm):
         fields = ('username','password')
 
 
-class create_imgpost_form(forms.ModelForm):
+class Create_Imgpost_Form(forms.ModelForm):
     about = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':40}))
     class Meta:
         model = Post
         fields=('about','image',)
 
-class create_videopost_form(forms.ModelForm):
+class Create_Videopost_Form(forms.ModelForm):
     about = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':40}))
     class Meta:
         model = Post
         fields=('about','video',)
 
 
-class create_textpost_form(forms.ModelForm):
+class Create_Textpost_Form(forms.ModelForm):
     text =forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':40}))
     class Meta:
         model = Post
         fields = ('text',)
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model= Comment
+        fields=('content',)

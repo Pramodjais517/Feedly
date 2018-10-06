@@ -18,10 +18,12 @@
             document.getElementById("myDropdown").classList.toggle("show");
         }
 
-        var modal = document.getElementById('id01');
+
 
         window.onclick = function (event) {
+        var modal = document.getElementById('id03');
             if (event.target == modal) {
+                closemodal();
                 modal.style.display = "none";
                 console.log('67');
             }
@@ -56,7 +58,7 @@
         return true;
 
 }
-function item(type,dpurl,postby,about,time,posturl)
+function item(id,type,dpurl,postby,about,time,posturl)
 {
 document.getElementById('dpurl').setAttribute("src", dpurl);
 document.getElementById('postby').innerHTML = postby;
@@ -89,6 +91,32 @@ video.play();
 var vi = document.getElementById('videopost'+time);
 vi.pause();
 }
+var form = document.getElementById('comment_form');
+     form.action = '/comment/'+id+'/';
+{% for comment in comments %}{
+   if ({{comment.post.id}} == id )
+   {
+    var user = document.createElement("h3");
+    user.setAttribute("class","commenter");
+    var comtime = document.createElement("p");
+    comtime.setAttribute("class","comment_time");
+    var com = document.createElement("P");
+    com.setAttribute("class","comment_content");
+    console.log('{{comment.content}}');
+    var cont = document.createTextNode('"{{ comment.content }}"');
+    var comt = document.createTextNode('{{ comment.comment_on }}');
+    var comb = document.createTextNode('{{ comment.comment_by }}');
+    user.appendChild(comb);
+    comtime.appendChild(comt);
+    com.appendChild(cont);
+      document.getElementById("comment").appendChild(user);
+      document.getElementById("comment").appendChild(comtime);
+    document.getElementById("comment").appendChild(com);
+
+ }
+
+}
+{% endfor %}
 document.getElementById('id03').style.display='block';
     }
 
@@ -96,6 +124,7 @@ document.getElementById('id03').style.display='block';
 function closemodal(){
 var vid=document.getElementById('postitem2');
 vid.pause();
+document.getElementById('comment').innerHTML='';
 document.getElementById('id03').style.display='none';
 }
 
@@ -109,6 +138,7 @@ function chBackcolor() {
     }
 
 }
+
     </script>
     <!--<script type="text/javascript">-->
         <!--$(document).ready(function(event){-->
@@ -142,7 +172,9 @@ function chBackcolor() {
       #text
       {% endif %}
        {
-       background-color:green;
+       border:none;
+
+       border-bottom:2px solid black;
        }
     </style>
 
@@ -203,7 +235,7 @@ function chBackcolor() {
     </header>
 {% if request.user.is_authenticated %}
     <div id="myDropdown" class="dropdown-content" style="margin-top:64px">
-        <a href="{% url 'profile' user.id %}">My profile</a>
+        <a href="{% url 'profile' request.user.id %}">My profile</a>
         <a href="{% url 'edit_profile' user.id %}">Edit profile</a>
         <a href="{% url 'logout' %}">Log Out</a>
     </div>
@@ -212,7 +244,7 @@ function chBackcolor() {
         <a class="active" href="{% url 'home' %}"><i class="fa fa-home">
             <p class="side-content">HOME</p>
         </i></a>
-        <a href="#"><i class="fa fa-chart-line">
+        <a href="{% url 'recents' rec='1' %}"><i class="fa fa-chart-line">
                 <p class="side-content">POPULAR</p>
             </i></a>
         <a href="{% url 'recents' rec=2 %}"><i class="fa fa-globe">
@@ -243,6 +275,9 @@ function chBackcolor() {
     {% endblock %}
   <!--loads createprofile.html-->
    {% block post %}
+
+{% endblock %}
+{% block profile %}
 
 {% endblock %}
 </body>
