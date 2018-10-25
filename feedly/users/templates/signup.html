@@ -1,24 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load staticfiles %}
+<!DOCTYPE <!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Signup</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="home.css"> <link rel="stylesheet" href="{% static '/css/home.css' %}">
+    <link rel="stylesheet" href="home.css"> <link rel="stylesheet" href="{% static '/css/login.css' %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Lato|Roboto|Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
-<h2>Sign up</h2>
-<form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-    <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% for error in field.errors %}
-    <p style="color: red">{{ error }}</p>
-    {% endfor %}
-    </p>
-    {% endfor %}
-    <button type="submit">Sign up</button>
+<body >
+    <div class="bg">
 
-</form>
+        <img src="/static/feedly_logo.svg" style="width:7.5%;height:7.5%;margin-top: 20px;">
+        <div id="name">
+                FeedLy
+            </div>
+        {% for message in messages %}
+        <p style="color:green;font-size:20px;margin-left:80px;margin-top:120px;">{{ message }}</p>
+        {% endfor %}
+            <form action="{% url 'signup' %}" method="post">
+                {% csrf_token %}
+            <div class="landinglogin">
+
+                <div class=wel>
+                    Welcome :)
+                </div> <br>
+                <div class="connected">
+                    Sign up here to get connected  <i class="fa fa-bell bells"></i>
+                </div>
+                <div class="input-container email">
+                        <i class="fa fa-user icon"></i>
+                    <input class="input-field" type="text" name="username" placeholder="Username" maxlength="150" autofocus="" required="" id="id_username">
+                    </div>
+                {% if form.username.errors %}
+                <p>{{ form.username.errors }}</p><br><br>
+                {% endif %}
+                    <div class="input-container">
+                        <i class="fa fa-envelope icon"></i>
+                        <input class="input-field" type="email"  placeholder="email" name="email" maxlength="30" required="" id="id_email" onblur="validateEmail(this);">
+
+                    </div>
+                {% if form.email.errors %}
+                <p>{{ form.email.errors }}</p><br><br>
+                {% endif%}
+                    <div class="input-container ">
+                        <i class="fa fa-key icon"></i>
+                        <input class="input-field" type="password" name="password1" required="" id="id_password1" placeholder="Password">
+
+                    </div>
+                {% if form.password1.errors %}
+                <p>{{ form.password1.errors }}</p><br><br>
+                {% endif %}
+                    <div class="input-container ">
+                        <i class="fa fa-lock icon"></i>
+                        <input class="input-field" type="password" name="password2" required="" id="id_password2" placeholder="confirm Password">
+
+                    </div>
+                {% if form.password2.errors %}
+                <p>{{ form.password2.errors }}</p><br><br>
+                {% endif %}
+                <button type="submit" class="btn" onclick="document.getElementById('id05').style.display='block'" >Signup</button>
+
+            </div>
+            </form>
+        <a href="{% url 'landing' %}"><button type="submit" class="cabtn" style="margin-left: 23%;" >Login</button></a>
+    </div>
 </body>
 </html>

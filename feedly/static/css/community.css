@@ -1,11 +1,12 @@
 .cvrimg{
     width: 100%;
-    height: 200px;
+    height: 300px;
     /* background-image: url('loginboy2.png');
     background-size: cover; */
     border: 1px solid red;
-    margin-top:64px;
+
    overflow: hidden;
+
     
 }
 .pgimg{
@@ -53,7 +54,6 @@
     /* background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0, 0, 0, 0.8); */
     padding: 10px;
-    font-size: 0px;
     text-align: center;
     background-color: #E0FFE3 ;
   }

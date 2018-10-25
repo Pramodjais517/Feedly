@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^$',views.LandingView.as_view(),name="landingpage"),
+    url(r'^$',views.LandingView.as_view(),name="landing"),
     url(r'^login/$', views.LoginView.as_view(), name='login'),
     url(r'^posts/(?P<rec>[0-9]+)/$', views.SortedView.as_view(), name='recents'),
     url(r'^signup/$', views.SignUpView.as_view(), name='signup'),
@@ -21,6 +21,9 @@ urlpatterns = [
     url(r'^profile/(?P<user_id>[0-9]+)/create_post/(?P<ch>[0-9A-Za-z]+)$', views.CreatePostView.as_view(),
         name='createpost'),
     url(r'^vote/$', views.VoteView.as_view(), name='vote'),
+    url(r'^voteprofile/(?P<post_by>[0-9]+)/$', views.VoteProfileView.as_view(), name='voteprofile'),
+    url(r'^comment/(?P<post_id>[0-9]+)/$', views.CommentView.as_view(), name='comment'),
+
  ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

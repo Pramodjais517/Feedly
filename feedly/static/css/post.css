@@ -14,12 +14,15 @@
 }
 
 .cp-content{
+        padding-top:1%;
+        padding-bottom:1%;
         background-color: #DDDEDE;
-        border-radius: 25px;
-        margin: 50px auto 20px 23%;
+        border-radius: 15px;
+        margin-right: 13%;
+        margin-top:20px;
         border: 1px solid #888;
-        width: 60%; 
-        float: left;
+        width: 40%;
+        float: right;
 }
 @media (max-width: 1000px) {
     .leftcolumn {   
@@ -57,12 +60,6 @@
 }
 
 
-.cpmenu{
-    display: flex;
-    align-items: center;
-    margin: 0% 0% 2% 47%;
-    width: 50%;
-    }
 
 .choosefile{
     margin-left: 4%;
@@ -79,7 +76,7 @@
 }
 
 .txt{
-    margin: 15px 2% 8px 7%;
+    margin: 15px 2% 8px 7.5%;
     width: 50%;
     border: 2px solid #888;
     border-radius: 8px;
@@ -87,12 +84,13 @@
     font-size: 120%
 }
 .uploadbtn{
-    font-size: 120%;
-    margin-left: 59%;
+    font-size: 130%;
+    margin-left: 70%;
     color: white;
-    padding: 1%;
+    padding: 1.5% 4%;
     background-color: #888;
-    border-radius: 6px;
+    border-radius: 20px;
+    border: 1px solid #888;
 }
 
 
@@ -105,3 +103,49 @@
     border-radius: 10px;
 
 }
+
+.abt{
+margin-top:50%;
+margin-left: 6%;
+font-size:150%;
+
+}
+
+.cont .imgcont{
+
+width:90%;
+margin-left:9%;
+margin-top:10%;
+height:200%;
+}
+
+.imgcont{
+margin-left:10%;
+}
+
+.choose{
+margin-left: 7.5%;
+margin-top: 2%;
+font-size: 120%;
+}
+
+.cp-icons{
+        padding-top:0.5%;
+        padding-bottom:0.5%;
+        background-color: #DDDEDE;
+        border-radius: 25px;
+        margin-left:6.5%;
+        margin-top:20px;
+        border: 1px solid #888;
+        width: 20%;
+        float: left;
+        display:inline-block;
+
+}
+
+#image, #video, #text{
+margin-left:25px;
+padding:5px;
+}
+button:focus{
+border:none;}
