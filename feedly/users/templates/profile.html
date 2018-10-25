@@ -11,7 +11,7 @@
         <img src="{{ user.myprofile.avatar.url }}" style="height:100%;">
     </div>
     <div class="sfname">
-            <h2 >{{ user.username }}</h2></div>
+            <h2 style="color:#BCBEBE;margin-top:1.5%">{{ user.username }}</h2></div>
 {% if posts %}
 
     <div class="row" style="margin-top:-3%">
@@ -27,7 +27,7 @@
                             <p style="font-size:18px;flaot:left;">{{ post.about }}</p>
                             {% endif %}
                             {% if post.text %}
-                            <p style="font-size:18px;">{{ post.text }}</p>
+                            <p style="margin-bottom:8px;background-color:#E9E9E9;padding:0.3%;width:100%;font-size:100%;border-radius:10px;border:2px solid gray">{{ post.text }}</p>
                             {% endif %}
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                         {% if post.video %}
                         <div id="cmntmodal" ><i onclick="item('{{post.id}}','video','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.video.url}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
                         {% endif %}
-                        <p style="padding-left:9px">200</p>
+
                         <i class="like fa fa-paper-plane" style="padding-left:9px"> </i>
                     </div>
 
@@ -105,7 +105,7 @@
         <div class="cardh">
             <h4 id="about"></h4>
         </div>
-        <h4 id="postitem3"></h4>
+        <p style="background-color:#E9E9E9;padding:2%;width:100%;font-size:150%;border-radius:10px;border:2px solid gray" id="postitem3"></p>
         <video class="fakeimg" id="postitem2" controls></video>
         <img src="/static/loginboy2.png" alt="Avatar" class="fakeimg" id="postitem">
         <div id ="comment">
@@ -116,7 +116,7 @@
         <div>
             <form id="comment_form"  method="post">
                 {% csrf_token %}
-                <textarea name="content" cols="85" rows="5" maxlength="300" required="" id="id_content" style="border: 2px solid darkgrey;border-radius:6px;font-size:130%;" placeholder="your comments here.."></textarea>
+                <textarea name="content" cols="85" rows="5" maxlength="300" required="" id="id_content" style="border: 2px solid darkgrey;border-radius:6px;font-size:130%;padding-left:5px;" placeholder="your comments here.."></textarea>
                 <button type="submit" class="cmntbtn" style="margin-left:85%;font-size:120%;margin-top:1%">comment</button>
             </form>
         </div>

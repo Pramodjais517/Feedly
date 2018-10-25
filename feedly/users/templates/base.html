@@ -100,17 +100,16 @@ var form = document.getElementById('comment_form');
     user.setAttribute("class","commenter");
     var comtime = document.createElement("p");
     comtime.setAttribute("class","comment_time");
-    var com = document.createElement("P");
+    var com = document.createElement("p");
     com.setAttribute("class","comment_content");
-    console.log('{{comment.content}}');
     var cont = document.createTextNode('"{{ comment.content }}"');
     var comt = document.createTextNode('{{ comment.comment_on }}');
     var comb = document.createTextNode('{{ comment.comment_by }}');
     user.appendChild(comb);
     comtime.appendChild(comt);
     com.appendChild(cont);
-      document.getElementById("comment").appendChild(user);
-      document.getElementById("comment").appendChild(comtime);
+    document.getElementById("comment").appendChild(user);
+    document.getElementById("comment").appendChild(comtime);
     document.getElementById("comment").appendChild(com);
 
  }
@@ -241,7 +240,7 @@ function chBackcolor() {
     </div>
 {% endif %}
     <div class="icon-bar">
-        <a class="active" href="{% url 'home' %}"><i class="fa fa-home">
+        <a href="{% url 'home' %}"><i class="fa fa-home">
             <p class="side-content">HOME</p>
         </i></a>
         <a href="{% url 'recents' rec='1' %}"><i class="fa fa-chart-line">

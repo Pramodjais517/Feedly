@@ -35,13 +35,13 @@ class Login_Form(forms.ModelForm):
 
 
 class Create_Imgpost_Form(forms.ModelForm):
-    about = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':40}))
+
     class Meta:
         model = Post
         fields=('about','image',)
 
 class Create_Videopost_Form(forms.ModelForm):
-    about = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':40}))
+
     class Meta:
         model = Post
         fields=('about','video',)

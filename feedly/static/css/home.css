@@ -626,3 +626,6 @@ padding-left:3  %;
 .cmnthere{
    border: 2px solid darkgrey;
 }
+.comment_content{
+white-space: pre-wrap;
+}

@@ -172,10 +172,19 @@ class ProfileView(View):
     def get(self, request, user_id,*args, **kwargs):
         user = User.objects.get(pk=user_id)
         posts = Post.objects.filter(post_by=user).order_by('-post_on')
+        userlogin = self.request.user
+        is_voted = Vote.objects.filter(voter=userlogin, status=True)
+        post_voted_list = list()
+        form = CommentForm()
+        for votes in is_voted:
+            post_voted = Post.objects.get(vote=votes)
+            post_voted_list.append(post_voted)
         context={
             'user': user,
             'posts':posts,
-            'comments':Comment.objects.all().order_by('-comment_on')
+            'comments':Comment.objects.all().order_by('-comment_on'),
+            'post_voted_list': post_voted_list,
+            'com_form': form,
         }
         return render(request, 'profile.html', context)
 
@@ -257,13 +266,13 @@ class VoteProfileView(View):
             item.result = item.result - 1
             item.save()
             prev_votes[0].delete()
-        is_voted = Vote.objects.filter(voter=user,status = True)
+        is_voted = Vote.objects.filter(voter=user, status=True)
         post_voted_list = list()
 
         for votes in is_voted:
             post_voted =Post.objects.get(vote=votes)
             post_voted_list.append(post_voted)
-        posts = Post.objects.filter(post_by=post_by)
+        posts = Post.objects.filter(post_by=post_by).order_by('-post_on')
         context={
             'user':User.objects.get(pk=post_by),
             'posts':posts,
@@ -271,6 +280,7 @@ class VoteProfileView(View):
             'object_list': Post.objects.order_by('-post_on'),
         }
         return render(request,'profile.html',context)
+
 
 class CommentView(View):
         @method_decorator(login_required)
