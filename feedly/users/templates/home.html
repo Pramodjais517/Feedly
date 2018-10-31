@@ -31,20 +31,12 @@
         <source src="{{ post.video.url }}" type="video/mp4" ></video>
     {% endif %}
     <div class="cardf">
-        <form action="{% url 'vote' %}" method="POST">
-            {{ post.result }}
-            <input type="hidden" name="post" value="{{post.pk}}">
-            {% csrf_token %}
-            {% if post in post_voted_list %}
-            <button type="submit" style="border:none" id="like" value="{{post.id}}">
-                <i class="like fa fa-thumbs-down" style="font-size: 150%;"></i></button>
-            {% else %}
-            <button type="submit" style="border:none" id ="like" value="{{post.id}}">
-                <i class="like fa fa-thumbs-up" style="font-size: 150%;"></i></button>
-            {% endif %}
-        </form>
-
-        <!--<i class="like fa fa-thumbs-down" style="padding-left:9px"></i>-->
+            <div id="{{post.id}}">{{ post.result }}</div>
+        {% if post in post_voted_list %}
+                <i class="like fa fa-thumbs-down" style="font-size: 150%;" value="{{post.id}}" id="like{{post.id}}"></i></button>
+        {% else %}
+                <i class="like fa fa-thumbs-up" style="font-size: 150%;" value="{{post.id}}" id="like{{post.id}}"></i></button>
+        {% endif %}
         {% if post.image %}
         <div id="cmntmodal" ><i onclick="item('{{post.id}}','image','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.image.url}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
         {% endif %}

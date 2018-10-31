@@ -137,29 +137,41 @@ function chBackcolor() {
     }
 
 }
-
     </script>
-    <!--<script type="text/javascript">-->
-        <!--$(document).ready(function(event){-->
-          <!--$(document).on('click','#like',function(event){-->
-          <!--event.preventDefault();-->
-          <!--var pk = $(this).attr('value');-->
-          <!--$.ajax({-->
-          <!--type : 'POST',-->
-          <!--url : '{% url 'home' %}',-->
-          <!--data:{'post':pk,'csrfmiddlewaretoken':'{{ csrf_token }}'},-->
-          <!--dataType:'json',-->
-          <!--success:function(response){-->
-           <!--$('#like_section').html(response['form'])-->
-           <!--console.log(('#like_section').html(response['form']));-->
-          <!--},-->
-          <!--error:function(rs,e){-->
-          <!--console.log(rs.responseText);-->
-          <!--},-->
-          <!--});-->
-        <!--});-->
-      <!--});-->
-    <!--</script>-->
+    <script type="text/javascript">
+        $(document).ready(function(){
+          $(".like").on('click',function(){
+          console.log("in ajax");
+          var postid = $(this).attr('value');
+          console.log(postid);
+          $.ajax({
+          type : 'GET',
+          url : '{% url 'vote' %}',
+          data:{
+          'postid':postid,
+          },
+          success:function(data){
+           console.log("out of ajax");
+           console.log(data.result);
+           $('#'+postid).html(data.result);
+           console.log(data.voted);
+           if(data.voted){
+           console.log("in voted");
+             $('#like' + postid).attr('class','like fa fa-thumbs-down');
+             }
+           else
+           {
+           $('#like' + postid).attr('class','like fa fa-thumbs-up');
+           }
+
+          },
+          error:function(rs,e){
+          console.log(rs.responseText);
+          },
+          });
+        });
+      });
+    </script>
     <style>
     {% if form.image %}
        #image
