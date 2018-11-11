@@ -255,54 +255,27 @@ class VoteView(View):
         print(result)
         print(voted)
         data={
-            'result':result,
-            'voted':voted,
+            'result': result,
+            'voted': voted,
         }
 
         return JsonResponse(data)
 
-class VoteProfileView(View):
-    @method_decorator(login_required)
-    def post(self,request,post_by,*args,**kwargs):
-        post = request.POST['post']
-        user = self.request.user
-        item = Post.objects.get(pk=post)
-        prev_votes = Vote.objects.filter(Q(voter=user)& Q(post_id = post))
-        has_voted = (prev_votes.count()>0)
-        if not has_voted:
-            Vote.objects.create(voter=user, post_id=post, status=True)
-            item.result = item.result +1
-            item.save()
-        else:
-            item.result = item.result - 1
-            item.save()
-            prev_votes[0].delete()
-        is_voted = Vote.objects.filter(voter=user, status=True)
-        post_voted_list = list()
-
-        for votes in is_voted:
-            post_voted =Post.objects.get(vote=votes)
-            post_voted_list.append(post_voted)
-        posts = Post.objects.filter(post_by=post_by).order_by('-post_on')
-        context={
-            'user':User.objects.get(pk=post_by),
-            'posts':posts,
-            'post_voted_list' : post_voted_list,
-            'object_list': Post.objects.order_by('-post_on'),
-        }
-        return render(request,'profile.html',context)
-
-
 class CommentView(View):
     @method_decorator(login_required)
-    def post(self,request,post_id,*args,**kwargs):
+    def post(self,request,postid,*args,**kwargs):
         form = CommentForm(request.POST or None)
-        post = Post.objects.get(pk = post_id)
+        print ("in view comment")
+        print (postid)
+        post = Post.objects.get(pk = postid)
         f = form.save(commit=False)
         f.comment_by = self.request.user
-        f.post_id = post_id
+        f.post_id = postid
         if form.is_valid():
             form.save()
-            return redirect('home')
+            data = {
+                'comment': f.content,
+            }
+            return JsonResponse(data)
         else:
             return HttpResponse("form Ivalid")

@@ -38,16 +38,16 @@
                 <i class="like fa fa-thumbs-up" style="font-size: 150%;" value="{{post.id}}" id="like{{post.id}}"></i></button>
         {% endif %}
         {% if post.image %}
-        <div id="cmntmodal" ><i onclick="item('{{post.id}}','image','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.image.url}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
+        <div id="cmntmodal" ><i onclick="item('{{post.id}}','image','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.image.url}}')" class="fa fa-comments" style="padding-left:9px"></i></div>
         {% endif %}
         {% if post.text %}
-        <div id="cmntmodal" ><i onclick="item('{{post.id}}','text','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.text}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
+        <div id="cmntmodal" ><i onclick="item('{{post.id}}','text','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.text}}')" class="fa fa-comments" style="padding-left:9px"></i></div>
         {% endif %}
         {% if post.video %}
-        <div id="cmntmodal" ><i onclick="item('{{post.id}}','video','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.video.url}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
+        <div id="cmntmodal" ><i onclick="item('{{post.id}}','video','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.video.url}}')" class="fa fa-comments" style="padding-left:9px"></i></div>
         {% endif %}
 
-        <i class="like fa fa-paper-plane" style="padding-left:9px"> </i>
+        <i class="fa fa-paper-plane" style="padding-left:9px"> </i>
     </div>
 </div>
 </div>
@@ -133,8 +133,7 @@
         <textarea name="content" cols="85" rows="5" maxlength="300" required="" id="id_content" style="border: 2px solid darkgrey;border-radius:6px;font-size:130%;" placeholder="your comments here.."></textarea>
         <button type="submit" class="cmntbtn" style="margin-left:85%;font-size:120%;margin-top:1%">comment</button>
     </form>
-<!--<textarea rows="4" cols="50" name="comment" form="usrform"  placeholder="ggw" style="width:100%"></textarea>-->
-<!--<div class="edittxt">-->
+
 
 
 

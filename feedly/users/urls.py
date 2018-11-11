@@ -21,8 +21,7 @@ urlpatterns = [
     url(r'^profile/(?P<user_id>[0-9]+)/create_post/(?P<ch>[0-9A-Za-z]+)$', views.CreatePostView.as_view(),
         name='createpost'),
     url(r'^vote/$', views.VoteView.as_view(), name='vote'),
-    url(r'^voteprofile/(?P<post_by>[0-9]+)/$', views.VoteProfileView.as_view(), name='voteprofile'),
-    url(r'^comment/(?P<post_id>[0-9]+)/$', views.CommentView.as_view(), name='comment'),
+    url(r'^comment/(?P<postid>[0-9]+)/$', views.CommentView.as_view(), name='comment'),
 
  ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

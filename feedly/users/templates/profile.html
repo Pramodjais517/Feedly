@@ -41,29 +41,26 @@
                         {% endif %}
                     </div>
                     <div class="gcardf">
-                        <form action="{% url 'voteprofile' post.post_by.id %}" method="POST">
-                            {{ post.result }}
-                            <input type="hidden" name="post" value="{{post.pk}}">
-                            {% csrf_token %}
-                            {% if post in post_voted_list %}
-                            <button type="submit" style="border:none" id="like" value="{{post.id}}"><i class="like fa fa-thumbs-down"></i></button>
-                            {% else %}
-                            <button type="submit" style="border:none" id ="like" value="{{post.id}}"><i class="like fa fa-thumbs-up"></i></button>
-                            {% endif %}
-                        </form>
+
+                        <div id="{{post.id}}">{{ post.result }}</div>
+                        {% if post in post_voted_list %}
+                        <i class="like fa fa-thumbs-down" style="font-size: 150%;" value="{{post.id}}" id="like{{post.id}}"></i></button>
+                        {% else %}
+                        <i class="like fa fa-thumbs-up" style="font-size: 150%;" value="{{post.id}}" id="like{{post.id}}"></i></button>
+                        {% endif %}
 
                         <!--<i class="like fa fa-thumbs-down" style="padding-left:9px"></i>-->
                         {% if post.image %}
-                        <div id="cmntmodal" ><i onclick="item('{{post.id}}','image','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.image.url}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
+                        <div id="cmntmodal" ><i onclick="item('{{post.id}}','image','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.image.url}}')" class="fa fa-comments" style="padding-left:9px"></i></div>
                         {% endif %}
                         {% if post.text %}
-                        <div id="cmntmodal" ><i onclick="item('{{post.id}}','text','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.text}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
+                        <div id="cmntmodal" ><i onclick="item('{{post.id}}','text','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.text}}')" class="fa fa-comments" style="padding-left:9px"></i></div>
                         {% endif %}
                         {% if post.video %}
-                        <div id="cmntmodal" ><i onclick="item('{{post.id}}','video','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.video.url}}')" class="like fa fa-comments" style="padding-left:9px"></i></div>
+                        <div id="cmntmodal" ><i onclick="item('{{post.id}}','video','{{ post.post_by.myprofile.avatar.url }}','{{ post.post_by }}','{{post.about}}','{{post.post_on}}','{{post.video.url}}')" class="fa fa-comments" style="padding-left:9px"></i></div>
                         {% endif %}
 
-                        <i class="like fa fa-paper-plane" style="padding-left:9px"> </i>
+                        <i class="fa fa-paper-plane" style="padding-left:9px"> </i>
                     </div>
 
                 </div>
