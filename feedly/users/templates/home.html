@@ -123,16 +123,17 @@
        <p style="background-color:#F5F6F7;padding:2%;width:100%;font-size:150%;border-radius:10px;border:2px solid gray" id="postitem3"></p>
        <video class="fakeimg" id="postitem2" controls></video>
     <img src="/static/loginboy2.png" alt="Avatar" class="fakeimg" id="postitem">
+       <h3 style="margin-top:20px">Your Comments:</h3>
+       <div>
+           <form id="comment_form"  method="post">
+               {% csrf_token %}
+               <textarea name="content" cols="85" rows="5" maxlength="300" required="" id="id_content" style="border: 2px solid darkgrey;border-radius:6px;font-size:130%;" placeholder="your comments here.."></textarea>
+               <button type="submit" class="cmntbtn" style="margin-left:85%;font-size:120%;margin-top:1%">comment</button>
+           </form>
        <div id ="comment">
 <!--comment goes here-->
        </div>
-<h3 style="margin-top:20px">Your Comments:</h3>
-<div>
-    <form id="comment_form"  method="post">
-        {% csrf_token %}
-        <textarea name="content" cols="85" rows="5" maxlength="300" required="" id="id_content" style="border: 2px solid darkgrey;border-radius:6px;font-size:130%;" placeholder="your comments here.."></textarea>
-        <button type="submit" class="cmntbtn" style="margin-left:85%;font-size:120%;margin-top:1%">comment</button>
-    </form>
+
 
 
 

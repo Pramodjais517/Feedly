@@ -1,5 +1,7 @@
 from django.http import HttpResponse,JsonResponse
 import json
+import datetime
+from django.utils import timezone
 from django.core import serializers
 from django.shortcuts import render, redirect,reverse
 from django.contrib.auth import login, authenticate,logout
@@ -46,7 +48,7 @@ class HomeView(View):
         context={
             # 'user':request.user,
             # 'is_voted':is_voted,
-            'comments': Comment.objects.all().order_by('-comment_on'),
+            'comments': Comment.objects.all().order_by('comment_on'),
             'post_voted_list': post_voted_list,
             'object_list': Post.objects.order_by('-post_on'),
             'com_form': form,
@@ -275,7 +277,10 @@ class CommentView(View):
             form.save()
             data = {
                 'comment': f.content,
+                'comment_by' : f.comment_by.username,
+                'comment_on': f.comment_on.strftime("%b. %d, %Y,%I:%M %p"),
             }
             return JsonResponse(data)
+
         else:
-            return HttpResponse("form Ivalid")
+            return HttpResponse("form Invalid")
