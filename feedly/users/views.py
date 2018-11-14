@@ -1,4 +1,8 @@
 from django.http import HttpResponse,JsonResponse
+import json
+import datetime
+from django.utils import timezone
+from django.core import serializers
 from django.shortcuts import render, redirect,reverse
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.decorators import login_required
@@ -44,7 +48,7 @@ class HomeView(View):
         context={
             # 'user':request.user,
             # 'is_voted':is_voted,
-            'comments': Comment.objects.all().order_by('-comment_on'),
+            'comments': Comment.objects.all().order_by('comment_on'),
             'post_voted_list': post_voted_list,
             'object_list': Post.objects.order_by('-post_on'),
             'com_form': form,
@@ -63,7 +67,7 @@ class SortedView(View):
             queryset = Post.objects.order_by('-result')
         context={
             'object_list': queryset,
-            }
+        }
         return render(request, 'home.html', context)
 
 
@@ -138,27 +142,27 @@ class EditProfileView(View):
 
 
 class LoginView(View):
-        def post(self, request,*args, **kwargs):
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    messages.success(request, 'woahh!! logged in..')
-                    return redirect('home')
-                else:
-                    return HttpResponse('please! verify your Email first')
+    def post(self, request,*args, **kwargs):
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                messages.success(request, 'woahh!! logged in..')
+                return redirect('home')
             else:
-                messages.error(request, 'username or password not correct')
-                return redirect('landing')
+                return HttpResponse('please! verify your Email first')
+        else:
+            messages.error(request, 'username or password not correct')
+            return redirect('landing')
 
-        def get(self, request, *args, **kwagrs):
-            if request.user.is_authenticated:
-               return redirect('home')
-            else:
-                form = Login_Form()
-            return render(request, 'landing.html', {'form': form})
+    def get(self, request, *args, **kwagrs):
+        if request.user.is_authenticated:
+            return redirect('home')
+        else:
+            form = Login_Form()
+        return render(request, 'landing.html', {'form': form})
 
 
 class LogoutView(View):
@@ -232,8 +236,9 @@ class CreatePostView(View):
 
 class VoteView(View):
     @method_decorator(login_required)
-    def post(self,request,*args,**kwargs):
-        post = request.POST['post']
+    def get(self,request,*args,**kwargs):
+        post = request.GET['postid']
+        print(post)
         user = self.request.user
         item = Post.objects.get(pk=post)
         prev_votes = Vote.objects.filter(Q(voter=user)& Q(post_id = post))
@@ -241,57 +246,41 @@ class VoteView(View):
         if not has_voted:
             Vote.objects.create(voter=user, post_id=post, status=True)
             item.result = item.result +1
+            voted = True
             item.save()
         else:
             item.result = item.result - 1
+            voted = False
             item.save()
             prev_votes[0].delete()
-
-        return redirect('home')
-
-
-class VoteProfileView(View):
-    @method_decorator(login_required)
-    def post(self,request,post_by,*args,**kwargs):
-        post = request.POST['post']
-        user = self.request.user
-        item = Post.objects.get(pk=post)
-        prev_votes = Vote.objects.filter(Q(voter=user)& Q(post_id = post))
-        has_voted = (prev_votes.count()>0)
-        if not has_voted:
-            Vote.objects.create(voter=user, post_id=post, status=True)
-            item.result = item.result +1
-            item.save()
-        else:
-            item.result = item.result - 1
-            item.save()
-            prev_votes[0].delete()
-        is_voted = Vote.objects.filter(voter=user, status=True)
-        post_voted_list = list()
-
-        for votes in is_voted:
-            post_voted =Post.objects.get(vote=votes)
-            post_voted_list.append(post_voted)
-        posts = Post.objects.filter(post_by=post_by).order_by('-post_on')
-        context={
-            'user':User.objects.get(pk=post_by),
-            'posts':posts,
-            'post_voted_list' : post_voted_list,
-            'object_list': Post.objects.order_by('-post_on'),
+        result = Vote.objects.filter(post_id = post).count()
+        print(result)
+        print(voted)
+        data={
+            'result': result,
+            'voted': voted,
         }
-        return render(request,'profile.html',context)
 
+        return JsonResponse(data)
 
 class CommentView(View):
-        @method_decorator(login_required)
-        def post(self,request,post_id,*args,**kwargs):
-            form = CommentForm(request.POST or None)
-            post = Post.objects.get(pk = post_id)
-            f = form.save(commit=False)
-            f.comment_by = self.request.user
-            f.post_id = post_id
-            if form.is_valid():
-                form.save()
-                return redirect('home')
-            else:
-                return HttpResponse("form Ivalid")
+    @method_decorator(login_required)
+    def post(self,request,postid,*args,**kwargs):
+        form = CommentForm(request.POST or None)
+        print ("in view comment")
+        print (postid)
+        post = Post.objects.get(pk = postid)
+        f = form.save(commit=False)
+        f.comment_by = self.request.user
+        f.post_id = postid
+        if form.is_valid():
+            form.save()
+            data = {
+                'comment': f.content,
+                'comment_by' : f.comment_by.username,
+                'comment_on': f.comment_on.strftime("%b. %d, %Y,%I:%M %p"),
+            }
+            return JsonResponse(data)
+
+        else:
+            return HttpResponse("form Invalid")

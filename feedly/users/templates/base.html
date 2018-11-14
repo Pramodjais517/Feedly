@@ -58,6 +58,9 @@
         return true;
 
 }
+
+
+
 function item(id,type,dpurl,postby,about,time,posturl)
 {
 document.getElementById('dpurl').setAttribute("src", dpurl);
@@ -71,7 +74,8 @@ document.getElementById('about').style.display = 'none';
 document.getElementById('postitem2').style.display='none';
 document.getElementById('postitem').style.display='none';
 }
-if (type == 'image'){
+if (type == 'image')
+{
 document.getElementById('postitem').style.display='block';
 document.getElementById('about').style.display = 'block';
 document.getElementById('postitem').setAttribute("src", posturl);
@@ -79,7 +83,8 @@ document.getElementById('about').innerHTML = about;
 document.getElementById('postitem2').style.display='none';
 document.getElementById('postitem3').style.display='none';
 }
-if (type == 'video'){
+if (type == 'video')
+{
 document.getElementById('postitem2').style.display='block';
 document.getElementById('about').style.display = 'block';
 document.getElementById('postitem2').setAttribute("src", posturl);
@@ -91,10 +96,17 @@ video.play();
 var vi = document.getElementById('videopost'+time);
 vi.pause();
 }
+update_comment(id);
+
+document.getElementById('id03').style.display='block';
 var form = document.getElementById('comment_form');
      form.action = '/comment/'+id+'/';
-{% for comment in comments %}{
-   if ({{comment.post.id}} == id )
+    }
+
+function update_comment(postid){
+{% for comment in comments %}
+{
+   if ({{comment.post.id}} == postid )
    {
     var user = document.createElement("h3");
     user.setAttribute("class","commenter");
@@ -102,7 +114,7 @@ var form = document.getElementById('comment_form');
     comtime.setAttribute("class","comment_time");
     var com = document.createElement("p");
     com.setAttribute("class","comment_content");
-    var cont = document.createTextNode('"{{ comment.content }}"');
+    var cont = document.createTextNode("'{{ comment.content }} '");
     var comt = document.createTextNode('{{ comment.comment_on }}');
     var comb = document.createTextNode('{{ comment.comment_by }}');
     user.appendChild(comb);
@@ -116,9 +128,7 @@ var form = document.getElementById('comment_form');
 
 }
 {% endfor %}
-document.getElementById('id03').style.display='block';
-    }
-
+}
 
 function closemodal(){
 var vid=document.getElementById('postitem2');
@@ -137,29 +147,76 @@ function chBackcolor() {
     }
 
 }
-
     </script>
-    <!--<script type="text/javascript">-->
-        <!--$(document).ready(function(event){-->
-          <!--$(document).on('click','#like',function(event){-->
-          <!--event.preventDefault();-->
-          <!--var pk = $(this).attr('value');-->
-          <!--$.ajax({-->
-          <!--type : 'POST',-->
-          <!--url : '{% url 'home' %}',-->
-          <!--data:{'post':pk,'csrfmiddlewaretoken':'{{ csrf_token }}'},-->
-          <!--dataType:'json',-->
-          <!--success:function(response){-->
-           <!--$('#like_section').html(response['form'])-->
-           <!--console.log(('#like_section').html(response['form']));-->
-          <!--},-->
-          <!--error:function(rs,e){-->
-          <!--console.log(rs.responseText);-->
-          <!--},-->
-          <!--});-->
-        <!--});-->
-      <!--});-->
-    <!--</script>-->
+    <script type="text/javascript">
+        $(document).ready(function(){
+          $(".like").on('click',function(event){
+          event.preventDefault();
+          console.log("in ajax");
+          var postid = $(this).attr('value');
+          console.log(postid);
+          $.ajax({
+          type : 'GET',
+          url : '{% url 'vote' %}',
+          data:{
+          'postid':postid,
+          },
+          success:function(data){
+           console.log("out of ajax");
+           console.log(data.result);
+           $('#'+postid).html(data.result);
+           console.log(data.voted);
+           if(data.voted){
+           console.log("in voted");
+             $('#like' + postid).attr('class','like fa fa-thumbs-down');
+             }
+           else
+           {
+           $('#like' + postid).attr('class','like fa fa-thumbs-up');
+           }
+
+          },
+          });
+        });
+      });
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    var frm = $('#comment_form');
+    $('#comment_form').on('submit',function (event) {
+    event.preventDefault();
+    console.log('in comment ajax');
+        $.ajax({
+            type: frm.attr('method'),
+            url: frm.attr('action'),
+            data: frm.serialize(),
+            success: function(data){
+            console.log(data);
+            console.log('out of ajax');
+            var user = document.createElement("h3");
+            user.setAttribute("class","commenter");
+            var comtime = document.createElement("p");
+            comtime.setAttribute("class","comment_time");
+            var com = document.createElement("p");
+            com.setAttribute("class","comment_content");
+            var comb = document.createTextNode(data.comment_by);
+            console.log(data.comment_by);
+            user.appendChild(comb);
+            document.getElementById("comment").appendChild(user);
+            var comt = document.createTextNode(data.comment_on);
+            comtime.appendChild(comt);
+            document.getElementById("comment").appendChild(comtime);
+            var cont = document.createTextNode(" '" + data.comment+ "' ");
+            com.appendChild(cont);
+            document.getElementById("comment").appendChild(com);
+    },
+            error: function(data) {
+                console.log('wrong');
+            }
+        });
+    });
+    });
+</script>
     <style>
     {% if form.image %}
        #image
