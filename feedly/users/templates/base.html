@@ -106,6 +106,7 @@ var form = document.getElementById('comment_form');
 function update_comment(postid){
 {% for comment in comments %}
 {
+
    if ({{comment.post.id}} == postid )
    {
     var user = document.createElement("h3");
@@ -182,6 +183,7 @@ function chBackcolor() {
     </script>
     <script type="text/javascript">
     $(document).ready(function(){
+    var comm,keys;
     var frm = $('#comment_form');
     $('#comment_form').on('submit',function (event) {
     event.preventDefault();
@@ -191,7 +193,6 @@ function chBackcolor() {
             url: frm.attr('action'),
             data: frm.serialize(),
             success: function(data){
-            console.log(data);
             console.log('out of ajax');
             var user = document.createElement("h3");
             user.setAttribute("class","commenter");
@@ -200,7 +201,6 @@ function chBackcolor() {
             var com = document.createElement("p");
             com.setAttribute("class","comment_content");
             var comb = document.createTextNode(data.comment_by);
-            console.log(data.comment_by);
             user.appendChild(comb);
             document.getElementById("comment").appendChild(user);
             var comt = document.createTextNode(data.comment_on);
@@ -215,7 +215,7 @@ function chBackcolor() {
             }
         });
     });
-    });
+  });
 </script>
     <style>
     {% if form.image %}

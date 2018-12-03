@@ -5,8 +5,6 @@ from django.dispatch import receiver
 from phonenumber_field.modelfields import PhoneNumberField
 
 
-
-
 class MyProfile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     first_name = models.CharField(max_length=10, blank=True,null=True,default='')

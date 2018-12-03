@@ -45,13 +45,14 @@ class HomeView(View):
         for votes in is_voted:
             post_voted =Post.objects.get(vote=votes)
             post_voted_list.append(post_voted)
+
         context={
             # 'user':request.user,
             # 'is_voted':is_voted,
-            'comments': Comment.objects.all().order_by('comment_on'),
             'post_voted_list': post_voted_list,
             'object_list': Post.objects.order_by('-post_on'),
             'com_form': form,
+            'comments':Comment.objects.all().order_by('comment_on')
         }
         return render(request, 'home.html', context)
 
@@ -269,15 +270,16 @@ class CommentView(View):
         form = CommentForm(request.POST or None)
         print ("in view comment")
         print (postid)
-        post = Post.objects.get(pk = postid)
         f = form.save(commit=False)
         f.comment_by = self.request.user
         f.post_id = postid
         if form.is_valid():
             form.save()
+            # comm = Comment.objects.all().order_by('comment_on')
+            # comments = list(comm.values())
             data = {
                 'comment': f.content,
-                'comment_by' : f.comment_by.username,
+                'comment_by': f.comment_by.username,
                 'comment_on': f.comment_on.strftime("%b. %d, %Y,%I:%M %p"),
             }
             return JsonResponse(data)
