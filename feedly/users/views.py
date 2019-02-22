@@ -1,8 +1,4 @@
 from django.http import HttpResponse,JsonResponse
-import json
-import datetime
-from django.utils import timezone
-from django.core import serializers
 from django.shortcuts import render, redirect,reverse
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.decorators import login_required
@@ -186,7 +182,7 @@ class ProfileView(View):
             post_voted_list.append(post_voted)
         context={
             'user': user,
-            'posts':posts,
+            'posts': posts,
             'comments':Comment.objects.all().order_by('-comment_on'),
             'post_voted_list': post_voted_list,
             'com_form': form,
