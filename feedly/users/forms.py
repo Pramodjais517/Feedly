@@ -19,6 +19,7 @@ class SignupForm(UserCreationForm):
 
 
 class Edit_Profile_Form(forms.ModelForm):
+    # date_of_birth = forms.DateField(widget=forms.widgets.DateInput(format="%d/%m/%Y"))
     class Meta:
         model = MyProfile
         fields=('avatar', 'first_name', 'last_name', 'gender', 'date_of_birth','phone_number')
@@ -39,7 +40,6 @@ class Create_Imgpost_Form(forms.ModelForm):
         model = Post
         fields=('about','image',)
 
-
 class Create_Videopost_Form(forms.ModelForm):
 
     class Meta:
@@ -52,7 +52,6 @@ class Create_Textpost_Form(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('text',)
-
 
 class CommentForm(forms.ModelForm):
     class Meta:
