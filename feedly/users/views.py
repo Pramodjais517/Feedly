@@ -43,8 +43,6 @@ class HomeView(View):
             post_voted_list.append(post_voted)
 
         context={
-            # 'user':request.user,
-            # 'is_voted':is_voted,
             'post_voted_list': post_voted_list,
             'object_list': Post.objects.order_by('-post_on'),
             'com_form': form,
