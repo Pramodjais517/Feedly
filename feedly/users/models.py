@@ -69,3 +69,9 @@ class Comment(models.Model):
         return "%s commented on %s" %(self.comment_by.username,self.post.about)
 
 
+class Friendlist(models.Model):
+    friends = models.ManyToManyField(User)
+    profile = models.OneToOneField(MyProfile,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "friend list of %s"%(self.profile.user.username)
