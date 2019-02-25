@@ -57,3 +57,10 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model= Comment
         fields=('content',)
+
+
+class SearchForm(forms.Form):
+    search = forms.CharField(max_length=30)
+
+    class Meta:
+        fields = ('search',)

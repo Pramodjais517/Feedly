@@ -3,8 +3,7 @@ from django.shortcuts import render, redirect,reverse
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .forms import SignupForm ,Edit_Profile_Form,Login_Form,Create_Imgpost_Form, \
-    Create_Videopost_Form,Create_Textpost_Form,CommentForm
+from .forms import *
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -44,7 +43,7 @@ class HomeView(View):
 
         context={
             # 'user':request.user,
-            # 'is_voted':is_voted,
+            # 'searchform':SearchForm,
             'post_voted_list': post_voted_list,
             'object_list': Post.objects.order_by('-post_on'),
             'com_form': form,
@@ -282,3 +281,13 @@ class CommentView(View):
 
         else:
             return HttpResponse("form Invalid")
+
+
+class SearchView(View):
+    @method_decorator(login_required)
+    def post(self,request,*args,**kwargs):
+        form = SearchForm(request.POST)
+        if(form.is_valid()):
+            print(form['search'].value())
+            return HttpResponse("well Done")
+        return redirect('home')

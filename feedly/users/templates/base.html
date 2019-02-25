@@ -187,13 +187,11 @@ function chBackcolor() {
     var frm = $('#comment_form');
     $('#comment_form').on('submit',function (event) {
     event.preventDefault();
-    console.log('in comment ajax');
         $.ajax({
             type: frm.attr('method'),
             url: frm.attr('action'),
             data: frm.serialize(),
             success: function(data){
-            console.log('out of ajax');
             var user = document.createElement("h3");
             user.setAttribute("class","commenter");
             var comtime = document.createElement("p");
@@ -216,10 +214,6 @@ function chBackcolor() {
         });
     });
   });
-
-function searchfunc(){
-console.log("hello");
-}
 </script>
     <style>
     {% if form.image %}
@@ -251,10 +245,13 @@ console.log("hello");
                 FeedLy
             </li>
             <li id="searchbox">
-                <form method="post" action="searchfunc()">
+                <form method="post" action="{% url 'search' %}">
                     {% csrf_token %}
-                    <input type="text" id="search" placeholder="Search">
-                    <button onclick="searchfunc()"><i class="fa fa-search"></i></button>
+                    {% if form.search.errors %}
+                    <p>{{ form.search.errors }}</p>
+                    {% endif %}
+                    <input type="text" placeholder="Search" name="search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
             </li>
             {% if request.user.is_authenticated %}
