@@ -216,6 +216,10 @@ function chBackcolor() {
         });
     });
   });
+
+function searchfunc(){
+console.log("hello");
+}
 </script>
     <style>
     {% if form.image %}
@@ -247,9 +251,10 @@ function chBackcolor() {
                 FeedLy
             </li>
             <li id="searchbox">
-                <form>
-                    <input type="text" id="search" placeholder=" Search">
-                    <button type="submit"><i class="fa fa-search"></i></button>
+                <form method="post" action="searchfunc()">
+                    {% csrf_token %}
+                    <input type="text" id="search" placeholder="Search">
+                    <button onclick="searchfunc()"><i class="fa fa-search"></i></button>
                 </form>
             </li>
             {% if request.user.is_authenticated %}
