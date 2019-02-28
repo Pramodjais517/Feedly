@@ -247,8 +247,10 @@ function chBackcolor() {
             <li id="searchbox">
                 <form method="post" action="{% url 'search' %}">
                     {% csrf_token %}
-                    {% if form.search.errors %}
-                    <p>{{ form.search.errors }}</p>
+                    {% if messages %}
+                    {% for message in messages %}
+                    <p style="color:green;font-size:20px;margin-left:80px;margin-top:120px;">{{ message }}</p>
+                    {% endfor %}
                     {% endif %}
                     <input type="text" placeholder="Search" name="search">
                     <button type="submit"><i class="fa fa-search"></i></button>

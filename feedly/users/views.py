@@ -287,7 +287,13 @@ class SearchView(View):
     @method_decorator(login_required)
     def post(self,request,*args,**kwargs):
         form = SearchForm(request.POST)
+        # if not form['search']:
+        #     messages.error(request,'enter a search')
+        #     return redirect('home')
         if(form.is_valid()):
-            print(form['search'].value())
-            return HttpResponse("well Done")
-        return redirect('home')
+            search = form['search'].value()
+            result = MyProfile.objects.filter(first_name__startswith=search)
+            context ={
+                'result':result,
+            }
+        return render(request,'search_result.html',context)
