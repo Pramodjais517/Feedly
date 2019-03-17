@@ -292,8 +292,8 @@ class SearchView(View):
         #     return redirect('home')
         if(form.is_valid()):
             search = form['search'].value()
-            result = MyProfile.objects.filter(first_name__startswith=search)
+            result = MyProfile.objects.filter(user__username=search)
             context ={
                 'result':result,
             }
-        return render(request,'search_result.html',context)
+            return render(request,'search_result.html',context)

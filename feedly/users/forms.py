@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import MyProfile,Post,Comment
+from phonenumber_field.modelfields import PhoneNumberField
 
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=30, help_text='Required')
@@ -19,7 +20,7 @@ class SignupForm(UserCreationForm):
 
 
 class Edit_Profile_Form(forms.ModelForm):
-    # date_of_birth = forms.DateField(widget=forms.widgets.DateInput(format="%d/%m/%Y"))
+    phone_number = forms.CharField(min_length=13,required=True)
     class Meta:
         model = MyProfile
         fields=('avatar', 'first_name', 'last_name', 'gender', 'date_of_birth','phone_number')
