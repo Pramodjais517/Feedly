@@ -245,7 +245,7 @@ function chBackcolor() {
                 FeedLy
             </li>
             <li id="searchbox">
-                <form method="post" action="{% url 'search' %}">
+                <form method="get" action="{% url 'search' %}">
                     {% csrf_token %}
                     {% if messages %}
                     {% for message in messages %}

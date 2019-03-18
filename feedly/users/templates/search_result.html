@@ -2,16 +2,12 @@
 {% load staticfiles %}
 {% block content %}
 <div style="text-align:center;padding-top:100px;">
-<p>hello</p>
-dSfnekw
-fefegeQAdwqfrbsdcswa
-dcwscv
-sdcsfcvdvaS
-DDS
-<p>ekdfnefef</p>
-<p>kvnlkdnva</p>
-<p>sdv ekjnwsdk</p>
-{% for user in result %}
+    {% if messages %}
+    {% for message in messages %}
+    <p style="text-align:center;margin-top:100px;">{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+{% for user in results %}
 <p style="text-align:center">{{ user }}</p>
 {% endfor %}
 {% endblock %}

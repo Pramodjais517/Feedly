@@ -127,7 +127,8 @@ class EditProfileView(View):
         form = Edit_Profile_Form(request.POST, request.FILES, instance=request.user.myprofile)
         if form.is_valid():
             form.save()
-            return redirect('profile', user_id)
+            messages.success(request, 'Profile updated successfully!!')
+            return redirect('edit_profile', user_id)
         else:
             return HttpResponse("hello")
 
@@ -188,6 +189,7 @@ class ProfileView(View):
         }
         return render(request, 'profile.html', context)
 
+
 class DeleteAccount(View):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
@@ -204,6 +206,7 @@ class DeleteAccount(View):
             current_user = request.user
             return redirect('profile', current_user.id)
 
+
 class CreatePostView(View):
     @method_decorator(login_required)
     def get(self, request,user_id,ch, *args, **kwagrs):
@@ -214,6 +217,7 @@ class CreatePostView(View):
         if ch == 'video':
             form = Create_Videopost_Form(request.POST or None, request.FILES or None)
         return render(request, 'createpost.html',{'form':form})
+
     @method_decorator(login_required)
     def post(self,request,user_id,ch,*args,**kwrgs):
         if ch == 'image':
@@ -229,6 +233,7 @@ class CreatePostView(View):
             return redirect('home')
         else:
             return render(request, 'createpost.html', {'form': form,})
+
 
 class VoteView(View):
     @method_decorator(login_required)
@@ -259,6 +264,7 @@ class VoteView(View):
 
         return JsonResponse(data)
 
+
 class CommentView(View):
     @method_decorator(login_required)
     def post(self,request,postid,*args,**kwargs):
@@ -285,15 +291,18 @@ class CommentView(View):
 
 class SearchView(View):
     @method_decorator(login_required)
-    def post(self,request,*args,**kwargs):
-        form = SearchForm(request.POST)
-        # if not form['search']:
-        #     messages.error(request,'enter a search')
-        #     return redirect('home')
-        if(form.is_valid()):
-            search = form['search'].value()
-            result = MyProfile.objects.filter(user__username=search)
-            context ={
-                'result':result,
-            }
-            return render(request,'search_result.html',context)
+    def get(self,request,*args,**kwargs):
+        search = request.GET.get('search')
+        if search is not None:
+            results = MyProfile.objects.filter(Q(user__username__icontains=search)|Q(first_name__icontains=search)|
+                                          Q(last_name__icontains=search)|Q(user__email__icontains=search)|
+                                          Q(phone_number__icontains=search))
+            if results is not None:
+                context={
+                    'results': results,
+                }
+                return render(request,'search_result.html',context)
+        else:
+            messages.success(request,"Required")
+            return redirect('search')
+

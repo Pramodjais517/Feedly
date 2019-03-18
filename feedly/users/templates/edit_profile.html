@@ -18,14 +18,14 @@
 {% endif %}
 <form method="post" enctype="multipart/form-data" class="editprofile">
     {% csrf_token %}
-    <!--<span id="changepic" style="display:grid;">{{ form.avatar }}</span>-->
     <span id="changepic" style="display:grid;" >
      <input type="file" name="avatar" accept="image/*" id="id_avatar">
     </span>
 
+    {% for message in messages %}
+    <p style="color:green;font-size:20px;text-align:center;margin-left:80px;">{{ message }}</p>
+    {% endfor %}
 <div class="edit">
-
-
         <label>Username:</label>
         <p class="fname">{{user.username }}</p>
 
@@ -35,12 +35,10 @@
         <label >First Name:
                 {{ form.first_name }}
         </label>
-        <!--<input type="text" id="fname" name="firstname" placeholder="First name">-->
 
         <label>Last Name:
                 {{ form.last_name }}
         </label>
-        <!--<input type="text" id="fname" name="firstname" placeholder=" Last name">-->
 
         <label>Gender:
             {{ form.gender }}
@@ -49,12 +47,10 @@
         <label >Date of Birth (dd/mm/yyyy):
                 {{  form.date_of_birth }}
         </label>
-        <!--<input type="text" id="lname" name="lastname" placeholder="yyyy-mm-dd">-->
 
         <label>Contact no.:
                 {{  form.phone_number }}
         </label>
-        <!--<input type="text" id="fname" name="firstname" placeholder="**********">-->
 
         <input type="submit" value="UPDATE" class="editbtn">
 </div>
