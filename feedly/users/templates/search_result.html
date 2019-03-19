@@ -8,7 +8,15 @@
     {% endfor %}
     {% endif %}
 {% for user in results %}
-<p style="text-align:center">{{ user }}</p>
+    <!--<div style="background:#c2c9d3;">-->
+        <div class="cardh">
+            <div class="dp" style="margin-left:0px;margin-right:300px">
+                <a href="{{ user.myprofile.avatar.url }}"><img src="{{ user.myprofile.avatar.url }}" class="postdp"></a>
+            </div>
+            <a style="text-decoration:none;margin-left:500px;margin-right:500px" href="{% url 'profile' user.id %}"><h4 style="padding-left:1%;position:absolute;margin-top:-10px;">{{ user }}</h4></a>
+        </div>
+<!--<p style="text-align:center">{{ user }}</p>-->
+    <!--</div>-->
 {% endfor %}
 {% endblock %}
 </div>

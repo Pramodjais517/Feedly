@@ -293,16 +293,17 @@ class SearchView(View):
     @method_decorator(login_required)
     def get(self,request,*args,**kwargs):
         search = request.GET.get('search')
-        if search is not None:
+        if search not in ('',' '):
             results = MyProfile.objects.filter(Q(user__username__icontains=search)|Q(first_name__icontains=search)|
                                           Q(last_name__icontains=search)|Q(user__email__icontains=search)|
                                           Q(phone_number__icontains=search))
-            if results is not None:
+            if results:
                 context={
                     'results': results,
                 }
                 return render(request,'search_result.html',context)
+            else:
+                messages.success(request,"No user found!!")
+                return render(request,'search_result.html')
         else:
-            messages.success(request,"Required")
-            return redirect('search')
-
+            return redirect(request.META['HTTP_REFERER'])
