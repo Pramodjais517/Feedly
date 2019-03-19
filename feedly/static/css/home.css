@@ -360,7 +360,7 @@ img.avatar {
       display: flex;
       align-items: center;
       padding: 4px;
-      border-radius: 4px;
+      border-radius: 10px;
       
   }
   .cardf{

@@ -7,14 +7,19 @@
     <p style="text-align:center;margin-top:100px;">{{ message }}</p>
     {% endfor %}
     {% endif %}
-{% for user in results %}
+{% for profile in results %}
     <!--<div style="background:#c2c9d3;">-->
-        <div class="cardh">
-            <div class="dp" style="margin-left:0px;margin-right:300px">
-                <a href="{{ user.myprofile.avatar.url }}"><img src="{{ user.myprofile.avatar.url }}" class="postdp"></a>
+    <div class="leftcolumn">
+    <div class="cardpost" style="margin-top:30px; margin-bottom:-80px;margin-left:300px">
+    <div class="cardh">
+            <div class="dp">
+                <a href="{{ profile.avatar.url }}"><img src="{{ profile.avatar.url }}" class="postdp"></a>
             </div>
-            <a style="text-decoration:none;margin-left:500px;margin-right:500px" href="{% url 'profile' user.id %}"><h4 style="padding-left:1%;position:absolute;margin-top:-10px;">{{ user }}</h4></a>
+            <a style="text-decoration:none;" href="{% url 'profile' profile.id %}"><h3 style="padding-left:1%;position:absolute;margin-top:-10px;">{{ profile }}</h3></a>
+            <h4 style="padding-left:5%;position:relative;margin-top:50px;">{{ profile.first_name}} {{ profile.last_name }}</h4>
         </div>
+    </div>
+    </div>
 <!--<p style="text-align:center">{{ user }}</p>-->
     <!--</div>-->
 {% endfor %}
