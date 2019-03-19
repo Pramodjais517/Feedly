@@ -207,6 +207,7 @@ function chBackcolor() {
             var cont = document.createTextNode(" '" + data.comment+ "' ");
             com.appendChild(cont);
             document.getElementById("comment").appendChild(com);
+            document.getElementById('cmntcnt').value='';
     },
             error: function(data) {
                 console.log('wrong');
