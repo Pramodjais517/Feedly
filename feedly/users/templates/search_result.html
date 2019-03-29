@@ -16,7 +16,9 @@
                 <a href="{{ profile.avatar.url }}"><img src="{{ profile.avatar.url }}" class="postdp"></a>
             </div>
             <a style="text-decoration:none;" href="{% url 'profile' profile.id %}"><h3 style="padding-left:1%;position:absolute;margin-top:-10px;">{{ profile }}</h3></a>
-            <h4 style="padding-left:5%;position:relative;margin-top:50px;">{{ profile.first_name}} {{ profile.last_name }}</h4>
+        
+            <h5 style="padding-left:5%;margin-top:50px;">{{ profile.first_name}}  {{ profile.last_name }}</h5>
+
         </div>
     </div>
     </div>

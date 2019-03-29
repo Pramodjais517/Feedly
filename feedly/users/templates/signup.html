@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="home.css"> <link rel="stylesheet" href="{% static '/css/home.css' %}">
     <link rel="stylesheet" href="home.css"> <link rel="stylesheet" href="{% static '/css/login.css' %}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Feedly</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Lato|Roboto|Montserrat" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
@@ -19,9 +19,7 @@
         <div id="name">
                 FeedLy
             </div>
-        {% for message in messages %}
-        <p style="color:green;font-size:20px;margin-left:80px;margin-top:120px;">{{ message }}</p>
-        {% endfor %}
+
             <form action="{% url 'signup' %}" method="post">
                 {% csrf_token %}
             <div class="landinglogin">
@@ -63,6 +61,13 @@
                 {% if form.password2.errors %}
                 <p>{{ form.password2.errors }}</p><br><br>
                 {% endif %}
+                <div class="input-container ">
+                <script src='https://www.google.com/recaptcha/api.js'></script>
+                <div class="g-recaptcha" data-sitekey="6Ldi4JoUAAAAADkHu_RcaZiy67p86o-ayAJCHBS1"></div>
+                </div>
+                {% for message in messages %}
+                <p style="color:green;font-size:20px;margin-left:80px;margin-bottom:20px">{{ message }}</p>
+                {% endfor %}
                 <button type="submit" class="btn" onclick="document.getElementById('id05').style.display='block'" >Signup</button>
 
             </div>

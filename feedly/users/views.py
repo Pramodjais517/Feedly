@@ -18,6 +18,9 @@ from django.views.generic import DetailView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import MyProfile,Post,Vote,Comment
 from django.db.models import Q
+import json
+import urllib
+from django.conf import settings
 
 
 class LandingView(View):
@@ -73,23 +76,40 @@ class SignUpView(View):
     def post(self, request, *args, **kwargs):
         form = SignupForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
-            current_site = get_current_site(request)
-            subject = 'Activate Your Feedly Account'
-            message = render_to_string('acc_active_email.html', {
+            ''' Begin reCAPTCHA validation '''
+            recaptcha_response = request.POST.get('g-recaptcha-response')
+            url = 'https://www.google.com/recaptcha/api/siteverify'
+            values = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response': recaptcha_response
+            }
+            data = urllib.parse.urlencode(values).encode()
+            req =  urllib.request.Request(url, data=data)
+            response = urllib.request.urlopen(req)
+            result = json.loads(response.read().decode())
+            """ end of reCAPTCHA validation"""
+            if result['success']:
 
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode,
-                'token': account_activation_token.make_token(user),
-            })
-            from_mail = EMAIL_HOST_USER
-            to_mail = [user.email]
-            send_mail(subject, message, from_mail, to_mail, fail_silently=False)
-            messages.success(request, 'Please!Confirm your email to complete registration.')
-            return redirect('signup')
+                user = form.save(commit=False)
+                user.is_active = False
+                user.save()
+                current_site = get_current_site(request)
+                subject = 'Activate Your Feedly Account'
+                message = render_to_string('acc_active_email.html', {
+
+                   'user': user,
+                   'domain': current_site.domain,
+                   'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode,
+                   'token': account_activation_token.make_token(user),
+                })
+                from_mail = EMAIL_HOST_USER
+                to_mail = [user.email]
+                send_mail(subject, message, from_mail, to_mail, fail_silently=False)
+                messages.success(request, 'Please!Confirm your email to complete registration.')
+                return redirect('signup')
+            else:
+                messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+                return redirect('signup')
         else:
             return render(request, 'signup.html', {'form': form})
 
@@ -145,9 +165,24 @@ class LoginView(View):
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
-                login(request, user)
-                messages.success(request, 'woahh!! logged in..')
-                return redirect('home')
+                ''' Begin reCAPTCHA validation '''
+                recaptcha_response = request.POST.get('g-recaptcha-response')
+                url = 'https://www.google.com/recaptcha/api/siteverify'
+                values = {
+                    'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                    'response': recaptcha_response
+                }
+                data = urllib.parse.urlencode(values).encode()
+                req =  urllib.request.Request(url, data=data)
+                response = urllib.request.urlopen(req)
+                result = json.loads(response.read().decode())
+                """ end of reCAPTCHA validation"""
+                if result['success']:
+                    login(request, user)
+                    return redirect('home')
+                else:
+                    messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+                    return redirect('landing')
             else:
                 return HttpResponse('please! verify your Email first')
         else:
