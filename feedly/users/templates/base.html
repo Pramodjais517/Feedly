@@ -92,10 +92,11 @@ document.getElementById('postitem2').setAttribute("src", posturl);
 document.getElementById('about').innerHTML = about;
 document.getElementById('postitem').style.display='none';
 document.getElementById('postitem3').style.display='none';
+var vi = document.getElementById('videopost'+time);
+vi.play();
 var video = document.getElementById('postitem2');
 video.play();
-var vi = document.getElementById('videopost'+time);
-vi.pause();
+<!--vi.pause();-->
 }
 update_comment(id);
 

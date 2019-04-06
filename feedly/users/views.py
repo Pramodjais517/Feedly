@@ -32,7 +32,6 @@ class LandingView(View):
             return render(request,'landing.html',{'form':Login_Form()})
 
 
-
 class HomeView(View):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
@@ -331,15 +330,14 @@ class SearchView(View):
         search = request.GET.get('search')
         if search not in ('',' '):
             search_words = search.strip().split(' ')
-            # print(search_words)
             quer=MyProfile.objects.filter(Q(user__username__icontains=search_words[0])|Q(first_name__icontains=search_words[0])|
                                           Q(last_name__icontains=search_words[0])|Q(user__email__icontains=search_words[0])|
                                           Q(phone_number=search_words[0]))
-            quer = Search(search_words,quer,1)
-            print(quer)
-            if quer:
+            query = Search(search_words,quer,1)
+            print(query)
+            if query:
                 context={
-                        'results': quer,
+                        'results': query,
                        }
                 return render(request,'search_result.html',context)
             else:
