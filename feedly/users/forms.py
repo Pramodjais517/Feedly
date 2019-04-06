@@ -20,7 +20,7 @@ class SignupForm(UserCreationForm):
 
 
 class Edit_Profile_Form(forms.ModelForm):
-    phone_number = forms.CharField(min_length=13,required=True)
+    phone_number = forms.CharField(min_length=10,required=True)
     class Meta:
         model = MyProfile
         fields=('avatar', 'first_name', 'last_name', 'gender', 'date_of_birth','phone_number')

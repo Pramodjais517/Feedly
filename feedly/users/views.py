@@ -21,6 +21,7 @@ from django.db.models import Q
 import json
 import urllib
 from django.conf import settings
+from .search_engine import Search
 
 
 class LandingView(View):
@@ -329,16 +330,20 @@ class SearchView(View):
     def get(self,request,*args,**kwargs):
         search = request.GET.get('search')
         if search not in ('',' '):
-            results = MyProfile.objects.filter(Q(user__username__icontains=search)|Q(first_name__icontains=search)|
-                                          Q(last_name__icontains=search)|Q(user__email__icontains=search)|
-                                          Q(phone_number__icontains=search))
-            if results:
+            search_words = search.strip().split(' ')
+            # print(search_words)
+            quer=MyProfile.objects.filter(Q(user__username__icontains=search_words[0])|Q(first_name__icontains=search_words[0])|
+                                          Q(last_name__icontains=search_words[0])|Q(user__email__icontains=search_words[0])|
+                                          Q(phone_number=search_words[0]))
+            quer = Search(search_words,quer,1)
+            print(quer)
+            if quer:
                 context={
-                    'results': results,
-                }
+                        'results': quer,
+                       }
                 return render(request,'search_result.html',context)
             else:
-                messages.success(request,"No user found!!")
-                return render(request,'search_result.html')
+                    messages.success(request,"No user found!!")
+                    return render(request,'search_result.html')
         else:
             return redirect(request.META['HTTP_REFERER'])
