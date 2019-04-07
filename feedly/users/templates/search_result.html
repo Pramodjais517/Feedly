@@ -7,18 +7,20 @@
     <p style="text-align:center;margin-top:100px;">{{ message }}</p>
     {% endfor %}
     {% endif %}
-{% for profile in results %}
+{% for user in results %}
     <!--<div style="background:#c2c9d3;">-->
     <div class="leftcolumn">
     <div class="cardpost" style="margin-top:30px; margin-bottom:-80px;margin-left:300px">
     <div class="cardh">
             <div class="dp">
-                <a href="{{ profile.avatar.url }}"><img src="{{ profile.avatar.url }}" class="postdp"></a>
+                <a href="{{ user.avatar.url }}"><img src="{{ user.avatar.url }}" class="postdp"></a>
             </div>
-            <a style="text-decoration:none;" href="{% url 'profile' profile.id %}"><h3 style="padding-left:1%;position:absolute;margin-top:-10px;">{{ profile }}</h3></a>
-        
-            <h5 style="padding-left:5%;margin-top:50px;">{{ profile.first_name}}  {{ profile.last_name }}</h5>
-
+            <a style="text-decoration:none;padding-left:1%;margin-top:-8%;" href="{% url 'profile' user.id %}"><h3 style="padding-left:1%;position:absolute;margin-top:-10px;">{{ user }}</h3></a>
+            <h4 style="padding-left:10%;margin-top:40px;">{{ user.first_name}}</h4>
+            <h4 style="padding-left:2%;margin-top:40px;">{{ user.last_name }}</h4>
+        <div class="dp2">
+            <a href="{% url 'add_friend' user.id"><i class="fa fa-user-plus fa-2x" aria-hidden="true"></i></a>
+        </div>
         </div>
     </div>
     </div>

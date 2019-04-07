@@ -254,8 +254,8 @@ function chBackcolor() {
                 </form>
             </li>
             {% if request.user.is_authenticated %}
-            <li>
-                <a href="{% url 'createpost' user.id 'text' %}" style="text-decoration:none"><button id="cp" type="button" ><i class="far fa-edit" style="margin-right:5%"></i> POST</button>
+            <li style="margin-left:5%">
+                <a href="{% url 'createpost' user.id 'text' %}" ><button id="cp" type="button" ><i class="far fa-edit"></i></button>
                 </a>
             </li>
             {% else %}
@@ -267,9 +267,13 @@ function chBackcolor() {
             </li>
             {% endif %}
             {% if request.user.is_authenticated %}
-            <li>
+            <li style="margin-left:2%">
                 <button id="noti" type="button" onclick="document.getElementById('id02').style.display='block'">
-                    <i class="far fa-bell" style="margin-right:5%" style="margin-right:5%"></i>NOTIFICATION</button>
+                    <i class="fa fa-users" aria-hidden="true" style="margin-left:5%"></i></button>
+            </li>
+            <li style="margin-left:1%">
+                <button id="noti" type="button" onclick="document.getElementById('id02').style.display='block'">
+                    <i class="far fa-bell" style="margin-left:5%"></i></button>
             </li>
             {% else %}
             <li>
@@ -279,7 +283,7 @@ function chBackcolor() {
             </li>
             {% endif %}
             {% if request.user.is_authenticated %}
-            <li>
+            <li style="margin-left:-3%">
                 <div class="dropdown">
                     <button onclick="myFunction()" class="dropbtn"><i class="far fa-user"></i><i class="fa fa-caret-down"></i></button>
 

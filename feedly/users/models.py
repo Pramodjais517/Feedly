@@ -66,13 +66,40 @@ class Comment(models.Model):
 
 
 class FriendList(models.Model):
-    profile = models.OneToOneField(MyProfile,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='mylist')
     friends = models.ManyToManyField(User)
 
     def __str__(self):
-        return "friend list of %s"%(self.profile.user.username)
+        return "friend list of %s"%(self.user.username)
 
+    @receiver(post_save, sender=User)
+    def create_friendlist(sender, instance, created, **kwargs):
+        if created:
+            obj=FriendList.objects.create(user=instance)
+            obj.save()
 
 class FriendRequest(models.Model):
-    profile = models.OneToOneField(MyProfile,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='receiver')
     friend_request = models.ManyToManyField(User)
+
+    def __str__(self):
+        return "friend request to %s"%(self.user.username)
+
+    @receiver(post_save, sender=User)
+    def create_friendrequest(sender, instance, created, **kwargs):
+        if created:
+            obj=FriendRequest.objects.create(user=instance)
+            obj.save()
+
+class FriendRequestSent(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='sender')
+    request_sent = models.ManyToManyField(User)
+
+    @receiver(post_save, sender=User)
+    def create_friendrequestsent(sender, instance, created, **kwargs):
+        if created:
+            obj=FriendRequestSent.objects.create(user=instance)
+            obj.save()
+
+    def __str__(self):
+        return "sent request of %s"%(self.user.username)

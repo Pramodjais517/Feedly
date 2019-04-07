@@ -16,7 +16,7 @@ from feedly.settings import EMAIL_HOST_USER
 from django.views import View
 from django.views.generic import DetailView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import MyProfile,Post,Vote,Comment
+from .models import *
 from django.db.models import Q
 import json
 import urllib
@@ -330,10 +330,8 @@ class SearchView(View):
         search = request.GET.get('search')
         if search not in ('',' '):
             search_words = search.strip().split(' ')
-            quer=MyProfile.objects.filter(Q(user__username__icontains=search_words[0])|Q(first_name__icontains=search_words[0])|
-                                          Q(last_name__icontains=search_words[0])|Q(user__email__icontains=search_words[0])|
-                                          Q(phone_number=search_words[0]))
-            query = Search(search_words,quer,1)
+            quer = MyProfile.objects
+            query = Search(search_words,quer,0,user=request.user)
             print(query)
             if query:
                 context={
@@ -345,3 +343,15 @@ class SearchView(View):
                     return render(request,'search_result.html')
         else:
             return redirect(request.META['HTTP_REFERER'])
+
+
+class AddFriendView(View):
+
+    def get(self):
+        user = self.kwargs('user_id')
+        sender = FriendRequestSent.object.get(user=self.request.user)
+        sender.request_sent.add(user)
+        receiver = FriendRequest.object.get(user=user)
+        receiver.friend_request.add(sender)
+        return HttpResponse("hello")
+

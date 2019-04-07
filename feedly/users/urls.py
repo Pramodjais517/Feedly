@@ -23,7 +23,9 @@ urlpatterns = [
         name='createpost'),
     url(r'^vote/$', views.VoteView.as_view(), name='vote'),
     url(r'^comment/(?P<postid>[0-9]+)/$', views.CommentView.as_view(), name='comment'),
-    url(r'search/$',views.SearchView.as_view(),name='search')
+    url(r'search/$',views.SearchView.as_view(),name='search'),
+    url(r'add_friend/(?P<user_id>[0-9]+)',views.AddFriendView.as_view(),name='add_friend')
+    # url(r'friendlist',views.FriendListView.as_view(),name='Friend_list')
 
  ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
