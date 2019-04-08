@@ -332,10 +332,18 @@ class SearchView(View):
             search_words = search.strip().split(' ')
             quer = MyProfile.objects
             query = Search(search_words,quer,0,user=request.user)
-            print(query)
+            friend = FriendList.objects.get(user=request.user)
+            requests = FriendRequest.objects.get(user=request.user)
+            sentreq = FriendRequestSent.objects.get(user=request.user)
+            friendlist = list(friend.friends.all())
+            requestlist = list(requests.friend_request.all())
+            sentrequestlist = list(sentreq.request_sent.all())
             if query:
                 context={
                         'results': query,
+                        'friendlist': friendlist,
+                        'requestlist': requestlist,
+                        'sentrequest':sentrequestlist,
                        }
                 return render(request,'search_result.html',context)
             else:
@@ -345,13 +353,39 @@ class SearchView(View):
             return redirect(request.META['HTTP_REFERER'])
 
 
-class AddFriendView(View):
+class SendCancelRequestView(View):
 
+    @method_decorator(login_required)
+    def get(self,request,user_id,*args,**kwargs):
+        # user = user_id
+        try:
+            req= FriendRequestSent.objects.get(user=self.request.user,request_sent=user_id)
+        except FriendRequestSent.DoesNotExist:
+            req = None
+        if req is None:
+            sender = FriendRequestSent.objects.get(user=self.request.user)
+            sender.request_sent.add(user_id)
+            receiver = FriendRequest.objects.get(user=user_id)
+            receiver.friend_request.add(sender.user)
+            data={
+                'status':'sent',
+            }
+            return JsonResponse(data)
+        else:
+            req.request_sent.remove(user_id)
+            receiver = FriendRequest.objects.get(user=user_id)
+            receiver.friend_request.remove(req.user)
+            data={
+                'status':'cancel'
+            }
+            return JsonResponse(data)
+
+
+class AcceptDeclineRequestView(View):
+    @method_decorator(login_required)
     def get(self):
-        user = self.kwargs('user_id')
-        sender = FriendRequestSent.object.get(user=self.request.user)
-        sender.request_sent.add(user)
-        receiver = FriendRequest.object.get(user=user)
-        receiver.friend_request.add(sender)
-        return HttpResponse("hello")
+        sender = self.kwargs['user_id']
+        status = self.kwargs['status']
+
+
 

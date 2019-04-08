@@ -155,7 +155,7 @@ function chBackcolor() {
         $(document).ready(function(){
           $(".like").on('click',function(event){
           event.preventDefault();
-          console.log("in ajax");
+
           var postid = $(this).attr('value');
           console.log(postid);
           $.ajax({
@@ -182,6 +182,7 @@ function chBackcolor() {
           });
         });
       });
+
     </script>
     <script type="text/javascript">
     $(document).ready(function(){
@@ -218,6 +219,34 @@ function chBackcolor() {
     });
   });
 </script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            $('.add_remove').on('click',function (event){
+            event.preventDefault();
+            var Url = $(this).attr('href');
+            var id = $(this).attr('id');
+            console.log(id);
+            $.ajax({
+            type : 'GET',
+            url : Url,
+            success:function(res){
+                 if(res.status == 'cancel'){
+                  document.getElementById(id).innerHTML = "Add Friend";
+             }
+                 else if(res.status == 'sent')
+                 {
+                  document.getElementById(id).innerHTML = "Cancel request";
+                 }
+            },
+             error:function(res){
+                console.log("something went wrong");
+               }
+              });
+         });
+
+      });
+    </script>
     <style>
     {% if form.image %}
        #image

@@ -18,9 +18,24 @@
             <a style="text-decoration:none;padding-left:1%;margin-top:-8%;" href="{% url 'profile' user.id %}"><h3 style="padding-left:1%;position:absolute;margin-top:-10px;">{{ user }}</h3></a>
             <h4 style="padding-left:10%;margin-top:40px;">{{ user.first_name}}</h4>
             <h4 style="padding-left:2%;margin-top:40px;">{{ user.last_name }}</h4>
+        {% if user.user in friendlist %}
         <div class="dp2">
-            <a href="{% url 'add_friend' user.id"><i class="fa fa-user-plus fa-2x" aria-hidden="true"></i></a>
+            <span>Friend</span>
         </div>
+        {% elif user.user in sentrequest %}
+        <div class="dp2">
+            <a id="{{user.id}}" href="{% url 'add_friend' user.id %}" class="add_remove">Cancel request</a>
+        </div>
+        {% elif user.user in requestlist %}
+        <div class="dp2">
+            <a id="{{user.id}}" href="{% url 'request_log' 'approve' user.id %}" class="app_dec">Approve Request</a>
+            <a id="{{user.id}}" href="{% url 'request_log'  'decline' user.id %}" class="app_dec">Decline</a>
+        </div>
+        {% else %}
+        <div class="dp2">
+            <a id="{{user.id}}" href="{% url 'add_friend' user.id %}" class="add_remove">Add Friend</a>
+        </div>
+        {% endif %}
         </div>
     </div>
     </div>
