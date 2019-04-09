@@ -28,8 +28,8 @@
         </div>
         {% elif user.user in requestlist %}
         <div class="dp2">
-            <a id="{{user.id}}" href="{% url 'request_log' 'approve' user.id %}" class="app_dec">Approve Request</a>
-            <a id="{{user.id}}" href="{% url 'request_log'  'decline' user.id %}" class="app_dec">Decline</a>
+            <button><a id="accept{{user.id}}" href="{% url 'request_log' 'approve' user.id %}" class="app_dec">Approve Request</a></button>
+            <button><a id="decline{{user.id}}" href="{% url 'request_log'  'decline' user.id %}" class="app_dec">Decline</a></button>
         </div>
         {% else %}
         <div class="dp2">
@@ -39,6 +39,6 @@
         </div>
     </div>
     </div>
+</div>
 {% endfor %}
 {% endblock %}
-</div>

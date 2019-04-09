@@ -247,6 +247,36 @@ function chBackcolor() {
 
       });
     </script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            $('.app_dec').on('click',function (event){
+            event.preventDefault();
+            var Url = $(this).attr('href');
+            var id = $(this).attr('id')
+            console.log(id);
+            $.ajax({
+            type : 'GET',
+            url : Url,
+            success:function(res){
+                 if(res.status == 'approved'){
+                  document.getElementById('accept'+res.user).innerHTML = "Accepted";
+                  $('#decline'+res.user).remove();
+             }
+                 else if(res.status == 'declined')
+                 {
+                  document.getElementById('decline'+res.user).innerHTML = "Declined";
+                  $('#accept'+res.user).remove();
+                 }
+            },
+             error:function(res){
+                console.log("something went wrong");
+               }
+              });
+         });
+
+      });
+    </script>
     <style>
     {% if form.image %}
        #image
@@ -297,8 +327,8 @@ function chBackcolor() {
             {% endif %}
             {% if request.user.is_authenticated %}
             <li style="margin-left:2%">
-                <button id="noti" type="button" onclick="document.getElementById('id02').style.display='block'">
-                    <i class="fa fa-users" aria-hidden="true" style="margin-left:5%"></i></button>
+                <a href="{% url 'friend_request' %}"><button id="noti" type="button" onclick="document.getElementById('id02').style.display='block'">
+                    <i class="fa fa-users" aria-hidden="true" style="margin-left:5%"></i></button></a>
             </li>
             <li style="margin-left:1%">
                 <button id="noti" type="button" onclick="document.getElementById('id02').style.display='block'">

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+{% for user in friend_request_list %}
+
+<div class="leftcolumn">
+    <div class="cardpost" style="margin-top:30px; margin-bottom:-80px;margin-left:300px">
+        <div class="cardh">
+            <div class="dp">
+                <a href="{{ user.myprofile.avatar.url }}"><img src="{{ user.myprofile.avatar.url }}" class="postdp"></a>
+            </div>
+            <a href="{% url 'profile' user.id %}">{{ user }}</a>
+            wants to be friend with you.
+            <div class="dp2">
+                <button><a id="accept{{user.id}}" href="{% url 'request_log' 'approve' user.id %}" class="app_dec">Approve Request</a></button>
+                <button><a id="decline{{user.id}}" href="{% url 'request_log'  'decline' user.id %}" class="app_dec">Decline</a></button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

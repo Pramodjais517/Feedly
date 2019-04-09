@@ -165,26 +165,11 @@ class LoginView(View):
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
-                ''' Begin reCAPTCHA validation '''
-                recaptcha_response = request.POST.get('g-recaptcha-response')
-                url = 'https://www.google.com/recaptcha/api/siteverify'
-                values = {
-                    'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
-                    'response': recaptcha_response
-                }
-                data = urllib.parse.urlencode(values).encode()
-                req =  urllib.request.Request(url, data=data)
-                response = urllib.request.urlopen(req)
-                result = json.loads(response.read().decode())
-                """ end of reCAPTCHA validation"""
-                if result['success']:
                     login(request, user)
                     return redirect('home')
-                else:
-                    messages.error(request, 'Invalid reCAPTCHA. Please try again.')
-                    return redirect('landing')
             else:
-                return HttpResponse('please! verify your Email first')
+                messages.error('please! verify your Email first')
+                return redirect('landing')
         else:
             messages.error(request, 'username or password not correct')
             return redirect('landing')
@@ -381,11 +366,44 @@ class SendCancelRequestView(View):
             return JsonResponse(data)
 
 
+class FriendRequestView(View):
+    @method_decorator(login_required)
+    def get(self,request,*args,**kwargs):
+        friend_request_list = FriendRequest.objects.get(user=self.request.user)
+        request_list = list(friend_request_list.friend_request.all())
+        context = {
+            'friend_request_list':request_list,
+        }
+        return render(request,'friend_request.html',context)
+
+
 class AcceptDeclineRequestView(View):
     @method_decorator(login_required)
-    def get(self):
+    def get(self,request,*args,**kwargs):
         sender = self.kwargs['user_id']
         status = self.kwargs['status']
-
-
+        if status == 'approve':
+            req = FriendRequest.objects.get(user=self.request.user)
+            req.friend_request.remove(sender)
+            sent = FriendRequestSent.objects.get(user=sender)
+            sent.request_sent.remove(self.request.user)
+            friendlist = FriendList.objects.get(user=self.request.user)
+            friendlist.friends.add(sender)
+            senderfrndlist = FriendList.objects.get(user=sender)
+            senderfrndlist.friends.add(self.request.user)
+            data={
+                'status':'approved',
+                'user': sender,
+            }
+            return JsonResponse(data)
+        elif status == 'decline':
+            req = FriendRequest.objects.get(user=self.request.user)
+            req.friend_request.remove(sender)
+            sent = FriendRequestSent.objects.get(user=sender)
+            sent.request_sent.remove(self.request.user)
+            data = {
+                'status':'declined',
+                'res':sender
+            }
+            return JsonResponse(data)
 

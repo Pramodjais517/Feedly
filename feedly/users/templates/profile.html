@@ -69,7 +69,11 @@
             {% else %}
             <div class="nopost">
                 <img src="/static/up.svg" alt="sdvfwegg">
+                {% if user == request.user %}
                 <h2 style="margin-top:-10%;margin-left:19%;">You havn't posted any thing yet!!:( </h2>
+                {% else %}
+                <h2 style="margin-top:-10%;margin-left:19%;">{{ user.username }} havn't posted any thing yet!!:( </h2>
+                {% endif %}
             </div>
             {% endif %}
         </div>
