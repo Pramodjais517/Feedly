@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
+
 <div style="text-align:center;padding-top:100px;">
     {% if messages %}
     {% for message in messages %}
     <p style="text-align:center;margin-top:100px;">{{ message }}</p>
     {% endfor %}
     {% endif %}
+
+
 {% for user in results %}
     <!--<div style="background:#c2c9d3;">-->
     <div class="leftcolumn">

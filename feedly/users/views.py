@@ -407,3 +407,15 @@ class AcceptDeclineRequestView(View):
             }
             return JsonResponse(data)
 
+class SentRequestView(View):
+    @method_decorator(login_required)
+    def get(self,request,*args,**kwargs):
+        sender = FriendRequestSent.objects.get(user=self.request.user)
+        sent_request = sender.request_sent.all()
+        context={
+            'sent_request':sent_request,
+        }
+        if len(sent_request)==0:
+            messages.success(request,"No Sent request!!")
+            return render(request,'sent_request.html')
+        return render(request,'sent_request.html',context)

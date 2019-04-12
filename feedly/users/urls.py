@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^comment/(?P<postid>[0-9]+)/$', views.CommentView.as_view(), name='comment'),
     url(r'search/$',views.SearchView.as_view(),name='search'),
     url(r'friend_request/$',views.FriendRequestView.as_view(),name='friend_request'),
+    url(r'sent_request/$',views.SentRequestView.as_view(),name='sent_request'),
     url(r'add_friend/(?P<user_id>[0-9]+)/$',views.SendCancelRequestView.as_view(),name='add_friend'),
     url(r'request_log/(?P<status>[A-za-z]+)/(?P<user_id>[0-9]+)/$',views.AcceptDeclineRequestView.as_view(),name='request_log')
 

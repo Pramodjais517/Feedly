@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<div style="text-align:center;padding-top:100px;">
+    {% if messages %}
+    {% for message in messages %}
+    <p style="text-align:center;margin-top:100px;">{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+</div>
+{% for user in sent_request %}
+<div class="leftcolumn">
+    <div class="cardpost" style="margin-top:30px; margin-bottom:-80px;margin-left:300px">
+        <div class="cardh">
+            <div class="dp">
+                <a href="{{ user.avatar.url }}"><img src="{{ user.avatar.url }}" class="postdp"></a>
+            </div>
+            <a style="text-decoration:none;padding-left:1%;margin-top:-8%;" href="{% url 'profile' user.id %}"><h3 style="padding-left:1%;position:absolute;margin-top:-10px;">{{ user }}</h3></a>
+            <h4 style="padding-left:10%;margin-top:40px;">{{ user.first_name}}</h4>
+            <h4 style="padding-left:2%;margin-top:40px;">{{ user.last_name }}</h4>
+            <div class="dp2">
+                <a id="{{user.id}}" href="{% url 'add_friend' user.id %}" class="add_remove">Cancel request</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
