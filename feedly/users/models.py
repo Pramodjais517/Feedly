@@ -30,6 +30,8 @@ class MyProfile(models.Model):
 
     @receiver(post_save, sender=User)
     def save_myprofile(sender, instance, **kwargs):
+        instance.myprofile.first_name = instance.first_name
+        instance.myprofile.last_name = instance.last_name
         instance.myprofile.save()
 
 #creating posts on timeline

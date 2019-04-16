@@ -47,9 +47,24 @@
                 <!--<div class="g-recaptcha" data-sitekey="6Ldi4JoUAAAAADkHu_RcaZiy67p86o-ayAJCHBS1"></div>-->
                 <!--</div>-->
                 <button type="submit" class="btn" style="margin-left: 23%;" >Login</button>
+
             </div>
             </form>
         <a href="{% url 'signup' %}"><button type="submit" class="cabtn">Signup</button></a>
+
+       <div style="margin-left:18%;padding-top:2%;">
+           <p style="padding:3%;">------OR-------</p>
+       <a href="{% url 'social:begin' 'google-oauth2' %}">
+           <img src="https://img.icons8.com/color/48/000000/google-logo.png">
+        </a>
+        <a href="{% url 'social:begin' 'facebook' %}" style="padding:1%;">
+            <img src="https://img.icons8.com/color/48/000000/facebook.png">
+        </a>
+        <a href="{% url 'social:begin' 'github' %}">
+            <img src="https://img.icons8.com/color/48/000000/github.png">
+        </a>
+       </div>
     </div>
+
 </body>
 </html>

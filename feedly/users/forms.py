@@ -13,7 +13,7 @@ class SignupForm(UserCreationForm):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         try:
-             User.objects.get(email=email)
+             User.objects.filter(email=email)
         except User.DoesNotExist:
             return email
         raise forms.ValidationError('This email address is already in use.')
