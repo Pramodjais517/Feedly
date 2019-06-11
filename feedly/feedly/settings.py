@@ -20,8 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'tchao-$t@yr--0+4ex7%iz@&@%%lpln7=cwaz$ru)-4i++xkvv'
-GOOGLE_RECAPTCHA_SECRET_KEY = "6Ldi4JoUAAAAAGzWBeLoyBBX8z7eHEOvShsA2wRT"
+SECRET_KEY = os.environ.get('FEEDLY_SECRET_KEY')
+GOOGLE_RECAPTCHA_SECRET_KEY = os.environ.get('GOOGLE_RECAPTCHA_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -29,8 +29,8 @@ ALLOWED_HOSTS = ['*']
 # for sending confirmation email.
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'feedlysi001'
-EMAIL_HOST_PASSWORD = 'pramod@12345'
+EMAIL_HOST_USER = os.environ.get('FEEDLY_EMAIL')
+EMAIL_HOST_PASSWORD = os.environ.get('FEEDLY_PASSWORD')
 EMAIL_PORT = 587
 
 # Application definition
@@ -87,14 +87,14 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='187943071910-tcr5r1d8rseoj5m8gj3ef0n74i58hu12.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '2LKtmBPEZAiy4vSswlyHwtPm'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY =os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
-SOCIAL_AUTH_GITHUB_KEY = '1e4b87b8aeb27abb4f4b'
-SOCIAL_AUTH_GITHUB_SECRET = '85b4552074577ad7008abf71b1617f4d036e9736'
+SOCIAL_AUTH_GITHUB_KEY = os.environ.get('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = os.environ.get('SOCIAL_AUTH_GITHUB_SECRET')
 
-SOCIAL_AUTH_FACEBOOK_KEY = '1558285267638576'  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = '0cbcab651125c5f6b2ffa4c7f7130010'  # App Secret
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
 
 
 # LOGIN_URL = '/auth/login/google-oauth2/'
