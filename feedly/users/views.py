@@ -162,6 +162,7 @@ class EditProfileView(View):
 
 
 class LoginView(View):
+    """This view logins the  user and raises validation error in case of wrong credentials """
     def post(self, request,*args, **kwargs):
         username = request.POST['username']
         password = request.POST['password']
@@ -186,12 +187,14 @@ class LoginView(View):
 
 
 class LogoutView(View):
+    """this view simply logs out user and thereby deleting the session."""
     def get(self, request,*args, **kwargs):
         logout(request)
         return redirect('landing')
 
 
 class ProfileView(View):
+    """profile view is used to view and edit profile of yours"""
     @method_decorator(login_required)
     def get(self, request, user_id,*args, **kwargs):
         user = User.objects.get(pk=user_id)
