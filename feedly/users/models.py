@@ -53,6 +53,7 @@ class Post(models.Model):
 
 
 class Vote(models.Model):
+    """for countinng the number of votes on a post"""
     voter = models.ForeignKey(User, on_delete= models.CASCADE)
     post = models.ForeignKey(Post, on_delete= models.CASCADE)
     status = models.BooleanField(default= False)
