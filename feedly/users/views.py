@@ -33,6 +33,7 @@ class LandingView(View):
 
 
 class HomeView(View):
+    """its the homepage of the site where posts are displayed """
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         user = request.user
@@ -56,6 +57,7 @@ class HomeView(View):
 
 
 class SortedView(View):
+    """ this view helps in sorting the displayed posts according to the choice made."""
     @method_decorator(login_required)
     def get(self, request,rec, *args, **kwargs):
         if rec =='3':
@@ -71,6 +73,7 @@ class SortedView(View):
 
 
 class SignUpView(View):
+    """It is used to fill and validate and create a new user whenever a new signup form is filled"""
     form = SignupForm()
 
     def post(self, request, *args, **kwargs):
