@@ -264,6 +264,7 @@ class CreatePostView(View):
 
 
 class VoteView(View):
+    """its helps invoting up and down to a post works similar to like and dislike"""
     @method_decorator(login_required)
     def get(self,request,*args,**kwargs):
         post = request.GET['postid']
@@ -294,6 +295,7 @@ class VoteView(View):
 
 
 class CommentView(View):
+    """handles the comment on the posts"""
     @method_decorator(login_required)
     def post(self,request,postid,*args,**kwargs):
         form = CommentForm(request.POST or None)
