@@ -6,6 +6,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class MyProfile(models.Model):
+    """model for storing user credentials"""
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     first_name = models.CharField(max_length=10, blank=True,null=True,default='')
     last_name = models.CharField(max_length=10, blank=True,null=True,default='')
@@ -24,18 +25,21 @@ class MyProfile(models.Model):
 
     @receiver(post_save, sender=User)
     def create_myprofile(sender, instance, created, **kwargs):
+        """creating a profile before saving a user"""
         if created:
             MyProfile.objects.create(user=instance)
 
 
     @receiver(post_save, sender=User)
     def save_myprofile(sender, instance, **kwargs):
+        """saving the profile instance before saving user instanace"""
         instance.myprofile.first_name = instance.first_name
         instance.myprofile.last_name = instance.last_name
         instance.myprofile.save()
 
-#creating posts on timeline
+
 class Post(models.Model):
+    """model for creating post """
     post_by = models.ForeignKey(User, on_delete=models.CASCADE)
     about = models.TextField(max_length=100, null=True, blank=True)
     post_on = models.DateTimeField(auto_now_add=True)
