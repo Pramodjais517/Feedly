@@ -320,6 +320,7 @@ class CommentView(View):
 
 
 class SearchView(View):
+    """helps in searching friends and groups """
     @method_decorator(login_required)
     def get(self,request,*args,**kwargs):
         search = request.GET.get('search')
@@ -349,7 +350,7 @@ class SearchView(View):
 
 
 class SendCancelRequestView(View):
-
+   """it is used to send and cancel requests"""
     @method_decorator(login_required)
     def get(self,request,user_id,*args,**kwargs):
         # user = user_id
@@ -377,6 +378,7 @@ class SendCancelRequestView(View):
 
 
 class FriendRequestView(View):
+    """this is used to view friend requests recieved"""
     @method_decorator(login_required)
     def get(self,request,*args,**kwargs):
         friend_request_list = FriendRequest.objects.get(user=self.request.user)
@@ -388,6 +390,7 @@ class FriendRequestView(View):
 
 
 class AcceptDeclineRequestView(View):
+   """View for accepting and declining the request"""
     @method_decorator(login_required)
     def get(self,request,*args,**kwargs):
         sender = self.kwargs['user_id']
