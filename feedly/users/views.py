@@ -217,6 +217,7 @@ class ProfileView(View):
 
 
 class DeleteAccount(View):
+    """this deletes the account of the user"""
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         return render(request, 'delete_acc.html')
@@ -234,6 +235,7 @@ class DeleteAccount(View):
 
 
 class CreatePostView(View):
+    """this generates the new post for the user(ex : image,text,video)"""
     @method_decorator(login_required)
     def get(self, request,user_id,ch, *args, **kwagrs):
         if ch == 'image':
