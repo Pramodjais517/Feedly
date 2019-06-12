@@ -421,6 +421,7 @@ class AcceptDeclineRequestView(View):
             return JsonResponse(data)
 
 class SentRequestView(View):
+    """View for sending request to any of the user"""
     @method_decorator(login_required)
     def get(self,request,*args,**kwargs):
         sender = FriendRequestSent.objects.get(user=self.request.user)
