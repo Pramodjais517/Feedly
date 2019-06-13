@@ -20,8 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.environ.get('FEEDLY_SECRET_KEY')
-SECRET_KEY = 'tchao-$t@yr--0+4ex7%iz@&@%%lpln7=cwaz$ru)-4i++xkvv'
+SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = 'tchao-$t@yr--0+4ex7%iz@&@%%lpln7=cwaz$ru)-4i++xkvv'
 GOOGLE_RECAPTCHA_SECRET_KEY = os.environ.get('GOOGLE_RECAPTCHA_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -168,10 +168,3 @@ STATICFILES_DIRS = [
      os.path.join(BASE_DIR, "static")
  ]
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
-}
