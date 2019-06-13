@@ -155,7 +155,7 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_URL = '/media/'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
@@ -163,7 +163,7 @@ LOGIN_REDIRECT_URL = 'home'
 PHONENUMBER_DEFAULT_REGION = 'IN'
 PHONENUMBER_DB_FORMAT='NATIONAL'
 DATE_INPUT_FORMATS = ('%d/%m/%Y','%d-%m-%Y')
-STATICFILES_DIRS = [
-     os.path.join(BASE_DIR, "static")
- ]
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATICFILES_DIRS = [
+#      os.path.join(BASE_DIR, "static")
+#  ]
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
