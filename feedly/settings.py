@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'tchao-$t@yr--0+4ex7%iz@&@%%lpln7=cwaz$ru)-4i++xkvv'
 GOOGLE_RECAPTCHA_SECRET_KEY = os.environ.get('GOOGLE_RECAPTCHA_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 # for sending confirmation email.
