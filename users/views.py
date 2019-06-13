@@ -349,8 +349,9 @@ class SearchView(View):
             return redirect(request.META['HTTP_REFERER'])
 
 
+
 class SendCancelRequestView(View):
-   """it is used to send and cancel requests"""
+    """it is used to send and cancel requests """
     @method_decorator(login_required)
     def get(self,request,user_id,*args,**kwargs):
         # user = user_id
@@ -390,7 +391,6 @@ class FriendRequestView(View):
 
 
 class AcceptDeclineRequestView(View):
-   """View for accepting and declining the request"""
     @method_decorator(login_required)
     def get(self,request,*args,**kwargs):
         sender = self.kwargs['user_id']
