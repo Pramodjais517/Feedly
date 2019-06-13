@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('FEEDLY_SECRET_KEY')
 GOOGLE_RECAPTCHA_SECRET_KEY = os.environ.get('GOOGLE_RECAPTCHA_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 # for sending confirmation email.
@@ -163,7 +163,15 @@ LOGIN_REDIRECT_URL = 'home'
 PHONENUMBER_DEFAULT_REGION = 'IN'
 PHONENUMBER_DB_FORMAT='NATIONAL'
 DATE_INPUT_FORMATS = ('%d/%m/%Y','%d-%m-%Y')
+
+##############    production.py ######################
+
 STATICFILES_DIRS = [
      os.path.join(BASE_DIR, "static")
  ]
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+
+DATABASES = {
+    'default': os.environ.get('DATABASE_URL')
+}
