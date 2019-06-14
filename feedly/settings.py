@@ -23,8 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('FEEDLY_SECRET_KEY')
 GOOGLE_RECAPTCHA_SECRET_KEY = os.environ.get('GOOGLE_RECAPTCHA_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
+DEBUG = True
 ALLOWED_HOSTS = ['*']
 # for sending confirmation email.
 EMAIL_USE_TLS = True
@@ -170,3 +169,11 @@ STATICFILES_DIRS = [
      os.path.join(BASE_DIR, "static")
  ]
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+import dj_database_url
+if(not DEBUG):
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL')
+        )
+     }
+    DEBUG = os.environ.get('DEBUG')
