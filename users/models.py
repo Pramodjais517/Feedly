@@ -12,7 +12,7 @@ class MyProfile(models.Model):
     last_name = models.CharField(max_length=10, blank=True,null=True,default='')
     phone_number = PhoneNumberField(max_length=15, blank=True, null=True)
     date_of_birth = models.DateField(null=True, blank=True)
-    avatar = models.ImageField(default='profile.png', upload_to='profile_pic')
+    avatar = models.ImageField(default='/profile_pic/profile.png', upload_to='profile_pic')
     GENDER_CHOICES=(
         ('Male', 'Male'),
         ('Female', 'Female'),
