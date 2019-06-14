@@ -110,7 +110,7 @@ WSGI_APPLICATION = 'feedly.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-#
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -175,21 +175,9 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 import dj_database_url
 
-if(not DEBUG):
-    DATABASES = {
+# if(not DEBUG):
+DATABASES = {
         'default': dj_database_url.config(
             default=os.environ.get('DATABASE_URL')
         )
     }
-    INSTALLED_APPS = [
-        'django.contrib.admin',
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.sessions',
-        'django.contrib.postgres',
-        'django.contrib.messages',
-        'django.contrib.staticfiles',
-        'users',
-        'phonenumber_field',
-        'social_django',
-    ]
