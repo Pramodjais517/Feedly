@@ -184,3 +184,4 @@ DATABASES = {
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+DEFAULT_DP = os.path.join(BASE_DIR, "static/profile.png")

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from phonenumber_field.modelfields import PhoneNumberField
+from django.conf import settings
 
 
 class MyProfile(models.Model):
@@ -12,7 +13,7 @@ class MyProfile(models.Model):
     last_name = models.CharField(max_length=10, blank=True,null=True,default='')
     phone_number = PhoneNumberField(max_length=15, blank=True, null=True)
     date_of_birth = models.DateField(null=True, blank=True)
-    avatar = models.ImageField(default='/profile_pic/profile.png', upload_to='profile_pic')
+    avatar = models.ImageField(default='profile_pic/profile.png', upload_to='profile_pic')
     GENDER_CHOICES=(
         ('Male', 'Male'),
         ('Female', 'Female'),
