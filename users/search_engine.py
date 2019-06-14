@@ -2,7 +2,7 @@ from .models import MyProfile
 from django.db.models import Q
 
 
-def Search(search_list,quer,i,user):
+def Search(search_list, quer, i, user):
         if i == len(search_list):
             if quer == MyProfile.objects:
                 quer = MyProfile.objects.filter(user=None)
