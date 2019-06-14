@@ -136,7 +136,7 @@ class Activate(View):
         if user is not None and account_activation_token.check_token(user, token):
             user.is_active = True
             user.save()
-            login(request, user)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             # messages.success(request, 'thank you! for email verification')
             return redirect('edit_profile',user.id)
         else:
