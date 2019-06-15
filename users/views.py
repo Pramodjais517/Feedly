@@ -107,7 +107,7 @@ class SignUpView(View):
                 })
                 from_mail = EMAIL_HOST_USER
                 to_mail = [user.email]
-                send_mail(subject, message, from_mail, to_mail, fail_silently=True)
+                send_mail(subject, message, from_mail, to_mail, fail_silently=False)
                 messages.success(request, 'Please!Confirm your email to complete registration.')
                 return redirect('signup')
             else:
