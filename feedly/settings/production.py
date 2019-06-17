@@ -1,7 +1,7 @@
 from .base import *
 import dj_database_url
 
-DEBUG = False
+DEBUG = os.environ.get('DEBUG')
 
 DATABASES = {
         'default': dj_database_url.config(
