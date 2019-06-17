@@ -12,7 +12,7 @@ from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.mail import send_mail
-from feedly.settings import EMAIL_HOST_USER
+from feedly.settings.base import EMAIL_HOST_USER
 from django.views import View
 from django.views.generic import DetailView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
