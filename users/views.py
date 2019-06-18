@@ -419,10 +419,6 @@ class AcceptDeclineRequestView(View):
                 'res':sender
             }
             return JsonResponse(data)
-I wrote this code js to test a merge request .
-first I created a new branch and changed few lines
-and now i will merge will the master
-
 
 class SentRequestView(View):
     """View for sending request to any of the user"""
