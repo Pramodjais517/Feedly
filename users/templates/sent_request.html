@@ -12,7 +12,7 @@
             <a style="text-decoration:none;padding-left:1%;margin-top:-8%;" href="{% url 'profile' user.id %}"><h3 style="padding-left:1%;position:absolute;margin-top:-10px;">{{ user }}</h3></a>
             <h4 style="padding-left:10%;margin-top:40px;">{{ user.first_name}}</h4>
             <h4 style="padding-left:2%;margin-top:40px;">{{ user.last_name }}</h4>
-            <div class="dp2">
+            <div class="dp2 button">
                 <a id="{{user.id}}" href="{% url 'add_friend' user.id %}" class="add_remove">Cancel request</a>
             </div>
         </div>
