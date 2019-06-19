@@ -6,8 +6,8 @@ A social media website where User can:
 4)uplaod post(Image,Text,Video)
 5)and much more.
 <h1> Set-up </h1>
-# pip install requirements.txt \n
-# python manage.py migrate \n
-# python manage.py runserver \n
+# pip install requirements.txt <br>
+# python manage.py migrate <br>
+# python manage.py runserver <br>
 that's it you are done!!!!
 for media uplaod your own fake data.
