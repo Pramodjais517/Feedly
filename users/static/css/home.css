@@ -630,10 +630,21 @@ padding-left:3  %;
 white-space: pre-wrap;
 }
   .dp2{
-    width: -100%;
-    height: -100%;
-  margin-left:15%;
-  margin-top:8%
-    overflow: hidden;
-    border-radius: 100%;
+    margin-left:45%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    margin-top:3%;
+    text-decoration:none;
+    text-decoration:none;
   }
+  .button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}

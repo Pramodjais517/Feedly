@@ -1,23 +1,32 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
-<a href="{% url 'sent_request' %}"><button style="margin-left:80%;margin-top:7%;">View Sent Request</button></a>
+<a href="{% url 'sent_request' %}"><button class=" dp2 button" style="margin-left:80%;margin-top:8%;" >View Sent Request</button></a>
+<a href="{% url 'friend_list' %}"><button class=" dp2 button" style="margin-left:80%"> View Friend List</button></a>
+
+{% if friend_request_list %}
 {% for user in friend_request_list %}
 
 <div class="leftcolumn">
-    <div class="cardpost" style="margin-top:30px; margin-bottom:-80px;margin-left:300px">
+    <div class="cardpost">
         <div class="cardh">
             <div class="dp">
                 <a href="{{ user.myprofile.avatar.url }}"><img src="{{ user.myprofile.avatar.url }}" class="postdp"></a>
             </div>
             <a href="{% url 'profile' user.id %}">{{ user }}</a>
             wants to be friend with you.
-            <div class="dp2">
-                <button><a id="accept{{user.id}}" href="{% url 'request_log' 'approve' user.id %}" class="app_dec">Approve Request</a></button>
-                <button><a id="decline{{user.id}}" href="{% url 'request_log'  'decline' user.id %}" class="app_dec">Decline</a></button>
+            <div >
+                <button class="dp2 button" id="acc{{user.id}}"><a href="{% url 'request_log' 'approve' user.id %}" class="app_dec">Approve Request</a></button>
+                <button class="dp2 button"id="dec{{user.id}}"><a href="{% url 'request_log'  'decline' user.id %}" class="app_dec">Decline</a></button>
             </div>
         </div>
     </div>
 </div>
 {% endfor %}
+{% else %}
+            <div class="nopost"style="margin-top:-12%;">
+                <img src="/static/up.svg" alt="sdvfwegg">
+                <h2 style="margin-top:-10%;margin-left:19%;">You don't have any pending friend requests!!:( </h2>
+            </div>
+            {% endif %}
 {% endblock %}

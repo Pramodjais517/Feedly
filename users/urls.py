@@ -27,7 +27,8 @@ urlpatterns = [
     url(r'friend_request/$',views.FriendRequestView.as_view(),name='friend_request'),
     url(r'sent_request/$',views.SentRequestView.as_view(),name='sent_request'),
     url(r'add_friend/(?P<user_id>[0-9]+)/$',views.SendCancelRequestView.as_view(),name='add_friend'),
-    url(r'request_log/(?P<status>[A-za-z]+)/(?P<user_id>[0-9]+)/$',views.AcceptDeclineRequestView.as_view(),name='request_log')
+    url(r'request_log/(?P<status>[A-za-z]+)/(?P<user_id>[0-9]+)/$',views.AcceptDeclineRequestView.as_view(),name='request_log'),
+    url(r'^friend_list/$', views.FriendListView.as_view(),name='friend_list')
 
  ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

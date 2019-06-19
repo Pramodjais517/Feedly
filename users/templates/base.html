@@ -261,13 +261,13 @@ function chBackcolor() {
             url : Url,
             success:function(res){
                  if(res.status == 'approved'){
-                  document.getElementById('accept'+res.user).innerHTML = "Accepted";
-                  $('#decline'+res.user).remove();
+                  document.getElementById('acc'+res.user).innerHTML = "Accepted";
+                  $('#dec'+res.user).remove();
              }
                  else if(res.status == 'declined')
                  {
-                  document.getElementById('decline'+res.user).innerHTML = "Declined";
-                  $('#accept'+res.user).remove();
+                  document.getElementById('dec'+res.user).innerHTML = "Declined";
+                  $('#acc'+res.user).remove();
                  }
             },
              error:function(res){
@@ -315,7 +315,7 @@ function chBackcolor() {
             </li>
             {% if request.user.is_authenticated %}
             <li style="margin-left:5%">
-                <a href="{% url 'createpost' user.id 'text' %}" ><button id="cp" type="button" ><i class="far fa-edit"></i></button>
+                <a title="Create New Posts" href="{% url 'createpost' user.id 'text' %}" ><button id="cp" type="button" ><i class="far fa-edit"></i></button>
                 </a>
             </li>
             {% else %}
@@ -328,11 +328,11 @@ function chBackcolor() {
             {% endif %}
             {% if request.user.is_authenticated %}
             <li style="margin-left:2%">
-                <a href="{% url 'friend_request' %}"><button id="noti" type="button" onclick="document.getElementById('id02').style.display='block'">
-                    <i class="fa fa-users" aria-hidden="true" style="margin-left:5%"></i></button></a>
+                <a title="Your Connections" href="{% url 'friend_request' %}"><button id="noti" type="button" onclick="document.getElementById('id02').style.display='block'">
+                    <i class="fa fa-users" aria-hidden="true" style="margin-left:5%"></i></button></a><span>{{requests.count}}</span>
             </li>
             <li style="margin-left:1%">
-                <button id="noti" type="button" onclick="document.getElementById('id02').style.display='block'">
+                <button id="noti" type="button" title="Notifications" onclick="document.getElementById('id02').style.display='block'">
                     <i class="far fa-bell" style="margin-left:5%"></i></button>
             </li>
             {% else %}

@@ -343,8 +343,13 @@ class SearchView(View):
                        }
                 return render(request,'search_result.html',context)
             else:
-                    messages.success(request,"No user found!!")
-                    return render(request,'search_result.html')
+                context = {
+                    'results': query,
+                    'friendlist': friendlist,
+                    'requestlist': requestlist,
+                    'sentrequest': sentrequestlist,
+                }
+                return render(request,'search_result.html',context)
         else:
             return redirect(request.META['HTTP_REFERER'])
 
@@ -415,8 +420,8 @@ class AcceptDeclineRequestView(View):
             sent = FriendRequestSent.objects.get(user=sender)
             sent.request_sent.remove(self.request.user)
             data = {
-                'status':'declined',
-                'res':sender
+                'status': 'declined',
+                'user': sender
             }
             return JsonResponse(data)
 
@@ -429,9 +434,17 @@ class SentRequestView(View):
         context={
             'sent_request':sent_request,
         }
-        if len(sent_request)==0:
-            messages.success(request,"No Sent request!!")
-            return render(request,'sent_request.html')
         return render(request,'sent_request.html',context)
 
-# PULL REQUEST
+
+class FriendListView(View):
+
+    @method_decorator(login_required)
+    def get(self, request):
+        user = self.request.user
+        your_list = FriendList.objects.get(user=user)
+        friend_list = your_list.friends.all()
+        context = {
+            'friend_list': friend_list,
+        }
+        return  render(request, 'friendlist.html', context)

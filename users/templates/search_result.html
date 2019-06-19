@@ -2,46 +2,46 @@
 {% load staticfiles %}
 {% block content %}
 
-<div style="text-align:center;padding-top:100px;">
-    {% if messages %}
-    {% for message in messages %}
-    <p style="text-align:center;margin-top:100px;">{{ message }}</p>
-    {% endfor %}
-    {% endif %}
 
-
+{% if results %}
 {% for user in results %}
-    <!--<div style="background:#c2c9d3;">-->
+<!--    <div style="background:#c2c9d3;">-->
     <div class="leftcolumn">
-    <div class="cardpost" style="margin-top:30px; margin-bottom:-80px;margin-left:300px">
+    <div class="cardpost" style="margin-top:1%;margin-left:40%">
     <div class="cardh">
             <div class="dp">
                 <a href="{{ user.avatar.url }}"><img src="{{ user.avatar.url }}" class="postdp"></a>
             </div>
             <a style="text-decoration:none;padding-left:1%;margin-top:-8%;" href="{% url 'profile' user.id %}"><h3 style="padding-left:1%;position:absolute;margin-top:-10px;">{{ user }}</h3></a>
-            <h4 style="padding-left:10%;margin-top:40px;">{{ user.first_name}}</h4>
-            <h4 style="padding-left:2%;margin-top:40px;">{{ user.last_name }}</h4>
+            <h4 style="padding-left:10%;margin-top:10%;">{{ user.first_name}}</h4>
+            <h4 style="padding-left:2%;margin-top:10%;">{{ user.last_name }}</h4>
         {% if user.user in friendlist %}
-        <div class="dp2">
-            <span>Friend</span>
-        </div>
+        <button class="dp2 button">
+            Friend
+        </button>
         {% elif user.user in sentrequest %}
-        <div class="dp2">
+        <button class="dp2 button">
             <a id="{{user.id}}" href="{% url 'add_friend' user.id %}" class="add_remove">Cancel request</a>
-        </div>
+        </button>
         {% elif user.user in requestlist %}
-        <div class="dp2">
+        <div class="dp2 button">
             <button><a id="accept{{user.id}}" href="{% url 'request_log' 'approve' user.id %}" class="app_dec">Approve Request</a></button>
             <button><a id="decline{{user.id}}" href="{% url 'request_log'  'decline' user.id %}" class="app_dec">Decline</a></button>
         </div>
         {% else %}
-        <div class="dp2">
-            <a id="{{user.id}}" href="{% url 'add_friend' user.id %}" class="add_remove">Add Friend</a>
+        <div class="dp2 button">
+            <a id="{{user.id}}" href="{% url 'add_friend' user.id %}" class="add_remove" style="text-decoration:none;">Add Friend</a>
         </div>
         {% endif %}
         </div>
     </div>
     </div>
-</div>
 {% endfor %}
+{% else %}
+ <div class="nopost"style="margin-left:30%;">
+                <img src="/static/up.svg" alt="sdvfwegg">
+                <h2 style="margin-top:-10%;margin-left:19%;">No Such User !:( </h2>
+            </div>
+            {% endif %}
+
 {% endblock %}

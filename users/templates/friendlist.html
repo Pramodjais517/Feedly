@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+{% if friend_list %}
+{% for user in friend_list %}
+
+<div class="leftcolumn">
+    <div class="cardpost">
+        <div class="cardh">
+            <div class="dp">
+                <a href="{{ user.myprofile.avatar.url }}"><img src="{{ user.myprofile.avatar.url }}" class="postdp"></a>
+            </div>
+            <a href="{% url 'profile' user.id %}">{{ user }}</a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% else %}
+            <div class="nopost"style="margin-top:-12%;">
+                <img src="/static/up.svg" alt="sdvfwegg">
+                <h2 style="margin-top:-10%;margin-left:19%;">Your friend list is empty !:( </h2>
+            </div>
+            {% endif %}
+
+
+
+
+{% endblock %}
