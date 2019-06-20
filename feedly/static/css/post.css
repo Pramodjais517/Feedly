@@ -1,0 +1,151 @@
+.loggedin{
+    text-align: center;
+    margin: 40px 0% 10px 0%;
+}
+
+.ok{
+    font-size: 120%;
+    background-color: rgb(107, 216, 118);
+    margin-left: 80%;
+    border-color: #45a049;
+    padding: 0.5% 3%;
+    border-radius: 15px;
+
+}
+
+.cp-content{
+        padding-top:1%;
+        padding-bottom:1%;
+        background-color: #DDDEDE;
+        border-radius: 15px;
+        margin-right: 13%;
+        margin-top:20px;
+        border: 1px solid #888;
+        width: 40%;
+        float: right;
+}
+@media (max-width: 1000px) {
+    .leftcolumn {   
+        width: 90%;
+        margin: auto;
+        margin-top: 75px;
+    }
+    .rightcolumn{
+        display: none;
+    }
+    .icon-bar a{
+        font-size: 1.7em;
+    }
+    
+}
+
+@media (max-width: 800px) {
+    .icon-bar a{
+        font-size: 1.5em;
+    }
+    
+}
+@media (max-width: 700px) {
+    .icon-bar a{
+        font-size: 1.2em;
+    }
+    
+}
+
+@media (max-width: 600px) {
+    .icon-bar a{
+        font-size: 0.9em;
+    }
+    
+}
+
+
+
+.choosefile{
+    margin-left: 4%;
+    background-color: black;
+    display: none;
+
+}
+
+.cpost{
+    text-align: center;
+    background-color: #DDDEDE;
+    padding: 5px 0px;
+    border-radius: 25px 25px 0px 0px;
+}
+
+.txt{
+    margin: 15px 2% 8px 7.5%;
+    width: 50%;
+    border: 2px solid #888;
+    border-radius: 8px;
+    padding: 1%;
+    font-size: 120%
+}
+.uploadbtn{
+    font-size: 130%;
+    margin-left: 70%;
+    color: white;
+    padding: 1.5% 4%;
+    background-color: #888;
+    border-radius: 20px;
+    border: 1px solid #888;
+}
+
+
+.srchc{
+        
+    padding: 1.5%;
+    width: 100%;
+    background-color: rgb(242, 243, 243);
+    border-bottom:2px solid darkgray;
+    border-radius: 10px;
+
+}
+
+.abt{
+margin-top:50%;
+margin-left: 6%;
+font-size:150%;
+
+}
+
+.cont .imgcont{
+
+width:90%;
+margin-left:9%;
+margin-top:10%;
+height:200%;
+}
+
+.imgcont{
+margin-left:10%;
+}
+
+.choose{
+margin-left: 7.5%;
+margin-top: 2%;
+font-size: 120%;
+}
+
+.cp-icons{
+        padding-top:0.5%;
+        padding-bottom:0.5%;
+        background-color: #DDDEDE;
+        border-radius: 25px;
+        margin-left:6.5%;
+        margin-top:20px;
+        border: 1px solid #888;
+        width: 20%;
+        float: left;
+        display:inline-block;
+
+}
+
+#image, #video, #text{
+margin-left:25px;
+padding:5px;
+}
+button:focus{
+border:none;}

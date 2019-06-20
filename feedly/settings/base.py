@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
+    'storages',
     'phonenumber_field',
     'social_django',
 ]
@@ -140,13 +141,29 @@ USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-
+# STATIC_URL = '/static/'
+#
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
+#
+# MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+AWS_ACCESS_KEY_ID = 'ASIAYNXICQ3ITNSOV6XC'
+AWS_SECRET_ACCESS_KEY = '0b9FuANMb1oUsKv1bF9ABdhOxUKeo/4xPmAwNDS9'
+AWS_STORAGE_BUCKET_NAME = 'feedly-static'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
 
-MEDIA_URL = '/media/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 LOGIN_URL = 'login'
 

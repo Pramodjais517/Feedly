@@ -1,0 +1,123 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Lato",sans-serif;
+}  
+
+
+    body, html {
+    height: 100%;
+}
+
+.bg { 
+    background-image: url("/static/lan.svg");
+
+    height: 100%; 
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+   
+}
+
+#name {
+    font-family: 'Varela Round', sans-serif;
+    font-size: 300%;
+    color: #4AA82B;
+    font-weight: 900;
+    float: right;
+    margin-right: 81.5%;
+    margin-top: 20px;
+    }
+    
+
+
+    .input-container {
+    display: flex; 
+    
+    width:90%;
+    
+    margin-bottom: 20px;
+    font-size: 150%;
+    
+}
+
+.icon {
+    padding: 10px;
+    background: #4AA82B;
+    color: white;
+    min-width: 50px;
+    text-align: center;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+}
+.email{
+    padding-top: 6%;
+}
+
+.btn {
+    background-color: #4AA82B;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    cursor: pointer;
+    width: 20%;
+    opacity: 0.9;
+    font-size: 120%;
+    border-radius: 30px;
+    border: 2px solid #4AA82B;
+  }
+  .input-field:focus {
+    border: 3px solid #4AA82B;
+}
+
+ .landinglogin{
+margin-top: 120px;
+margin-left: 10%;
+width:30%;
+/* background-color: aquamarine; */
+
+    }
+
+.wel{
+    font-size: 300%;
+    font-weight: 200;
+}
+
+.connected{
+    font-size: 120%;
+    font-weight: 200;
+}
+.cabtn{
+    float:right;
+    margin-right:68%;
+    background-color: transparent;
+    border: 2px solid #4AA82B;
+    color: #4AA82B;
+    padding:6px 6px;
+    width:8%;
+    margin-top:-2.2%;
+
+
+
+
+        padding: 6px 10px;
+
+        cursor: pointer;
+
+        opacity: 0.9;
+        font-size: 120%;
+        border-radius: 30px;
+
+}
+.errorlist{
+color:red;
+margin-left:80px;
+
+}
