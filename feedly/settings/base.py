@@ -7,7 +7,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('FEEDLY_SECRET_KEY')
 
-GOOGLE_RECAPTCHA_SECRET_KEY = os.environ.get('GOOGLE_RECAPTCHA_SECRET_KEY')
+GOOGLE_RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 
 # DEBUG = os.environ.get('DEBUG', default=True)
@@ -141,29 +142,13 @@ USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
-# STATIC_URL = '/static/'
-#
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-#
-# STATIC_ROOT = os.path.join(BASE_DIR, "static")
-#
-# MEDIA_URL = '/media/'
+STATIC_URL = '/static/'
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-AWS_ACCESS_KEY_ID = 'ASIAYNXICQ3ITNSOV6XC'
-AWS_SECRET_ACCESS_KEY = '0b9FuANMb1oUsKv1bF9ABdhOxUKeo/4xPmAwNDS9'
-AWS_STORAGE_BUCKET_NAME = 'feedly-static'
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_LOCATION = 'static'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = '/media/'
 
 LOGIN_URL = 'login'
 
