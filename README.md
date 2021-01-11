@@ -10,4 +10,4 @@ A social media website where User can:
 # python manage.py migrate <br>
 # python manage.py runserver <br>
 that's it you are done!!!!
-for media uplaod your own fake data.
+for media uplaod dummy data.
